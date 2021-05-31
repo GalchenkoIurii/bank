@@ -13,8 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [MainController::class, 'index'])
-    ->name('home');
+Route::get('/', function(){
+    return 'Main page';
+});
+//Route::get('/', [MainController::class, 'index'])
+//    ->name('home');
 Route::get('/about', [MainController::class, 'about'])
     ->name('about');
 Route::get('/agreement', [MainController::class, 'agreement'])
@@ -70,6 +73,9 @@ Route::post('/convert/handle', [ConvertController::class, 'convertHandle'])
 Route::get('/investments', [MainController::class, 'investments'])
     ->name('investments')->middleware('auth');
 
+// need to add profile route
+
+// need to add notices route
 
 /*
  * register, login, logout
@@ -104,6 +110,8 @@ Route::get('/user/settings', [UserController::class, 'userSettings'])
     ->name('user.settings')->middleware('auth');
 Route::post('/user/settings', [UserController::class, 'userSettingsStore'])
     ->name('user.settings.store')->middleware('auth');
+
+// move identify functionality to the profile
 Route::get('/user/identify', [UserController::class, 'userIdentify'])
     ->name('user.identify')->middleware('auth');
 Route::post('/user/identify', [UserController::class, 'userIdentifyStore'])
@@ -114,7 +122,9 @@ Route::post('/user/identify', [UserController::class, 'userIdentifyStore'])
  * admin routes
  */
 Route::prefix('admin')->middleware('admin')->group(function() {
+    // need to add name('admin.') method for the group
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+    // need to remake all resources in one method call
     Route::resource('/settings', SettingController::class);
     Route::resource('/cards', CardController::class);
     Route::resource('/credits', CreditController::class);
@@ -123,6 +133,11 @@ Route::prefix('admin')->middleware('admin')->group(function() {
     Route::resource('/notices', NoticeController::class);
     Route::resource('/balances', BalanceController::class);
     Route::resource('/blanks', BlankController::class);
+
+    // move balances, notices, customers to one route customers
+
+    // need to add identification requests route
+
     Route::get('/get-blank/{id}', [BlankController::class, 'getBlank'])
         ->name('admin.get.blank');
     Route::get('/balances/add/{id}', [BalanceController::class, 'add'])
