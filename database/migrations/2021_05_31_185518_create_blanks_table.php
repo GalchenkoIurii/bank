@@ -14,7 +14,14 @@ class CreateBlanksTable extends Migration
     public function up()
     {
         Schema::create('blanks', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->string('title_lt')->nullable();
+            $table->string('title_en')->nullable();
+            $table->string('title_ru')->nullable();
+            $table->text('text_lt')->nullable();
+            $table->text('text_en')->nullable();
+            $table->text('text_ru')->nullable();
+            $table->string('slug')->nullable();
             $table->timestamps();
         });
     }
