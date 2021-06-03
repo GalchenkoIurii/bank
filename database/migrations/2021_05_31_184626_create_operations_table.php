@@ -21,12 +21,12 @@ class CreateOperationsTable extends Migration
             $table->string('description_lt')->nullable();
             $table->string('description_en')->nullable();
             $table->string('description_ru')->nullable();
-            $table->string('type')->nullable();
-            $table->double('sum')->nullable();
-            $table->string('currency')->nullable();
+            $table->string('type');
+            $table->double('sum');
+            $table->string('currency');
             $table->string('phone')->nullable();
             $table->string('bik')->nullable();
-            $table->integer('user_id')->unsigned();
+            $table->unsignedInteger('user_id');
             $table->timestamps();
         });
     }

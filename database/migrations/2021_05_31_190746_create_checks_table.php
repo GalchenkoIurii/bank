@@ -15,6 +15,11 @@ class CreateChecksTable extends Migration
     {
         Schema::create('checks', function (Blueprint $table) {
             $table->id();
+            $table->string('title_lt')->nullable();
+            $table->string('title_en')->nullable();
+            $table->string('title_ru')->nullable();
+            $table->double('sum');
+            $table->unsignedInteger('operation_id');
             $table->timestamps();
         });
     }

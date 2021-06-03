@@ -29,14 +29,14 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
-            $table->tinyInteger('is_admin')->default(0);
-            $table->tinyInteger('is_banned')->default(0);
-            $table->tinyInteger('need_confirmation')->default(1);
-            $table->tinyInteger('confirmation')->default(0);
-            $table->tinyInteger('confirmed')->default(0);
+            $table->unsignedTinyInteger('is_admin')->default(0);
+            $table->unsignedTinyInteger('is_banned')->default(0);
+            $table->unsignedTinyInteger('need_confirmation')->default(1);
+            $table->unsignedTinyInteger('confirmation')->default(0);
+            $table->unsignedTinyInteger('confirmed')->default(0);
             $table->timestamp('confirmed_at')->nullable();
-            $table->tinyInteger('show_card')->default(0);
-            $table->tinyInteger('withdrawable')->default(0);
+            $table->unsignedTinyInteger('show_card')->default(0);
+            $table->unsignedTinyInteger('withdrawable')->default(0);
         });
     }
 
