@@ -15,6 +15,13 @@ class CreateBalancesTable extends Migration
     {
         Schema::create('balances', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->string('control_sum_lt')->nullable();
+            $table->string('control_sum_en')->nullable();
+            $table->string('control_sum_ru')->nullable();
+            $table->double('balance_rur')->default(0);
+            $table->double('balance_usd')->default(0);
+            $table->double('balance_eur')->default(0);
             $table->timestamps();
         });
     }

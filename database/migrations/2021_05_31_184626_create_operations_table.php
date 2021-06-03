@@ -26,7 +26,7 @@ class CreateOperationsTable extends Migration
             $table->string('currency');
             $table->string('phone')->nullable();
             $table->string('bik')->nullable();
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
         });
     }

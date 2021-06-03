@@ -20,7 +20,7 @@ class CreateCreditsTable extends Migration
             $table->unsignedSmallInteger('credit_term');
             $table->double('percent');
             $table->double('monthly_payment');
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('full_name')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
