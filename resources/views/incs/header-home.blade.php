@@ -6,7 +6,7 @@
                     <a href="#" class="top-cont__burger" id="burger"></a>
                     <a href="{{ route('home') }}" class="top-cont__logo">
                         <img src="{{ asset('img/logo.png') }}" alt="logo">
-                        <span>{{ $site_settings['site_name']->value }}</span>
+                        <span>{{ $site_settings['site_name']->value_lt }}</span>
                     </a>
                     {{--<a href="{{ route('home') }}" class="top-cont__logo">{{ $site_settings['site_name']->value }}</a>--}}
                     <a href="{{ route('logout') }}" class="top-cont__exit"><img src="{{ asset('img/exit-ak.svg') }}" alt=""></a>
@@ -21,8 +21,8 @@
                         </ul>
 
                         <div class="currency-block">
-                            <p class="currency-block__text"><span>$</span> {{ $site_settings['usd'] }}</p>
-                            <p class="currency-block__text"><span>€</span> {{ $site_settings['eur'] }}</p>
+{{--                            <p class="currency-block__text"><span>$</span> {{ $site_settings['usd'] }}</p>--}}
+{{--                            <p class="currency-block__text"><span>€</span> {{ $site_settings['eur'] }}</p>--}}
                         </div>
                     </div>
                     <div class="block-link">
@@ -49,8 +49,8 @@
         <div class="container">
             <div class="bottom-cont">
                 <div class="block-title">
-                    <p class="bottom-cont__title">{{ $site_settings['site_name']->value }}</p>
-                    <p class="bottom-cont__text">{{ $site_settings['site_slogan']->value }}</p>
+                    <p class="bottom-cont__title">{{ $site_settings['site_name']->value_lt }}</p>
+                    <p class="bottom-cont__text">{{ $site_settings['site_slogan']->value_lt }}</p>
                     <a href="@if(auth()->check())
                     {{ route('finances') }}
                     @else
