@@ -32,6 +32,7 @@ class ViewServiceProvider extends ServiceProvider
                 'home',
                 'incs.header-home',
                 'incs.header-logged',
+                'incs.header-register',
                 'incs.footer-home',
                 'incs.footer-logged',
                 'incs.admin-message'

@@ -28,6 +28,8 @@ class SettingsComposer
             'address' => null,
             'user_notices' => null,
             'admin_message' => null,
+            'usd' => '12test',
+            'eur' => '23test',
             ];
 
         foreach($this->settings as $setting) {
@@ -39,6 +41,7 @@ class SettingsComposer
 
         // need to implement:
         // getting user's notices
+        // getting currencies exchange rates
 
 
         $view->with('site_settings', $settings);
