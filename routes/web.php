@@ -30,7 +30,9 @@ Route::get('/confidentiality', [MainController::class, 'confidentiality'])
 
 
 Route::get('/finances', [MainController::class, 'finances'])
-    ->name('finances')->middleware('auth');
+    ->name('finances');
+//Route::get('/finances', [MainController::class, 'finances'])
+//    ->name('finances')->middleware('auth');
 
 Route::post('/finances', [OperationController::class, 'storeTransaction'])
     ->name('transaction.store')->middleware('auth');

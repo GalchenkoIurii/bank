@@ -26,6 +26,8 @@ class SettingsComposer
             'email' => null,
             'time' => null,
             'address' => null,
+            'user_notices' => null,
+            'admin_message' => null,
             ];
 
         foreach($this->settings as $setting) {
@@ -33,6 +35,11 @@ class SettingsComposer
                 $settings[$setting->slug] = $setting;
             }
         }
+
+
+        // need to implement:
+        // getting user's notices
+
 
         $view->with('site_settings', $settings);
     }

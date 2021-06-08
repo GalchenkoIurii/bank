@@ -26,7 +26,7 @@
 <div class="block-noactive-two">
     <div class="noactive-header">
         <a href="#" class="noactive-header__prev"><img src="{{ asset('img/prev.svg') }}" alt=""></a>
-        <a href="{{ route('home') }}" class="noactive-header__title">{{ $site_settings['site_name']->value }}</a>
+        <a href="{{ route('home') }}" class="noactive-header__title">{{ $site_settings['site_name']->value_lt }}</a>
         <a href="{{ route('home') }}" class="noactive-header__home"><img src="{{ asset('img/home.svg') }}" alt=""></a>
     </div>
     <div class="noactive-cont">
@@ -39,7 +39,7 @@
     <div class="bg-mob"></div>
     <div class="mob-head">
         <a href="{{ route('logout') }}" class="mob-head__link"><img src="{{ asset('img/exit.svg') }}" alt=""></a>
-        <p class="mob-head__title">{{ $site_settings['site_name']->value }}</p>
+        <p class="mob-head__title">{{ $site_settings['site_name']->value_lt }}</p>
     </div>
     <div class="block-left" id="blockLeft">
         @yield('side')

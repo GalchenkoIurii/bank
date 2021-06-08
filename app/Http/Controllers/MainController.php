@@ -8,11 +8,24 @@ class MainController extends Controller
 {
     public function index()
     {
-        $site_name = 'Bank'; // need retrieve from Setting model
+        return view('home');
+    }
 
-        // need to insert via ViewComposer
-        $site_settings = [];
+    public function finances()
+    {
+        $balance_rur = 0;
+        $balance_usd = 0;
+        $balance_eur = 0;
+        $operations = null;
 
-        return view('home', compact('site_name'));
+
+        // need to implement:
+        // getting user's balances and operations
+
+
+        return view(
+            'finances',
+            compact('balance_rur', 'balance_usd', 'balance_eur', 'operations')
+        );
     }
 }
