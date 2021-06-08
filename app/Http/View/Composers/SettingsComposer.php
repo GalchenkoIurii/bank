@@ -11,42 +11,29 @@ class SettingsComposer
 {
     protected $settings;
 
-    public function __construct(Setting $settings)
+    public function __construct()
     {
-        $this->settings = $settings;
+        $this->settings = Setting::all();
     }
 
     public function compose(View $view)
     {
-        $site_name = '';
-        $site_slogan = '';
-        $copyright = '';
-        $tel = '';
-        $email = '';
-        $time = '';
-        $address = '';
+        $settings = [
+            'site_name' => null,
+            'site_slogan' => null,
+            'copyright' => null,
+            'tel' => null,
+            'email' => null,
+            'time' => null,
+            'address' => null,
+            ];
 
         foreach($this->settings as $setting) {
-            if($setting->slug == 'site_name') {
-                $site_name = $setting;
-            } elseif ($setting->slug == 'site_slogan') {
-                $site_slogan = $setting;
-            } elseif ($setting->slug == 'tel') {
-                $tel = $setting;
-            } elseif ($setting->slug == 'email') {
-                $email = $setting;
-            } elseif ($setting->slug == 'time') {
-                $time = $setting;
-            } elseif ($setting->slug == 'address') {
-                $address = $setting;
-            } elseif ($setting->slug == 'copyright') {
-                $copyright = $setting;
+            if (array_key_exists($setting->slug, $settings)) {
+                $settings[$setting->slug] = $setting;
             }
         }
 
-        $view->with(
-            'site_settings',
-            compact('site_name', 'site_slogan', 'copyright', 'tel', 'email', 'time', 'address')
-        );
+        $view->with('site_settings', $settings);
     }
 }
