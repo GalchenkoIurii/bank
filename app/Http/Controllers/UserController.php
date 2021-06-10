@@ -47,6 +47,47 @@ class UserController extends Controller
         return redirect()->route('finances');
     }
 
+    public function loginForm()
+    {
+        return view('login');
+    }
+
+    public function login(Request $request)
+    {
+        $request->validate([
+            'login' => 'required',
+            'password' => 'required'
+        ]);
+
+        $user = User::where('login', $request->login)->first();
+
+        if (isset($user) && $user->is_banned) {
+            return redirect()->back()->with('error', 'Аккаунт заблокирован');
+        }
+
+        if (Auth::attempt([
+            'login' => $request->login,
+            'password' => $request->password
+        ])) {
+            session()->flash('success', 'Вы вошли');
+
+            if (Auth::user()->is_admin) {
+                return redirect()->route('admin.index');
+            } else {
+                return redirect()->route('finances');
+            }
+        }
+
+        return redirect()->back()->with('error', 'Неверный логин или пароль');
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+
+        return redirect()->route('home');
+    }
+
     protected function getUserPersonalCode()
     {
         $personalCode = $this->getNumbers();

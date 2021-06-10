@@ -30,12 +30,14 @@ class ViewServiceProvider extends ServiceProvider
             [
                 'layouts.logged',
                 'home',
-                'incs.header-home',
+//                'incs.header-home',
                 'incs.header-logged',
-                'incs.header-register',
-                'incs.footer-home',
+//                'incs.header-register',
+//                'incs.footer-home',
                 'incs.footer-logged',
-                'incs.admin-message'
+                'incs.admin-message',
+                'login',
+                'register'
             ],
             SettingsComposer::class
         );

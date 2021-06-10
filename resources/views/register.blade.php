@@ -25,17 +25,18 @@
 
                     <div class="block-input">
                         <p class="block-input__text">Логин</p>
-                        <input type="text" name="login" id="userLogin" placeholder="Введите логин" required>
+                        <input type="text" name="login" id="userLogin" placeholder="Введите логин" value="{{ old('login') }}" required>
                     </div>
 
                     <div class="block-input">
                         <p class="block-input__text">Телефон</p>
-                        <input type="tel" name="phone" id="userTel" placeholder="" ng-model="selectedCountryDialCode" ng-value="selectedCountry.dial_code" required>
+                        <input type="tel" name="phone" id="userTel" placeholder="" value="{{ old('phone') }}"
+                               ng-model="selectedCountryDialCode" ng-value="selectedCountry.dial_code" required>
                     </div>
 
                     <div class="block-input">
                         <p class="block-input__text">Почта</p>
-                        <input type="email" name="email" id="userEmail" placeholder="pochta@mail.ru" required>
+                        <input type="email" name="email" id="userEmail" placeholder="pochta@mail.ru" value="{{ old('email') }}" required>
                     </div>
 
                     <div class="block-input">
