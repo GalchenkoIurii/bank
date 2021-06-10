@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Page;
 use Illuminate\Http\Request;
 
 class MainController extends Controller
@@ -27,5 +28,31 @@ class MainController extends Controller
             'finances',
             compact('balance_rur', 'balance_usd', 'balance_eur', 'operations')
         );
+    }
+
+
+
+    public function about()
+    {
+        $page_data = Page::where('slug', 'about')->first();
+        return view('about', compact('page_data'));
+    }
+
+    public function agreement()
+    {
+        $page_data = Page::where('slug', 'agreement')->first();
+        return view('agreement', compact('page_data'));
+    }
+
+    public function business()
+    {
+        $page_data = Page::where('slug', 'business')->first();
+        return view('business', compact('page_data'));
+    }
+
+    public function confidentiality()
+    {
+        $page_data = Page::where('slug', 'confidentiality')->first();
+        return view('confidentiality', compact('page_data'));
     }
 }

@@ -37,7 +37,7 @@ class ViewServiceProvider extends ServiceProvider
                 'incs.footer-logged',
                 'incs.admin-message',
                 'login',
-                'register'
+                'register',
             ],
             SettingsComposer::class
         );

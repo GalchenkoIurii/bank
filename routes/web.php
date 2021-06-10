@@ -1,5 +1,14 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\BalanceController;
+use App\Http\Controllers\Admin\BlankController;
+use App\Http\Controllers\Admin\CardController;
+use App\Http\Controllers\Admin\CreditController;
+use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\NoticeController;
+use App\Http\Controllers\Admin\PageController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\ConvertController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\OperationController;
