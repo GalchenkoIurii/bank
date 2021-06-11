@@ -14,29 +14,30 @@
                     @csrf
                     <p class="form-reg__title">РЕГИСТРАЦИЯ</p>
 
-                    <p class="error hide">123</p>
-                    <p class="success hide">12313</p>
-
-                    @if($errors->any())
-                        @foreach($errors->all() as $error)
-                            <p class="block-input__arror">{{ $error }}</p>
-                        @endforeach
-                    @endif
-
                     <div class="block-input">
                         <p class="block-input__text">Логин</p>
-                        <input type="text" name="login" id="userLogin" placeholder="Введите логин" value="{{ old('login') }}" required>
+                        <input type="text" name="login" id="userLogin"
+                               placeholder="Введите логин" value="{{ old('login') }}" required>
+                        @error('login')
+                            <p class="error">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div class="block-input">
                         <p class="block-input__text">Телефон</p>
                         <input type="tel" name="phone" id="userTel" placeholder="" value="{{ old('phone') }}"
                                ng-model="selectedCountryDialCode" ng-value="selectedCountry.dial_code" required>
+                        @error('phone')
+                            <p class="error">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div class="block-input">
                         <p class="block-input__text">Почта</p>
                         <input type="email" name="email" id="userEmail" placeholder="pochta@mail.ru" value="{{ old('email') }}" required>
+                        @error('email')
+                            <p class="error">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div class="block-input">
@@ -65,6 +66,9 @@
                     <div class="block-input">
                         <p class="block-input__text">Подтверждение пароля</p>
                         <input type="password" name="password_confirmation" id="userPasswordTwo" placeholder="Введите пароль ещё раз" required>
+                        @error('password')
+                            <p class="error">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div class="block-check">

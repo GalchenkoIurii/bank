@@ -14,15 +14,6 @@
                     @csrf
                     <p class="form-reg__title">ВХОД В АККАУНТ</p>
 
-                    <p class="error hide">123</p>
-                    <p class="success hide">12313</p>
-
-                    @if($errors->any())
-                        @foreach($errors->all() as $error)
-                            <p class="block-input__arror">{{ $error }}</p>
-                        @endforeach
-                    @endif
-
                     @if(session()->has('error'))
                         <p class="block-input__arror">{{ session('error') }}</p>
                     @endif
