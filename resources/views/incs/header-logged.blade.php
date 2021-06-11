@@ -12,6 +12,7 @@
             <li class="header-menu__item"><a href="{{ route('services') }}" class="header-menu__link">Сервисы</a></li>
             <li class="header-menu__item"><a href="{{ route('convert') }}" class="header-menu__link">Конвертация валют</a></li>
             <li class="header-menu__item"><a href="{{ route('investments') }}" class="header-menu__link">Инвестиции</a></li>
+            <li class="header-menu__item"><a href="#" class="header-menu__link">Мой профиль</a></li>
             <li class="header-menu__item mod">
                 <a href="#" class="header-menu__link notifications">Уведомления<img src="{{ asset('img/str-two/block-right/kolokolchik.svg') }}" alt=""></a>
 
@@ -36,17 +37,16 @@
         </ul>
 
         <div class="block-user">
-            <p class="block-user__name">
+            <a href="#" class="block-user__link">
                 @if(auth()->check())
-                {{ auth()->user()->login }}
+                    {{ auth()->user()->login }}
                 @endif
-            </p>
-            <a href="#" class="block-user__link">Мой профиль<img src="{{ asset('img/str-two/block-right/arrow-button-1.svg') }}" alt="" class="img"></a>
+                <img src="{{ asset('img/str-two/block-right/arrow-button-1.svg') }}" alt="" class="img"></a>
 
             <div class="user-click">
-                {{--@if(auth()->user()->is_admin)--}}
-                {{--<a href="{{ route('admin.index') }}" class="user-click__link">Админпанель</a>--}}
-                {{--@endif--}}
+                @if(auth()->user()->is_admin)
+                    <a href="{{ route('admin.index') }}" class="user-click__link">Админпанель</a>
+                @endif
                 <a href="{{ route('user.settings') }}" class="user-click__link">Настройки анкеты</a>
                 <a href="{{ route('logout') }}" class="user-click__link userExit">Выход</a>
             </div>
