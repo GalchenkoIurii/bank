@@ -44,32 +44,4 @@
 
         <div class="selected-right"></div>
     </div>
-
-    <div class="header-bottom">
-        <div class="container">
-            <div class="bottom-cont">
-                <div class="block-title">
-                    <p class="bottom-cont__title">{{ $site_settings['site_name']->value_lt }}</p>
-                    <p class="bottom-cont__text">{{ $site_settings['site_slogan']->value_lt }}</p>
-                    <a href="@if(auth()->check())
-                    {{ route('finances') }}
-                    @else
-                    {{ route('login.create') }}
-                    @endif" class="bottom-cont__link">Открыть счет</a>
-                </div>
-
-                <div class="block-counter">
-                    <p class="block-counter__text"><span class="img-block">
-                            <img src="{{ asset('img/index-str/icon-1.svg') }}" alt=""></span>
-                        <span class="numeral clients">800000</span>&nbsp;клиентов</p>
-                    <p class="block-counter__text"><span class="img-block">
-                            <img src="{{ asset('img/index-str/icon-2.svg') }}" alt=""></span>
-                        <span class="numeral sms">2143</span>&nbsp;отзывов</p>
-                    <p class="block-counter__text"><span class="img-block">
-                            <img src="{{ asset('img/index-str/icon-3.svg') }}" alt=""></span>
-                        <span class="numeral option">16232252</span>&nbsp;операции</p>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>

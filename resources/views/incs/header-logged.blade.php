@@ -1,7 +1,7 @@
 <div class="header">
     <a href="{{ route('home') }}" class="top-cont__logo">
         <img src="{{ asset('img/logo.png') }}" alt="logo">
-        <span>{{ $site_settings['site_name']->value }}</span>
+        <span>{{ $site_settings['site_name']->value_lt }}</span>
     </a>
     {{--<a href="{{ route('home') }}" class="header-logo">{{ $site_settings['site_name']->value }}</a>--}}
     <a href="{{ route('logout') }}" class="header-home"><img src="{{ asset('img/exit-ak.svg') }}" alt=""></a>

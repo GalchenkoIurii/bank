@@ -31,6 +31,7 @@ class ViewServiceProvider extends ServiceProvider
                 'layouts.logged',
                 'home',
 //                'incs.header-home',
+                'incs.header',
                 'incs.header-logged',
 //                'incs.header-register',
 //                'incs.footer-home',
