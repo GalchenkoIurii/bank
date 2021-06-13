@@ -1,6 +1,6 @@
 @extends('layouts.logged')
 
-@section('page-title')Мои операции@endsection
+@section('page-title')Мои операции @endsection
 
 @section('side')
     @include('incs.side-logged')

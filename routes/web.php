@@ -83,9 +83,11 @@ Route::post('/convert/handle', [ConvertController::class, 'convertHandle'])
 Route::get('/investments', [MainController::class, 'investments'])
     ->name('investments')->middleware('auth');
 
-// need to add profile route
+Route::get('/profile', [MainController::class, 'profile'])
+    ->name('profile')->middleware('auth');
 
-// need to add notices route
+Route::get('/notices', [MainController::class, 'notices'])
+    ->name('notices')->middleware('auth');
 
 /*
  * register, login, logout
