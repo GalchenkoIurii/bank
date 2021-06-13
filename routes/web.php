@@ -37,10 +37,11 @@ Route::get('/business', [MainController::class, 'business'])
 Route::get('/confidentiality', [MainController::class, 'confidentiality'])
     ->name('confidentiality');
 
-
+// need to group all routes with auth middleware
 Route::get('/finances', [MainController::class, 'finances'])
     ->name('finances')->middleware('auth');
 
+//
 Route::post('/finances', [OperationController::class, 'storeTransaction'])
     ->name('transaction.store')->middleware('auth');
 
