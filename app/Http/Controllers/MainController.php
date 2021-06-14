@@ -93,7 +93,7 @@ class MainController extends Controller
 
     public function creditAgreement($id)
     {
-        $credit_info = Credit::find($id);
+        $credit_info = Credit::findOrFail($id);
 
         return view('credit-agreement', compact('credit_info'));
     }
