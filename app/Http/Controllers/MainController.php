@@ -50,16 +50,16 @@ class MainController extends Controller
         return view('lending', compact('has_reviewing_credits', 'credits'));
     }
 
-    public function creditIndividual()
+    public function creditInfo()
     {
-        $credit_category = 'individual';
-        return view('credit', compact('credit_category'));
+        return view('credit-info');
     }
 
-    public function creditAuto()
+    public function credit($category)
     {
-        $credit_category = 'auto';
-        return view('credit', compact('credit_category'));
+        $credit = CreditSetting::where('category_slug', $category)->firstOrFail();
+
+        return view('credit', compact('credit'));
     }
 
     public function creditStore(Request $request)
@@ -90,12 +90,6 @@ class MainController extends Controller
         return redirect()->route('lending')->with('success', 'Заявка отправлена на проверку');
     }
 
-    public function creditRefinancing()
-    {
-        $credit_category = 'refinancing';
-        return view('credit', compact('credit_category'));
-    }
-
     public function creditAgreement($id)
     {
         $credit_info = Credit::find($id);
@@ -103,10 +97,7 @@ class MainController extends Controller
         return view('credit-agreement', compact('credit_info'));
     }
 
-    public function creditInfo()
-    {
-        return view('credit-info');
-    }
+
 
 
 

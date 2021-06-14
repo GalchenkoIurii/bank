@@ -15,21 +15,6 @@
             <li class="header-menu__item"><a href="{{ route('profile') }}" class="header-menu__link">Мой профиль</a></li>
             <li class="header-menu__item mod">
                 <a href="{{ route('notices') }}" class="header-menu__link notifications">Уведомления<img src="{{ asset('img/str-two/block-right/kolokolchik.svg') }}" alt=""></a>
-                {{--<div class="block-mod" id="uved1">--}}
-                    {{--@if(isset($site_settings['user_notices']))--}}
-                        {{--@foreach($site_settings['user_notices'] as $notice)--}}
-                        {{--<div class="text-block">--}}
-                            {{--<p class="text-block__time">{{ $notice->created_at }}</p>--}}
-                            {{--<p class="text-block__title">{{ $notice->title }}</p>--}}
-                            {{--<p class="text-block__text">{!! $notice->text !!}</p>--}}
-                        {{--</div>--}}
-                        {{--@endforeach--}}
-                    {{--@else--}}
-                        {{--<div class="text-block">--}}
-                            {{--<p class="text-block__title">Уведомлений пока нет...</p>--}}
-                        {{--</div>--}}
-                    {{--@endif--}}
-                {{--</div>--}}
             </li>
         </ul>
 
@@ -82,18 +67,3 @@
 
     </div>
 </div>
-{{--<div class="block-mod" id="uved2">--}}
-    {{--@if(isset($site_settings['user_notices']))--}}
-        {{--@foreach($site_settings['user_notices'] as $notice)--}}
-        {{--<div class="text-block">--}}
-            {{--<p class="text-block__time">{{ $notice->created_at }}</p>--}}
-            {{--<p class="text-block__title">{{ $notice->title }}</p>--}}
-            {{--<p class="text-block__text">{!! $notice->text !!}</p>--}}
-        {{--</div>--}}
-        {{--@endforeach--}}
-    {{--@else--}}
-        {{--<div class="text-block">--}}
-            {{--<p class="text-block__title">Уведомлений пока нет...</p>--}}
-        {{--</div>--}}
-    {{--@endif--}}
-{{--</div>--}}

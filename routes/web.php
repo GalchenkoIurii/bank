@@ -53,14 +53,13 @@ Route::get('/lending', [MainController::class, 'lending'])
     ->name('lending')->middleware('auth');
 Route::post('/lending', [MainController::class, 'creditStore'])
     ->name('lending.store')->middleware('auth');
-Route::get('/lending/individual', [MainController::class, 'creditIndividual'])
-    ->name('lending.individual')->middleware('auth');
-Route::get('/lending/auto', [MainController::class, 'creditAuto'])
-    ->name('lending.auto')->middleware('auth');
-Route::get('/lending/refinancing', [MainController::class, 'creditRefinancing'])
-    ->name('lending.refinancing')->middleware('auth');
+
 Route::get('/lending/info', [MainController::class, 'creditInfo'])
     ->name('lending.info')->middleware('auth');
+
+Route::get('/lending/{category}', [MainController::class, 'credit'])
+    ->name('lending.category')->middleware('auth');
+
 
 Route::get('/credit-agreement/{id}', [MainController::class, 'creditAgreement'])
     ->name('credit.agreement')->middleware('auth');

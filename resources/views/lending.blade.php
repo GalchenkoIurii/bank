@@ -10,8 +10,6 @@
     @include('incs.header-logged')
 @endsection
 
-@include('incs.fix-block')
-
 @section('content')
     @include('incs.admin-message')
 
@@ -29,7 +27,7 @@
             <div class="kredit-item">
                 <p class="kredit-item__title">{{ $credit->category_lt }}</p>
                 {!! $credit->description_lt !!}
-                <a href="{{ route('lending.' . $credit->category_slug) }}" class="kredit-item__link">Оставить заявку</a>
+                <a href="{{ route('lending.category', ['category' => $credit->category_slug]) }}" class="kredit-item__link">Оставить заявку</a>
             </div>
         @endforeach
 

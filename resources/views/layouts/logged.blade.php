@@ -35,6 +35,9 @@
         <a href="#" class="noactive-cont__link">Назад</a>
     </div>
 </div>
+
+@include('incs.fix-block')
+
 <div class="str-two">
     <div class="bg-mob"></div>
     <div class="mob-head">
