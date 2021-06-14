@@ -60,9 +60,9 @@ Route::get('/lending/info', [MainController::class, 'creditInfo'])
 Route::get('/lending/{category}', [MainController::class, 'credit'])
     ->name('lending.category')->middleware('auth');
 
-
 Route::get('/credit-agreement/{id}', [MainController::class, 'creditAgreement'])
     ->name('credit.agreement')->middleware('auth');
+
 
 Route::get('/check/{id}', [MainController::class, 'check'])
     ->name('check')->middleware('auth');

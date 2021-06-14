@@ -65,27 +65,28 @@ class MainController extends Controller
     public function creditStore(Request $request)
     {
         $request->validate([
-            'credit_category' => 'required',
+            'credit_setting_id' => 'required',
             'credit_sum' => 'required',
             'credit_term' => 'required',
             'percent' => 'required',
             'monthly_payment' => 'required',
-            'phone' => 'required'
+            'user_id' => 'required',
         ]);
 
         $data = $request->all();
 
-        $data['user_id'] = Auth::user()->id;
+        $data['user_id'] = ($data['user_id'] == Auth::user()->id) ? $data['user_id'] : Auth::user()->id;
 
         Credit::create($data);
 
-        $notice_blank = Blank::where('slug', 'credit_request_sent')->first();
-        $notice = [
-            'title' => $notice_blank->title,
-            'text' => $notice_blank->text,
-            'user_id' => Auth::user()->id
-        ];
-        Notice::create($notice);
+        // need to implement Blanks and Notices logic
+//        $notice_blank = Blank::where('slug', 'credit_request_sent')->first();
+//        $notice = [
+//            'title' => $notice_blank->title,
+//            'text' => $notice_blank->text,
+//            'user_id' => Auth::user()->id
+//        ];
+//        Notice::create($notice);
 
         return redirect()->route('lending')->with('success', 'Заявка отправлена на проверку');
     }
