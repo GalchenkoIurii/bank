@@ -46,7 +46,9 @@ class ViewServiceProvider extends ServiceProvider
         );
 
         View::composer(
-            'incs.side-logged',
+            [
+                'incs.side-logged',
+            ],
             SideSettingsComposer::class
         );
     }

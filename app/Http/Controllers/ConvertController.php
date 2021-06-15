@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Balance;
 use App\Models\User;
 use CentralBankRussian\ExchangeRate\CBRClient;
 use CentralBankRussian\ExchangeRate\Exceptions\ExceptionIncorrectData;
@@ -81,14 +82,15 @@ class ConvertController extends Controller
 
     public function store(Request $request)
     {
-        $customer = User::find(Auth::user()->id);
+        $user = User::find(Auth::user()->id);
         $requestData = $request->all();
 
         $balances = [];
-        $balances['balance_rur'] = round((float) $customer->balance_rur, 2);
-        $balances['balance_usd'] = round((float) $customer->balance_usd, 2);
-        $balances['balance_eur'] = round((float) $customer->balance_eur, 2);
+        $balances['balance_rur'] = round((float) $user->balance->balance_rur, 2);
+        $balances['balance_usd'] = round((float) $user->balance->balance_usd, 2);
+        $balances['balance_eur'] = round((float) $user->balance->balance_eur, 2);
 
+        // need to implement notices
 //        $notice_blank_balance_sub = Blank::where('slug', 'balance_sub')->first();
 //        $notice_blank_balance_add = Blank::where('slug', 'balance_add')->first();
 //        $notice_blank_convert = Blank::where('slug', 'convert')->first();
@@ -107,17 +109,22 @@ class ConvertController extends Controller
         }
 
         $exchangeRate = new ExchangeRate(new CBRClient());
-        $currencyRate = $exchangeRate->setDate(new DateTime())->getCurrencyExchangeRates();
-        $rub_usd = null;
-        $rub_eur = null;
 
-        foreach ($currencyRate as $k => $value) {
-            if ($k == 'USD') {
-                $rub_usd = $value->getExchangeRate();
-            }
-            if ($k == 'EUR') {
-                $rub_eur = $value->getExchangeRate();
-            }
+        try {
+            $currencyRate = $exchangeRate
+                ->setDate(new DateTime())
+                ->getCurrencyExchangeRates();
+
+            $rub_usd = $currencyRate->getCurrencyRateBySymbolCode('USD')
+                ->getExchangeRate();
+            $rub_eur = $currencyRate->getCurrencyRateBySymbolCode('EUR')
+                ->getExchangeRate();
+
+        }
+        catch (ExceptionIncorrectData | ExceptionInvalidParameter $e) {
+            return response()->json([
+                "errorCurrency" => $e->getMessage()
+            ]);
         }
 
         $usd_rub = 1 / $rub_usd;
@@ -133,10 +140,11 @@ class ConvertController extends Controller
                     if ($balances['balance_rur'] < 0) {
                         return back()->with('error', 'Сумма списания превышает сумму баланса');
                     } else {
-                        $balances['balance_rur'] = (string) $balances['balance_rur'];
+//                        $balances['balance_rur'] = (string) $balances['balance_rur'];
                         $balances['balance_usd'] += round($second_currency_sum, 2);
-                        $balances['balance_usd'] = (string) $balances['balance_usd'];
+//                        $balances['balance_usd'] = (string) $balances['balance_usd'];
 
+                        // need to implement checks, notices, operations
 //                        $check = Check::create([
 //                            'title' => $notice_blank_convert['title'],
 //                            'sum' => $second_currency_sum . ' USD',
@@ -168,10 +176,11 @@ class ConvertController extends Controller
                     if ($balances['balance_rur'] < 0) {
                         return back()->with('error', 'Сумма списания превышает сумму баланса');
                     } else {
-                        $balances['balance_rur'] = (string) $balances['balance_rur'];
+//                        $balances['balance_rur'] = (string) $balances['balance_rur'];
                         $balances['balance_eur'] += round($second_currency_sum, 2);
-                        $balances['balance_eur'] = (string) $balances['balance_eur'];
+//                        $balances['balance_eur'] = (string) $balances['balance_eur'];
 
+                        // need to implement checks, notices, operations
 //                        $check = Check::create([
 //                            'title' => $notice_blank_convert['title'],
 //                            'sum' => $second_currency_sum . ' EUR',
@@ -206,10 +215,11 @@ class ConvertController extends Controller
                     if ($balances['balance_usd'] < 0) {
                         return back()->with('error', 'Сумма списания превышает сумму баланса');
                     } else {
-                        $balances['balance_usd'] = (string) $balances['balance_usd'];
+//                        $balances['balance_usd'] = (string) $balances['balance_usd'];
                         $balances['balance_rur'] += round($second_currency_sum, 2);
-                        $balances['balance_rur'] = (string) $balances['balance_rur'];
+//                        $balances['balance_rur'] = (string) $balances['balance_rur'];
 
+                        // need to implement checks, notices, operations
 //                        $check = Check::create([
 //                            'title' => $notice_blank_convert['title'],
 //                            'sum' => $second_currency_sum . ' RUB',
@@ -241,10 +251,11 @@ class ConvertController extends Controller
                     if ($balances['balance_usd'] < 0) {
                         return back()->with('error', 'Сумма списания превышает сумму баланса');
                     } else {
-                        $balances['balance_usd'] = (string) $balances['balance_usd'];
+//                        $balances['balance_usd'] = (string) $balances['balance_usd'];
                         $balances['balance_eur'] += round($second_currency_sum, 2);
-                        $balances['balance_eur'] = (string) $balances['balance_eur'];
+//                        $balances['balance_eur'] = (string) $balances['balance_eur'];
 
+                        // need to implement checks, notices, operations
 //                        $check = Check::create([
 //                            'title' => $notice_blank_convert['title'],
 //                            'sum' => $second_currency_sum . ' EUR',
@@ -279,10 +290,11 @@ class ConvertController extends Controller
                     if ($balances['balance_eur'] < 0) {
                         return back()->with('error', 'Сумма списания превышает сумму баланса');
                     } else {
-                        $balances['balance_eur'] = (string) $balances['balance_eur'];
+//                        $balances['balance_eur'] = (string) $balances['balance_eur'];
                         $balances['balance_rur'] += round($second_currency_sum, 2);
-                        $balances['balance_rur'] = (string) $balances['balance_rur'];
+//                        $balances['balance_rur'] = (string) $balances['balance_rur'];
 
+                        // need to implement checks, notices, operations
 //                        $check = Check::create([
 //                            'title' => $notice_blank_convert['title'],
 //                            'sum' => $second_currency_sum . ' RUB',
@@ -314,10 +326,11 @@ class ConvertController extends Controller
                     if ($balances['balance_eur'] < 0) {
                         return back()->with('error', 'Сумма списания превышает сумму баланса');
                     } else {
-                        $balances['balance_eur'] = (string) $balances['balance_eur'];
+//                        $balances['balance_eur'] = (string) $balances['balance_eur'];
                         $balances['balance_usd'] += round($second_currency_sum, 2);
-                        $balances['balance_usd'] = (string) $balances['balance_usd'];
+//                        $balances['balance_usd'] = (string) $balances['balance_usd'];
 
+                        // need to implement checks, notices, operations
 //                        $check = Check::create([
 //                            'title' => $notice_blank_convert['title'],
 //                            'sum' => $second_currency_sum . ' USD',
@@ -347,9 +360,13 @@ class ConvertController extends Controller
                 break;
         }
 
-        $customer->update($balances);
+        $res = Balance::where('user_id', $user->id)->update($balances);
 
-        return redirect()->route('convert')->with('success', 'Конвертация проведена');
+        if ($res) {
+            return redirect()->route('convert')->with('success', 'Конвертация проведена успешно');
+        }
+
+        return back()->with('error', 'Что-то пошло не так');
     }
 
     public function exchangeCurrencies($currency_sum, $exchange_rate)

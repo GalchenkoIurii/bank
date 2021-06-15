@@ -18,14 +18,14 @@ class MainController extends Controller
 
     public function finances()
     {
-        $balance_rur = 0;
-        $balance_usd = 0;
-        $balance_eur = 0;
+        $balance_rur = Auth::user()->balance->balance_rur;
+        $balance_usd = Auth::user()->balance->balance_usd;
+        $balance_eur = Auth::user()->balance->balance_eur;
         $operations = null;
 
 
         // need to implement:
-        // getting user's balances and operations
+        // getting user's operations
 
 
         return view(

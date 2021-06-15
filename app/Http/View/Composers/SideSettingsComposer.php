@@ -62,19 +62,35 @@ class SideSettingsComposer
         }
 
         // getting card_owner and show_card settings
-        $user = User::find(Auth::user()->id);
-        if (!empty($user->first_name) && !empty($user->last_name)) {
-            $side_settings['card_owner'] = $user->first_name . ' ' . $user->last_name;
+//        $user = User::find(Auth::user()->id);
+//        if (!empty($user->first_name) && !empty($user->last_name)) {
+//            $side_settings['card_owner'] = $user->first_name . ' ' . $user->last_name;
+//        }
+//        $side_settings['show_card'] = $user->show_card;
+
+        // reducing db queries count
+        if (!empty(Auth::user()->first_name) && !empty(Auth::user()->last_name)) {
+            $side_settings['card_owner'] = Auth::user()->first_name . ' ' . Auth::user()->last_name;
         }
-        $side_settings['show_card'] = $user->show_card;
+        $side_settings['show_card'] = Auth::user()->show_card;
+
 
         // getting user's personal_code, iban and balances
-        $side_settings['personal_code_value'] = $side_settings['personal_code']->value_lt . $user->userData->personal_code;
-        $side_settings['iban_value'] = $side_settings['iban']->value_lt . $user->userData->iban;
+//        $side_settings['personal_code_value'] = $side_settings['personal_code']->value_lt . $user->userData->personal_code;
+//        $side_settings['iban_value'] = $side_settings['iban']->value_lt . $user->userData->iban;
+//
+//        $side_settings['balance_rur'] = $user->balance->balance_rur;
+//        $side_settings['balance_usd'] = $user->balance->balance_usd;
+//        $side_settings['balance_eur'] = $user->balance->balance_eur;
 
-        $side_settings['balance_rur'] = $user->balance->balance_rur;
-        $side_settings['balance_usd'] = $user->balance->balance_usd;
-        $side_settings['balance_eur'] = $user->balance->balance_eur;
+        // reducing db queries count
+        $side_settings['personal_code_value'] = $side_settings['personal_code']->value_lt . Auth::user()->userData->personal_code;
+        $side_settings['iban_value'] = $side_settings['iban']->value_lt . Auth::user()->userData->iban;
+
+        $side_settings['balance_rur'] = Auth::user()->balance->balance_rur;
+        $side_settings['balance_usd'] = Auth::user()->balance->balance_usd;
+        $side_settings['balance_eur'] = Auth::user()->balance->balance_eur;
+
 
         // getting currencies exchange rates
         $exchangeRate = new ExchangeRate(new CBRClient());
