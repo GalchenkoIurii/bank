@@ -60,7 +60,7 @@
                 <p class="item-page__title">Заказ пластиковой банковской карты</p>
                 <div class="page-services">
                     <div class="services-one">
-                        <img src="{{ asset('img/new-icon/icon3.svg') }}" alt="">
+                        <img src="{{ asset('img/new-icon/icon4.svg') }}" alt="">
                         <span class="services-one__text">Банковская карта</span>
                     </div>
                 </div>

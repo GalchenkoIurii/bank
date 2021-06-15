@@ -85,9 +85,20 @@ Route::post('/convert/handle', [ConvertController::class, 'handle'])
 Route::get('/investments', [MainController::class, 'investments'])
     ->name('investments')->middleware('auth');
 
-//
+
 Route::get('/profile', [MainController::class, 'profile'])
     ->name('profile')->middleware('auth');
+
+//
+Route::get('/user/identify', [UserController::class, 'userIdentify'])
+    ->name('user.identify')->middleware('auth');
+//
+Route::post('/user/identify', [UserController::class, 'userIdentifyStore'])
+    ->name('user.identify.store')->middleware('auth');
+
+//
+Route::get('/auth-info', [MainController::class, 'authInfo'])
+    ->name('auth.info')->middleware('auth');
 
 //
 Route::get('/notices', [MainController::class, 'notices'])
@@ -126,12 +137,6 @@ Route::get('/user/settings', [UserController::class, 'userSettings'])
     ->name('user.settings')->middleware('auth');
 Route::post('/user/settings', [UserController::class, 'userSettingsStore'])
     ->name('user.settings.store')->middleware('auth');
-
-// move identify functionality to the profile
-Route::get('/user/identify', [UserController::class, 'userIdentify'])
-    ->name('user.identify')->middleware('auth');
-Route::post('/user/identify', [UserController::class, 'userIdentifyStore'])
-    ->name('user.identify.store')->middleware('auth');
 
 
 /*

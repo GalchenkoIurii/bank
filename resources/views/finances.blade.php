@@ -70,15 +70,15 @@
         <a href="#" class="operations-block__link">Все транзакции</a>
     </div>
 
-    <div class="identification-block">
-        <div class="block-img"><img src="{{ asset('img/str-two/block-right/img-1.png') }}" alt=""></div>
+    {{--<div class="identification-block">--}}
+        {{--<div class="block-img"><img src="{{ asset('img/str-two/block-right/img-1.png') }}" alt=""></div>--}}
 
-        <div class="block-text">
-            <p class="block-text__title">Идентификация личного кабинета онлайн</p>
-            <p class="block-text__text">Что бы получить полный спектр услуг и возможность вывода ваших средств в другие банки, клиентам нашего онлайн банка необходимо пройти процедуру идентификации личного кабинета.</p>
-            <a href="{{ route('user.identify') }}" class="block-text__link">Пройти идентификацию</a>
-        </div>
-    </div>
+        {{--<div class="block-text">--}}
+            {{--<p class="block-text__title">Идентификация личного кабинета онлайн</p>--}}
+            {{--<p class="block-text__text">Что бы получить полный спектр услуг и возможность вывода ваших средств в другие банки, клиентам нашего онлайн банка необходимо пройти процедуру идентификации личного кабинета.</p>--}}
+            {{--<a href="{{ route('user.identify') }}" class="block-text__link">Пройти идентификацию</a>--}}
+        {{--</div>--}}
+    {{--</div>--}}
 
     <div class="transfers-block">
         <p class="transfers-block__title"><img src="{{ asset('img/str-two/block-right/transfer-img.svg') }}" alt="">Переводы и пополнения</p>
@@ -97,19 +97,6 @@
             <a href="#" class="transfers-item__link transfersLink2"><img src="img/str-two/block-right/icon/icon5.svg" alt="">PayPal</a>
             <a href="#" class="transfers-item__link transfersLink"><img src="img/str-two/block-right/icon/icon6.svg" alt="">OSON</a>
             <a href="#" class="transfers-item__link transfersLink3"><img src="img/str-two/block-right/icon/icon7.svg" alt="">Пополнение мобильного</a>
-        </div>
-    </div>
-
-    <div class="block-noactive">
-        <div class="noactive-header">
-            <a href="#" class="noactive-header__prev"><img src="img/prev.svg" alt=""></a>
-            <a href="{{ route('home') }}" class="noactive-header__title">AVRORA CAPITAL BANK</a>
-            <a href="{{ route('home') }}" class="noactive-header__home"><img src="img/home.svg" alt=""></a>
-        </div>
-        <div class="noactive-cont">
-            <p class="noactive-cont__title">Услуга недоступна.</p>
-            <p class="noactive-cont__text">Для возможности инвестирования, Вам, необходимо иметь гражданство Евросоюза. Для получение подробной информации, обратитесь к онлайн админстратору банка.</p>
-            <a href="#" class="noactive-cont__link">Назад</a>
         </div>
     </div>
 

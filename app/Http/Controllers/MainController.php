@@ -117,6 +117,15 @@ class MainController extends Controller
         return view('convert', compact('user'));
     }
 
+    public function investments()
+    {
+        return view('investments');
+    }
+
+    public function profile()
+    {
+        return view('profile');
+    }
 
 
 
