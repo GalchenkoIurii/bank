@@ -71,14 +71,16 @@ Route::get('/check/{id}', [MainController::class, 'check'])
 Route::get('/services', [MainController::class, 'services'])
     ->name('services')->middleware('auth');
 
+
 Route::get('/convert', [MainController::class, 'convert'])
     ->name('convert')->middleware('auth');
 
-Route::post('/convert', [ConvertController::class, 'convertStore'])
+Route::post('/convert', [ConvertController::class, 'store'])
     ->name('convert.store')->middleware('auth');
 
-Route::post('/convert/handle', [ConvertController::class, 'convertHandle'])
+Route::post('/convert/handle', [ConvertController::class, 'handle'])
     ->name('convert.handle')->middleware('auth');
+
 
 Route::get('/investments', [MainController::class, 'investments'])
     ->name('investments')->middleware('auth');

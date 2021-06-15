@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Credit;
 use App\Models\CreditSetting;
 use App\Models\Page;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -98,6 +99,23 @@ class MainController extends Controller
         return view('credit-agreement', compact('credit_info'));
     }
 
+    public function services()
+    {
+        return view('services');
+    }
+
+    public function convert()
+    {
+        if (auth()->check()) {
+            $user = User::find(Auth::user()->id);
+
+            if ($user->is_banned) {
+                return redirect()->route('logout');
+            }
+        }
+
+        return view('convert', compact('user'));
+    }
 
 
 

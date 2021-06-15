@@ -947,6 +947,7 @@ body {
 
 /* line 664, two-style.scss */
 .block-noactive,
+.block-noactive-2,
 .block-noactive-two {
   position: absolute;
   top: 70px;
@@ -969,7 +970,8 @@ body {
   transition: right .4s;
 }
 /* line 679, two-style.scss */
-.block-noactive .noactive-cont, .block-noactive-two .noactive-cont {
+.block-noactive .noactive-cont, .block-noactive-two .noactive-cont,
+.block-noactive-2 .noactive-cont {
   background: #FFFFFF;
   padding: 24px 35px;
   max-width: 650px;
@@ -979,6 +981,7 @@ body {
 }
 /* line 685, two-style.scss */
 .block-noactive .noactive-cont__title,
+.block-noactive-2 .noactive-cont__title,
 .block-noactive-two .noactive-cont__title {
   font-weight: bold;
   font-size: 25px;
@@ -987,6 +990,7 @@ body {
 }
 /* line 692, two-style.scss */
 .block-noactive .noactive-cont__text,
+.block-noactive-2 .noactive-cont__text,
 .block-noactive-two .noactive-cont__text {
   font-size: 16px;
   line-height: 26px;
@@ -994,6 +998,7 @@ body {
 }
 /* line 698, two-style.scss */
 .block-noactive .noactive-cont__link,
+.block-noactive-2 .noactive-cont__link,
 .block-noactive-two .noactive-cont__link {
   font-weight: bold;
   font-size: 16px;
@@ -1009,12 +1014,14 @@ body {
 }
 /* line 711, two-style.scss */
 .block-noactive .noactive-header,
+.block-noactive-2 .noactive-header,
 .block-noactive-two .noactive-header {
   display: none;
 }
 
 /* line 716, two-style.scss */
 .block-noactive.active,
+.block-noactive-2.active,
 .block-noactive-two.active {
   right: 0;
 }
@@ -1236,11 +1243,12 @@ body {
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
-  width: 100%;
+  width: 90%;
   height: 40px;
   background: #F2F4F5;
   position: relative;
   z-index: 12;
+  margin: 0 auto;
 }
 /* line 893, two-style.scss */
 .block-arror__text {
@@ -2906,12 +2914,14 @@ body::before {
 /* line 2217, two-style.scss */
 .serv-page .item-page__title {
   font-weight: bold;
-  font-size: 25px;
+  font-size: 23px;
   line-height: 25px;
   margin-bottom: 30px;
+  min-height: 50px;
 }
 /* line 2224, two-style.scss */
-.serv-page .item-page__link {
+.serv-page .item-page__link,
+.block-new .item-page__link {
   font-weight: bold;
   font-size: 16px;
   line-height: 23px;
@@ -2946,12 +2956,17 @@ body::before {
 }
 /* line 2245, two-style.scss */
 .serv-page .item-page .services-one {
-  width: 32px;
-  height: 32px;
+  width: 100%;
+  height: 150px;
   background: #C4C4C4;
   border-radius: 4px;
   position: relative;
-  margin: 0 30px 30px 0;
+  margin-bottom: 30px;
+}
+.serv-page .item-page .services-one img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 /* line 2253, two-style.scss */
 .serv-page .item-page .services-one:nth-child(4n+4) {
@@ -2974,9 +2989,9 @@ body::before {
   text-align: center;
 }
 /* line 2273, two-style.scss */
-.serv-page .item-page .services-one:hover span {
+/*.serv-page .item-page .services-one:hover span {
   min-height: 30px;
-}
+}*/
 
 /* line 2279, two-style.scss */
 .services-block.serv {

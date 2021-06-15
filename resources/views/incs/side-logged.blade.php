@@ -185,12 +185,12 @@
 
     <div class="block-info">
         <p class="block-info__title">{{ $side_settings['personal_code']->title_lt }}</p>
-        <p class="block-info__text">{{ $side_settings['personal_code']->value_lt }}</p>
+        <p class="block-info__text">{{ $side_settings['personal_code_value'] }}</p>
     </div>
 
     <div class="block-info">
         <p class="block-info__title">{{ $side_settings['iban']->title_lt }}</p>
-        <p class="block-info__text">{{ $side_settings['iban']->value_lt }}</p>
+        <p class="block-info__text">{{ $side_settings['iban_value'] }}</p>
     </div>
 
     <div class="block-info">
@@ -206,12 +206,12 @@
     </div>
     <div class="col-text">
         <p class="row-val">$</p>
-        <p class="row-text">{{ $side_settings['usd'] }}</p>
-        <p class="row-text">{{ $side_settings['usd'] }}</p>
+        <p class="row-text">{{ $side_settings['usd_buy'] }}</p>
+        <p class="row-text">{{ $side_settings['usd_sell'] }}</p>
     </div>
     <div class="col-text">
         <p class="row-val">€</p>
-        <p class="row-text">{{ $side_settings['eur'] }}</p>
-        <p class="row-text">{{ $side_settings['eur'] }}</p>
+        <p class="row-text">{{ $side_settings['eur_buy'] }}</p>
+        <p class="row-text">{{ $side_settings['eur_sell'] }}</p>
     </div>
 </div>

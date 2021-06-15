@@ -37,6 +37,8 @@ class ViewServiceProvider extends ServiceProvider
                 'incs.footer-home',
                 'incs.footer-logged',
                 'incs.admin-message',
+                'incs.no-active-block',
+                'incs.no-active-block-2',
                 'login',
                 'register',
             ],

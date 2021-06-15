@@ -243,6 +243,7 @@ if (noActive) {
         e.preventDefault();
         $(".block-noactive").removeClass("active");
         $(".block-noactive-two").removeClass("active");
+        $(".block-noactive-2").removeClass("active");
         $(".mob-block").addClass("active");
         $(".bg-mob").addClass("active");
         $(".mob-head").addClass("active");
@@ -294,6 +295,7 @@ $(".bg-mob").click(function(e){
     $("#perevod1").removeClass("active");
     $(".block-noactive").removeClass("active");
     $(".block-noactive-two").removeClass("active");
+    $(".block-noactive-2").removeClass("active");
     $(".mob-block").removeClass("active");
     $(".mob-head").removeClass("active");
     $(".bg-mob").removeClass("active");
@@ -700,6 +702,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 })
             }).then(response => response.json())
                 .then(data => {
+            console.log(data);
                     let inputElement = document.querySelector('#second_currency_sum');
                     let errorElement = document.querySelector('#error');
                     if (data.errorSameCurrency) {
@@ -714,7 +717,20 @@ document.addEventListener("DOMContentLoaded", function() {
                             errorElement.style.border = 'none';
                             errorElement.style.padding = '0';
                         }, 4000);
+                    } else if (data.errorCurrency) {
+                        inputElement.classList.add('arror-input');
+                        errorElement.innerText = data.errorCurrency;
+                        errorElement.style.border = '2px solid red';
+                        errorElement.style.padding = '5px';
+
+                        setTimeout(() => {
+                            inputElement.classList.remove('arror-input');
+                            errorElement.innerText = '';
+                            errorElement.style.border = 'none';
+                            errorElement.style.padding = '0';
+                        }, 4000);
                     } else {
+                        console.log(data);
                         inputElement.value = data.second_currency_sum;
                     }
                 });
@@ -737,6 +753,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 })
             }).then(response => response.json())
                 .then(data => {
+            console.log(data);
                     let inputElement = document.querySelector('#second_currency_sum');
                     let errorElement = document.querySelector('#error');
                     if (data.errorSameCurrency) {
@@ -751,7 +768,20 @@ document.addEventListener("DOMContentLoaded", function() {
                             errorElement.style.border = 'none';
                             errorElement.style.padding = '0';
                         }, 4000);
+                    } else if (data.errorCurrency) {
+                        inputElement.classList.add('arror-input');
+                        errorElement.innerText = data.errorCurrency;
+                        errorElement.style.border = '2px solid red';
+                        errorElement.style.padding = '5px';
+
+                        setTimeout(() => {
+                            inputElement.classList.remove('arror-input');
+                            errorElement.innerText = '';
+                            errorElement.style.border = 'none';
+                            errorElement.style.padding = '0';
+                        }, 4000);
                     } else {
+                        console.log(data);
                         inputElement.value = data.second_currency_sum;
                     }
                 });
@@ -792,5 +822,11 @@ if ($(".block-pos__link")) {
     $(".block-pos__link").click(function(e){
         e.preventDefault();
         $(".block-noactive-two").addClass("active");
+    });
+}
+if ($(".link-new")) {
+    $(".link-new").click(function(e){
+        e.preventDefault();
+        $(".block-noactive-2").addClass("active");
     });
 }
