@@ -2887,6 +2887,7 @@ body::before {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  flex-wrap: wrap;
 }
 /* line 2203, two-style.scss */
 .serv-page .item-page {

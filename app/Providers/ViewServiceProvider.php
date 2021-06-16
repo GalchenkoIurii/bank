@@ -41,6 +41,9 @@ class ViewServiceProvider extends ServiceProvider
                 'incs.no-active-block-2',
                 'login',
                 'register',
+                'forgot-password',
+                'link-sent',
+                'reset-password',
             ],
             SettingsComposer::class
         );

@@ -27,6 +27,16 @@
                 <a href="{{ route('user.identify') }}" class="block-text__link">Пройти подтверждение</a>
             </div>
         </div>
+
+        <div class="identification-block">
+            <div class="block-img"><img src="{{ asset('img/str-two/block-right/title-img-1.svg') }}" alt=""></div>
+
+            <div class="block-text">
+                <p class="block-text__title">Аутентификация платежной информации</p>
+                <p class="block-text__text"></p>
+                <a href="{{ route('user.identify') }}" class="block-text__link">Пройти аутентификацию</a>
+            </div>
+        </div>
     </div>
 
     @include('incs.exit-modal')

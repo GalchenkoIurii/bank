@@ -132,7 +132,7 @@ Route::get('/reset-password/{token}/', [UserController::class, 'passwordReset'])
 Route::post('/reset-password', [UserController::class, 'passwordUpdate'])
     ->name('password.update')->middleware('guest');
 
-
+//
 Route::get('/user/settings', [UserController::class, 'userSettings'])
     ->name('user.settings')->middleware('auth');
 Route::post('/user/settings', [UserController::class, 'userSettingsStore'])
