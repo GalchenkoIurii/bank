@@ -32,7 +32,6 @@ class SideSettingsComposer
             'site_name' => null,
             'gold_card' => null,
             'silver_card' => null,
-            'card_owner' => null,
             'show_card' => null,
             'bank' => null,
             'personal_code' => null,

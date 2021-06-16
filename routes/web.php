@@ -37,80 +37,82 @@ Route::get('/business', [MainController::class, 'business'])
 Route::get('/confidentiality', [MainController::class, 'confidentiality'])
     ->name('confidentiality');
 
-// need to group all routes with auth middleware
-Route::get('/finances', [MainController::class, 'finances'])
-    ->name('finances')->middleware('auth');
+
+Route::middleware('auth')->group(function() {
+    Route::get('/finances', [MainController::class, 'finances'])
+        ->name('finances');
 
 //
-Route::post('/finances', [OperationController::class, 'storeTransaction'])
-    ->name('transaction.store')->middleware('auth');
+    Route::post('/finances', [OperationController::class, 'storeTransaction'])
+        ->name('transaction.store');
 
 
-/*
- * credit pages
- */
-Route::get('/lending', [MainController::class, 'lending'])
-    ->name('lending')->middleware('auth');
-Route::post('/lending', [MainController::class, 'creditStore'])
-    ->name('lending.store')->middleware('auth');
+    /*
+     * credit pages
+     */
+    Route::get('/lending', [MainController::class, 'lending'])
+        ->name('lending');
+    Route::post('/lending', [MainController::class, 'creditStore'])
+        ->name('lending.store');
 
-Route::get('/lending/info', [MainController::class, 'creditInfo'])
-    ->name('lending.info')->middleware('auth');
+    Route::get('/lending/info', [MainController::class, 'creditInfo'])
+        ->name('lending.info');
 
-Route::get('/lending/{category}', [MainController::class, 'credit'])
-    ->name('lending.category')->middleware('auth');
+    Route::get('/lending/{category}', [MainController::class, 'credit'])
+        ->name('lending.category');
 
-Route::get('/credit-agreement/{id}', [MainController::class, 'creditAgreement'])
-    ->name('credit.agreement')->middleware('auth');
-
-//
-Route::get('/check/{id}', [MainController::class, 'check'])
-    ->name('check')->middleware('auth');
-
-
-Route::get('/services', [MainController::class, 'services'])
-    ->name('services')->middleware('auth');
-
-
-Route::get('/convert', [MainController::class, 'convert'])
-    ->name('convert')->middleware('auth');
-
-Route::post('/convert', [ConvertController::class, 'store'])
-    ->name('convert.store')->middleware('auth');
-
-Route::post('/convert/handle', [ConvertController::class, 'handle'])
-    ->name('convert.handle')->middleware('auth');
-
-
-Route::get('/investments', [MainController::class, 'investments'])
-    ->name('investments')->middleware('auth');
-
-
-Route::get('/profile', [MainController::class, 'profile'])
-    ->name('profile')->middleware('auth');
+    Route::get('/credit-agreement/{id}', [MainController::class, 'creditAgreement'])
+        ->name('credit.agreement');
 
 //
-Route::get('/user/identify', [UserController::class, 'userIdentify'])
-    ->name('user.identify')->middleware('auth');
-//
-Route::post('/user/identify', [UserController::class, 'userIdentifyStore'])
-    ->name('user.identify.store')->middleware('auth');
-
-//
-Route::get('/auth-info', [MainController::class, 'authInfo'])
-    ->name('auth.info')->middleware('auth');
-
-//
-Route::get('/user/settings', [UserController::class, 'userSettings'])
-    ->name('user.settings')->middleware('auth');
-//
-Route::post('/user/settings', [UserController::class, 'userSettingsStore'])
-    ->name('user.settings.store')->middleware('auth');
+    Route::get('/check/{id}', [MainController::class, 'check'])
+        ->name('check');
 
 
+    Route::get('/services', [MainController::class, 'services'])
+        ->name('services');
+
+
+    Route::get('/convert', [MainController::class, 'convert'])
+        ->name('convert');
+
+    Route::post('/convert', [ConvertController::class, 'store'])
+        ->name('convert.store');
+
+    Route::post('/convert/handle', [ConvertController::class, 'handle'])
+        ->name('convert.handle');
+
+
+    Route::get('/investments', [MainController::class, 'investments'])
+        ->name('investments');
+
+
+    Route::get('/profile', [MainController::class, 'profile'])
+        ->name('profile');
+
 //
-Route::get('/notices', [MainController::class, 'notices'])
-    ->name('notices')->middleware('auth');
+    Route::get('/user/identify', [UserController::class, 'userIdentify'])
+        ->name('user.identify');
+//
+    Route::post('/user/identify', [UserController::class, 'userIdentifyStore'])
+        ->name('user.identify.store');
+
+//
+    Route::get('/auth-info', [MainController::class, 'authInfo'])
+        ->name('auth.info');
+
+//
+    Route::get('/user/settings', [UserController::class, 'userSettings'])
+        ->name('user.settings');
+//
+    Route::post('/user/settings', [UserController::class, 'userSettingsStore'])
+        ->name('user.settings.store');
+
+
+//
+    Route::get('/notices', [MainController::class, 'notices'])
+        ->name('notices');
+});
 
 
 Route::middleware('guest')->group(function() {

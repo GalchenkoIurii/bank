@@ -44,6 +44,10 @@ class UserController extends Controller
             'iban' => $this->getUserIBAN(),
         ]);
 
+        $balance = $user->balance()->create([
+            'user_id' => $user->id,
+        ]);
+
         session()->flash('success', 'Вы зарегистрированы');
 
         Auth::login($user);
@@ -142,6 +146,13 @@ class UserController extends Controller
             ? redirect()->route('login')->with('status', __($status))
             : back()->withErrors(['email' => [__($status)]]);
     }
+
+    public function userIdentify()
+    {
+        return view('identify');
+    }
+
+
 
     protected function getUserPersonalCode()
     {
