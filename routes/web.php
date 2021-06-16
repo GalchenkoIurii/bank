@@ -101,42 +101,47 @@ Route::get('/auth-info', [MainController::class, 'authInfo'])
     ->name('auth.info')->middleware('auth');
 
 //
+Route::get('/user/settings', [UserController::class, 'userSettings'])
+    ->name('user.settings')->middleware('auth');
+//
+Route::post('/user/settings', [UserController::class, 'userSettingsStore'])
+    ->name('user.settings.store')->middleware('auth');
+
+
+//
 Route::get('/notices', [MainController::class, 'notices'])
     ->name('notices')->middleware('auth');
 
-/*
- * register, login, logout
- */
-Route::get('/register', [UserController::class, 'create'])
-    ->name('register.create')->middleware('guest');
-Route::post('/register', [UserController::class, 'store'])
-    ->name('register.store')->middleware('guest');
-Route::get('/login', [UserController::class, 'loginForm'])
-    ->name('login.create')->middleware('guest');
-Route::post('/login', [UserController::class, 'login'])
-    ->name('login')->middleware('guest');
+
+Route::middleware('guest')->group(function() {
+    /*
+     * reset password
+     */
+    Route::get('/forgot-password', [UserController::class, 'passwordRequest'])
+        ->name('password.request');
+    Route::post('/forgot-password', [UserController::class, 'passwordEmail'])
+        ->name('password.email');
+
+    Route::get('/reset-password/{token}/', [UserController::class, 'passwordReset'])
+        ->name('password.reset');
+    Route::post('/reset-password', [UserController::class, 'passwordUpdate'])
+        ->name('password.update');
+
+    /*
+     * register, login, logout
+     */
+    Route::get('/register', [UserController::class, 'create'])
+        ->name('register.create');
+    Route::post('/register', [UserController::class, 'store'])
+        ->name('register.store');
+    Route::get('/login', [UserController::class, 'loginForm'])
+        ->name('login.create');
+    Route::post('/login', [UserController::class, 'login'])
+        ->name('login');
+});
+
 Route::get('/logout', [UserController::class, 'logout'])
     ->name('logout')->middleware('auth');
-
-
-/*
- * reset password
- */
-Route::get('/forgot-password', [UserController::class, 'passwordRequest'])
-    ->name('password.request')->middleware('guest');
-Route::post('/forgot-password', [UserController::class, 'passwordEmail'])
-    ->name('password.email')->middleware('guest');
-
-Route::get('/reset-password/{token}/', [UserController::class, 'passwordReset'])
-    ->name('password.reset')->middleware('guest');
-Route::post('/reset-password', [UserController::class, 'passwordUpdate'])
-    ->name('password.update')->middleware('guest');
-
-//
-Route::get('/user/settings', [UserController::class, 'userSettings'])
-    ->name('user.settings')->middleware('auth');
-Route::post('/user/settings', [UserController::class, 'userSettingsStore'])
-    ->name('user.settings.store')->middleware('auth');
 
 
 /*
