@@ -98,7 +98,7 @@ Route::middleware('auth')->group(function() {
         ->name('user.identify.store');
 
 //
-    Route::get('/auth-info', [MainController::class, 'authInfo'])
+    Route::get('/auth-info', [UserController::class, 'authInfo'])
         ->name('auth.info');
 
 //

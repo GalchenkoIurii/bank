@@ -149,7 +149,11 @@ class UserController extends Controller
 
     public function userIdentify()
     {
-        return view('identify');
+        $user = User::find(Auth::user()->id);
+        $user_name = $user->last_name . ' ' . $user->first_name . ' ' . $user->patronymic;
+        $user_passport = $user->userData->passport_num;
+
+        return view('identify', compact('user_name', 'user_passport'));
     }
 
     public function userIdentifyStore(Request $request)
@@ -219,6 +223,13 @@ class UserController extends Controller
         return redirect()->route('user.identify')->with('success', 'Данные отправлены на проверку');
     }
 
+    public function authInfo()
+    {
+        $user = User::find(Auth::user()->id);
+        $control_sum = ($user->balance->control_sum_lt) ?: 0;
+
+        return view('auth-info', compact('control_sum'));
+    }
 
 
     protected function getUserPersonalCode()

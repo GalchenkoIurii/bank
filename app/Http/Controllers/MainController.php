@@ -126,7 +126,16 @@ class MainController extends Controller
 
     public function profile()
     {
-        return view('profile');
+        $user = User::find(Auth::user()->id);
+        $balance = $user->balance;
+
+        $is_user_confirmed = ($user->confirmed) ? true : false;
+        $is_positive_balance = ($balance->balance_rur > 0
+            || $balance->balance_usd > 0
+            || $balance->balance_eur > 0)
+            ? true : false;
+
+        return view('profile', compact('is_user_confirmed', 'is_positive_balance'));
     }
 
 

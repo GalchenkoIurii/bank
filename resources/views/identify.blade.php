@@ -20,7 +20,8 @@
 
             <p class="form-two__text">Ваш счет анонимный, чтобы он был нормальный, заполните доки</p>
             <p class="form-two__text">Подтверждение личных данных, абсолютно <span>бесплатная</span> процедура и не
-                подразумевает в себе ни каких оплат.</p>
+                подразумевает в себе никаких оплат.</p>
+            <p class="form-two__text"><span>Статус аккаунта: Требует подтверждения личности!</span></p>
 
             <div class="block-text">
                 <div class="block-img"><img src="{{ asset('img/str-two/block-right/img-1.png') }}" alt=""></div>
@@ -192,13 +193,16 @@
     @elseif(auth()->user()->confirmation)
         <div class="block-cart two">
             <p class="block-cart__title">Подтверждение личных данных держателя счета</p>
-            <p class="block-cart__txt">Паспортные данные проходят проверку...</p>
+            <p class="block-cart__txt">Ваши паспортные данные проходят проверку службой безопасности...</p>
+            <p class="block-cart__txt">Статус аккаунта: Требует подтверждения личности!</p>
         </div>
     @elseif(auth()->user()->confirmed)
         <div class="block-cart two">
             <p class="block-cart__title">Подтверждение личных данных держателя счета</p>
             <p class="block-cart__txt">Ваши личные данные прошли проверку.</p>
             <p class="block-cart__txt active">Статус аккаунта: подтвержденный!</p>
+            <p class="block-text__text">Фамилия Имя Отчество: </p><p class="block-cart__txt active">{{ $user_name }}</p>
+            <p class="block-text__text">Серия и номер паспорта: </p><p class="block-cart__txt active">{{ $user_passport }}</p>
         </div>
     @endif
 

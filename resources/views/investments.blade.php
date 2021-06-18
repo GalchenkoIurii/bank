@@ -79,6 +79,18 @@
 
                 <a href="#" class="item-page__link link-new">Начать инвестировать</a>
             </div>
+
+            <div class="item-page">
+                <p class="item-page__title">Помощь брокера</p>
+                <div class="page-services">
+                    <div class="services-one">
+                        <img src="{{ asset('img/new-icon/icon6.svg') }}" alt="">
+                        <span class="services-one__text">Помощь брокера</span>
+                    </div>
+                </div>
+
+                <a href="#" class="item-page__link link-new">Начать инвестировать</a>
+            </div>
         </div>
     </div>
 

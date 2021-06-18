@@ -33,8 +33,12 @@
 
             <div class="block-text">
                 <p class="block-text__title">Аутентификация платежной информации</p>
-                <p class="block-text__text"></p>
-                <a href="{{ route('user.identify') }}" class="block-text__link">Пройти аутентификацию</a>
+
+                @if($is_user_confirmed && $is_positive_balance)
+                    <a href="{{ route('auth.info') }}" class="block-text__link">Пройти аутентификацию</a>
+                @else
+                    <p class="block-text__text">Аутентификация платежной информации не требуется</p>
+                @endif
             </div>
         </div>
     </div>
