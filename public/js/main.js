@@ -441,7 +441,7 @@ document.addEventListener("DOMContentLoaded", function() {
         '<input type="text" name="passport_issuer" id="passport_issuer" placeholder="">';
     const issuerCodeWrapper = document.querySelector('#issuerCodeWrapper');
     const issuerCodeHtml = '<p class="block-input__text">Код подразделения</p>\n' +
-        '<input type="text" name="issuer_address" id="issuer_address" placeholder="">';
+        '<input type="text" name="issuer_code" id="issuer_address" placeholder="">';
     const inputRus = document.querySelector('#inputRus');
 
     if (inputRus) {

@@ -11,8 +11,17 @@ class UserData extends Model
 
     protected $fillable = [
         'citizenship',
+        'passport_num',
+        'passport_issuer',
+        'issuer_code',
+        'issue_date',
+        'user_address',
+        'inn',
+        'code_kaz',
         'personal_code',
         'iban',
+        'passport_photo_first',
+        'passport_photo_address',
     ];
 
     public function user()

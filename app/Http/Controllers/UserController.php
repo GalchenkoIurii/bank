@@ -152,6 +152,73 @@ class UserController extends Controller
         return view('identify');
     }
 
+    public function userIdentifyStore(Request $request)
+    {
+        $request->validate([
+            'citizenship' => 'required',
+            'passport_num' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'patronymic' => 'required',
+            'birth_date' => 'required',
+            'issue_date' => 'required',
+            'user_address' => 'required',
+            'inn' => 'required',
+            'passport_photo_first' => 'image',
+            'passport_photo_address' => 'image',
+        ]);
+
+        $user_data = [
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'patronymic' => $request->patronymic,
+            'birth_date' => $request->birth_date,
+            'gender' => $request->gender,
+            'need_confirmation' => 0,
+            'confirmation' => 1,
+        ];
+
+        $user_data_rel = [
+            'citizenship' => $request->citizenship,
+            'passport_num' => $request->passport_num,
+            'passport_issuer' => $request->passport_issuer,
+            'issuer_code' => $request->issuer_code,
+            'issue_date' => $request->issue_date,
+            'user_address' => $request->user_address,
+            'inn' => $request->inn,
+            'code_kaz' => $request->code_kaz,
+        ];
+
+        if ($request->hasFile('passport_photo_first')) {
+            $folder = date('Y-m-d');
+            $user_data_rel['passport_photo_first'] = $request->file('passport_photo_first')->store("images/{$folder}");
+        }
+        if ($request->hasFile('passport_photo_address')) {
+            $folder = date('Y-m-d');
+            $user_data_rel['passport_photo_address'] = $request->file('passport_photo_address')->store("images/{$folder}");
+        }
+
+        // will retrieve via updated_at field of related UserData model
+//        $data['identifying_at'] = now();
+
+
+        $user = User::find(Auth::user()->id);
+        $user->update($user_data);
+        $user->userData()->update($user_data_rel);
+
+
+        // need to implement notices
+//        $notice_blank = Blank::where('slug', 'data_sent')->first();
+//        $notice = [
+//            'title' => $notice_blank->title,
+//            'text' => $notice_blank->text,
+//            'user_id' => Auth::user()->id
+//        ];
+//        Notice::create($notice);
+
+        return redirect()->route('user.identify')->with('success', 'Данные отправлены на проверку');
+    }
+
 
 
     protected function getUserPersonalCode()

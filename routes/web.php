@@ -90,10 +90,10 @@ Route::middleware('auth')->group(function() {
     Route::get('/profile', [MainController::class, 'profile'])
         ->name('profile');
 
-//
+
     Route::get('/user/identify', [UserController::class, 'userIdentify'])
         ->name('user.identify');
-//
+
     Route::post('/user/identify', [UserController::class, 'userIdentifyStore'])
         ->name('user.identify.store');
 

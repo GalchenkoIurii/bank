@@ -193,14 +193,12 @@
         <div class="block-cart two">
             <p class="block-cart__title">Подтверждение личных данных держателя счета</p>
             <p class="block-cart__txt">Паспортные данные проходят проверку...</p>
-
         </div>
     @elseif(auth()->user()->confirmed)
         <div class="block-cart two">
             <p class="block-cart__title">Подтверждение личных данных держателя счета</p>
-            <p class="block-cart__txt">Ваши личные данные прошли одобрение.</p>
+            <p class="block-cart__txt">Ваши личные данные прошли проверку.</p>
             <p class="block-cart__txt active">Статус аккаунта: подтвержденный!</p>
-
         </div>
     @endif
 
