@@ -1,0 +1,22 @@
+<?php
+
+return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | Password Reset Language Lines
+    |--------------------------------------------------------------------------
+    |
+    | The following language lines are the default lines which match reasons
+    | that are given by the password broker for a password update attempt
+    | has failed, such as for an invalid token or invalid new password.
+    |
+    */
+
+    'reset' => 'LtВаш пароль был сброшен!',
+    'sent' => 'LtМы отправили Вам email со ссылкой для сброса пароля!',
+    'throttled' => 'LtПожалуйста подождите.',
+    'token' => 'LtДанный токен для сброса пароля не валидный.',
+    'user' => "LtМы не можем найти пользователя с таким email адресом.",
+
+];
