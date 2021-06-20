@@ -97,14 +97,14 @@ Route::middleware('auth')->group(function() {
     Route::post('/user/identify', [UserController::class, 'userIdentifyStore'])
         ->name('user.identify.store');
 
-//
+
     Route::get('/auth-info', [UserController::class, 'authInfo'])
         ->name('auth.info');
 
-//
+
     Route::get('/user/settings', [UserController::class, 'userSettings'])
         ->name('user.settings');
-//
+
     Route::post('/user/settings', [UserController::class, 'userSettingsStore'])
         ->name('user.settings.store');
 

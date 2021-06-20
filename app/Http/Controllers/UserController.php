@@ -231,6 +231,93 @@ class UserController extends Controller
         return view('auth-info', compact('control_sum'));
     }
 
+    public function userSettings()
+    {
+        $user = Auth::user();
+
+        return view('settings', ['user' => $user]);
+    }
+
+    public function userSettingsStore(Request $request)
+    {
+//        if ($request->login) {
+//            $request->validate([
+//                'login' => 'unique:users'
+//            ]);
+//        }
+        if ($request->email) {
+            $request->validate([
+                'email' => 'email'
+            ]);
+        }
+//        if ($request->phone) {
+//            $request->validate([
+//                'phone' => 'unique:users'
+//            ]);
+//        }
+
+//        dd($request);
+//        $request_login = $request->login;
+
+        $data = $request->all();
+
+        $user = User::find(Auth::id());
+
+        if (isset($data['login'])) {
+            if ($data['login'] !== $user->login
+                && $check_login = User::where('login', $data['login'])->first()) {
+                return redirect()->back()->with('error', 'Логин уже занят');
+            }
+        } else {
+            $data['login'] = $user->login;
+        }
+
+        if (isset($data['email'])) {
+            if ($data['email'] !== $user->email
+                && $check_email = User::where('email', $data['email'])->first()) {
+                return redirect()->back()->with('error', 'Email уже занят');
+            }
+        } else {
+            $data['email'] = $user->email;
+        }
+
+        if (isset($data['phone'])) {
+            if ($data['phone'] !== $user->phone
+                && $check_phone = User::where('phone', $data['phone'])->first()) {
+                return redirect()->back()->with('error', 'Телефон уже занят');
+            }
+        } else {
+            $data['phone'] = $user->phone;
+        }
+
+
+//        if (!isset($data['login'])) {
+//            $data['login'] = $user->login;
+//        }
+//
+//        if (!isset($data['name'])) {
+//            $data['name'] = $user->name;
+//        }
+//        if (!isset($data['email'])) {
+//            $data['email'] = $user->email;
+//        }
+//        if (!isset($data['phone'])) {
+//            $data['phone'] = $user->phone;
+//        }
+
+        if (isset($data['passwordOld']) && isset($data['passwordNew'])) {
+            if (Auth::attempt(['id' => $user->id, 'password' => $data['passwordOld']])) {
+                $data['password'] = bcrypt($data['passwordNew']);
+            } else {
+                return redirect()->back()->with('error', 'Неверный пароль');
+            }
+        }
+
+        $user->update($data);
+
+        return redirect()->route('user.settings')->with('success', 'Данные сохранены!');
+    }
+
 
     protected function getUserPersonalCode()
     {
