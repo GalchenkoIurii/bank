@@ -558,7 +558,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 removeIssuerCode();
                 passportIssuerWrapper.style.display = 'none';
                 issuerCodeWrapper.style.display = 'none';
-            } else if (event.target.value == 'Польша') {
+            } else if (event.target.value == 'Литва') {
                 removeKazHtml();
 
                 insertTitle('#passportNum', '#passportNum p', 'Паспорт №');
@@ -567,7 +567,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 removeIssuerCode();
                 passportIssuerWrapper.style.display = 'none';
                 issuerCodeWrapper.style.display = 'none';
-            } else if (event.target.value == 'Чехия') {
+            } else if (event.target.value == 'Киргизстан') {
                 removeKazHtml();
 
                 insertTitle('#passportNum', '#passportNum p', 'Паспорт №');
@@ -642,8 +642,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     }
                     break;
                 case 'Беларусь':
-                case 'Польша':
-                case 'Чехия':
+                case 'Литва':
+                case 'Киргизстан':
                     for (let field of formFields) {
                         if (field.value === '') {
                             isEmptyField = true;

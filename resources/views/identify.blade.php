@@ -56,6 +56,13 @@
                             </li>
                             <li>
                                 <label class="option">
+                                    <input type="radio" name="citizenship" value="Литва">
+                                    <img src="{{ asset('img/flag/lt.png') }}" alt="">
+                                    <p>Литва</p>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="option">
                                     <input type="radio" name="citizenship" value="Казахстан">
                                     <img src="{{ asset('img/flag/kaz.svg') }}" alt="">
                                     <p>Казахстан</p>
@@ -91,16 +98,9 @@
                             </li>
                             <li>
                                 <label class="option">
-                                    <input type="radio" name="citizenship" value="Польша">
-                                    <img src="{{ asset('img/flag/pl.png') }}" alt="">
-                                    <p>Польша</p>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="option">
-                                    <input type="radio" name="citizenship" value="Чехия">
-                                    <img src="{{ asset('img/flag/cz.png') }}" alt="">
-                                    <p>Чехия</p>
+                                    <input type="radio" name="citizenship" value="Киргизстан">
+                                    <img src="{{ asset('img/flag/kir.png') }}" alt="">
+                                    <p>Киргизстан</p>
                                 </label>
                             </li>
                         </ul>
