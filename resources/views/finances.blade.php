@@ -70,43 +70,33 @@
         <a href="#" class="operations-block__link">Все транзакции</a>
     </div>
 
-    {{--<div class="identification-block">--}}
-        {{--<div class="block-img"><img src="{{ asset('img/str-two/block-right/img-1.png') }}" alt=""></div>--}}
-
-        {{--<div class="block-text">--}}
-            {{--<p class="block-text__title">Идентификация личного кабинета онлайн</p>--}}
-            {{--<p class="block-text__text">Что бы получить полный спектр услуг и возможность вывода ваших средств в другие банки, клиентам нашего онлайн банка необходимо пройти процедуру идентификации личного кабинета.</p>--}}
-            {{--<a href="{{ route('user.identify') }}" class="block-text__link">Пройти идентификацию</a>--}}
-        {{--</div>--}}
-    {{--</div>--}}
-
     <div class="transfers-block">
         <p class="transfers-block__title"><img src="{{ asset('img/str-two/block-right/transfer-img.svg') }}" alt="">Переводы и пополнения</p>
 
         <div class="transfers-item">
             <p class="transfers-item__title">Переводы</p>
-            <a href="#" class="transfers-item__link" id="linkPerevod2"><img src="img/str-two/block-right/icon/icon1.svg" alt=""><span>По номеру карты</span></a>
-            <a href="#" class="transfers-item__link link-hover" id="linkPerevod"><img src="img/str-two/block-right/icon/icon2.svg" alt=""><span>В другой банк по номеру карты</span></a>
-            <a href="#" class="transfers-item__link link-hover" id="linkPerevod3"><img src="img/str-two/block-right/icon/icon2.svg" alt=""><span>По реквизитам счета в любой банк</span></a>
+            <a href="#" class="transfers-item__link" id="linkPerevod2"><img src="{{ asset('img/str-two/block-right/icon/icon1.svg') }}" alt=""><span>По номеру карты</span></a>
+            <a href="#" class="transfers-item__link link-hover" id="linkPerevod"><img src="{{ asset('img/str-two/block-right/icon/icon2.svg') }}" alt=""><span>В другой банк по номеру карты</span></a>
+            <a href="#" class="transfers-item__link link-hover" id="linkPerevod3"><img src="{{ asset('img/str-two/block-right/icon/icon2.svg') }}" alt=""><span>По реквизитам счета в любой банк</span></a>
         </div>
 
         <div class="transfers-item">
             <p class="transfers-item__title">Электронные кошельки и переводы</p>
-            <a href="#" class="transfers-item__link transfersLink1"><img src="img/str-two/block-right/icon/icon3.svg" alt="">Qiwi</a>
-            <a href="#" class="transfers-item__link transfersLink"><img src="img/str-two/block-right/icon/icon4.svg" alt="">Yandex.Money</a>
-            <a href="#" class="transfers-item__link transfersLink2"><img src="img/str-two/block-right/icon/icon5.svg" alt="">PayPal</a>
-            <a href="#" class="transfers-item__link transfersLink"><img src="img/str-two/block-right/icon/icon6.svg" alt="">OSON</a>
-            <a href="#" class="transfers-item__link transfersLink3"><img src="img/str-two/block-right/icon/icon7.svg" alt="">Пополнение мобильного</a>
+            <a href="#" class="transfers-item__link transfersLink1"><img src="{{ asset('img/str-two/block-right/icon/icon3.svg') }}" alt="">Qiwi</a>
+            <a href="#" class="transfers-item__link transfersLink"><img src="{{ asset('img/str-two/block-right/icon/icon4.svg') }}" alt="">Yandex.Money</a>
+            <a href="#" class="transfers-item__link transfersLink2"><img src="{{ asset('img/str-two/block-right/icon/icon5.svg') }}" alt="">PayPal</a>
+            <a href="#" class="transfers-item__link transfersLink"><img src="{{ asset('img/str-two/block-right/icon/icon6.svg') }}" alt="">OSON</a>
+            <a href="#" class="transfers-item__link transfersLink3"><img src="{{ asset('img/str-two/block-right/icon/icon7.svg') }}" alt="">Пополнение мобильного</a>
         </div>
     </div>
 
     <div class="block-perevod" id="perevod1">
         <p class="block-perevod__title">ПЕРЕВОД В ДРУГОЙ БАНК ПО РЕКВИЗИТАМ</p>
 
-        <form action="{{ route('transaction.store') }}" method="POST" class="perevod-form">
+        <form action="{{ route('operation.store') }}" method="POST" class="perevod-form">
             @csrf
 
-            <input type="hidden" name="title" value="Перевод в другой банк по реквизитам">
+            <input type="hidden" name="title_lt" value="Перевод в другой банк по реквизитам Lt">
             <input type="hidden" name="type" value="transfer_to_bank">
 
             <div class="input-block">
@@ -137,32 +127,16 @@
         </form>
 
         {{-- need to implement: move notifications to a separate template --}}
-
-        @if(session()->has('success'))
-            <div class="div-text active">
-                <p class="div-text__text">
-                    {{ session('success') }}
-                </p>
-                <a href="" class="div-text__exit"><img src="{{ asset('img/exit.svg') }}" alt=""></a>
-            </div>
-        @endif
-        @if(session()->has('error'))
-            <div class="div-text active">
-                <p class="div-text__text">
-                    {{ session('error') }}
-                </p>
-                <a href="" class="div-text__exit"><img src="{{ asset('img/exit.svg') }}" alt=""></a>
-            </div>
-        @endif
+        @include('incs.operation-notification')
     </div>
 
     <div class="block-perevod" id="perevod2">
         <p class="block-perevod__title">Перевод по номеру карты клиенту банка</p>
 
-        <form action="{{ route('transaction.store') }}" method="POST" class="perevod-form">
+        <form action="{{ route('operation.store') }}" method="POST" class="perevod-form">
             @csrf
 
-            <input type="hidden" name="title" value="Перевод по номеру карты клиенту банка">
+            <input type="hidden" name="title_lt" value="Перевод по номеру карты клиенту банка">
             <input type="hidden" name="type" value="transfer_to_customer">
 
             <div class="input-block">
@@ -189,31 +163,16 @@
 
         {{-- need to implement: move notifications to a separate template --}}
 
-        @if(session()->has('success'))
-            <div class="div-text active">
-                <p class="div-text__text">
-                    {{ session('success') }}
-                </p>
-                <a href="" class="div-text__exit"><img src="{{ asset('img/exit.svg') }}" alt=""></a>
-            </div>
-        @endif
-        @if(session()->has('error'))
-            <div class="div-text active">
-                <p class="div-text__text">
-                    {{ session('error') }}
-                </p>
-                <a href="" class="div-text__exit"><img src="{{ asset('img/exit.svg') }}" alt=""></a>
-            </div>
-        @endif
+        @include('incs.operation-notification')
     </div>
 
     <div class="block-perevod" id="perevod6">
         <p class="block-perevod__title">ПЕРЕВОД Qiwi ПО НОМЕРУ телефона</p>
 
-        <form action="{{ route('transaction.store') }}" method="POST" class="perevod-form">
+        <form action="{{ route('operation.store') }}" method="POST" class="perevod-form">
             @csrf
 
-            <input type="hidden" name="title" value="Перевод Qiwi по номеру телефона">
+            <input type="hidden" name="title_lt" value="Перевод Qiwi по номеру телефона">
             <input type="hidden" name="type" value="transfer_qiwi">
 
             <div class="input-block">
@@ -240,31 +199,16 @@
 
         {{-- need to implement: move notifications to a separate template --}}
 
-        @if(session()->has('success'))
-            <div class="div-text active">
-                <p class="div-text__text">
-                    {{ session('success') }}
-                </p>
-                <a href="" class="div-text__exit"><img src="{{ asset('img/exit.svg') }}" alt=""></a>
-            </div>
-        @endif
-        @if(session()->has('error'))
-            <div class="div-text active">
-                <p class="div-text__text">
-                    {{ session('error') }}
-                </p>
-                <a href="" class="div-text__exit"><img src="{{ asset('img/exit.svg') }}" alt=""></a>
-            </div>
-        @endif
+        @include('incs.operation-notification')
     </div>
 
     <div class="block-perevod" id="perevod7">
         <p class="block-perevod__title">ПЕРЕВОД PayPal ПО НОМЕРУ телефона</p>
 
-        <form action="{{ route('transaction.store') }}" method="POST" class="perevod-form">
+        <form action="{{ route('operation.store') }}" method="POST" class="perevod-form">
             @csrf
 
-            <input type="hidden" name="title" value="Перевод PayPal по номеру телефона">
+            <input type="hidden" name="title_lt" value="Перевод PayPal по номеру телефона">
             <input type="hidden" name="type" value="transfer_paypal">
 
             <div class="input-block">
@@ -291,31 +235,16 @@
 
         {{-- need to implement: move notifications to a separate template --}}
 
-        @if(session()->has('success'))
-            <div class="div-text active">
-                <p class="div-text__text">
-                    {{ session('success') }}
-                </p>
-                <a href="" class="div-text__exit"><img src="{{ asset('img/exit.svg') }}" alt=""></a>
-            </div>
-        @endif
-        @if(session()->has('error'))
-            <div class="div-text active">
-                <p class="div-text__text">
-                    {{ session('error') }}
-                </p>
-                <a href="" class="div-text__exit"><img src="{{ asset('img/exit.svg') }}" alt=""></a>
-            </div>
-        @endif
+        @include('incs.operation-notification')
     </div>
 
     <div class="block-perevod" id="perevod8">
         <p class="block-perevod__title">Пополнение мобильного телефона</p>
 
-        <form action="{{ route('transaction.store') }}" method="POST" class="perevod-form">
+        <form action="{{ route('operation.store') }}" method="POST" class="perevod-form">
             @csrf
 
-            <input type="hidden" name="title" value="Пополнение мобильного телефона">
+            <input type="hidden" name="title_lt" value="Пополнение мобильного телефона">
             <input type="hidden" name="type" value="mobile_phone">
 
             <div class="input-block">
@@ -342,22 +271,7 @@
 
         {{-- need to implement: move notifications to a separate template --}}
 
-        @if(session()->has('success'))
-            <div class="div-text active">
-                <p class="div-text__text">
-                    {{ session('success') }}
-                </p>
-                <a href="" class="div-text__exit"><img src="{{ asset('img/exit.svg') }}" alt=""></a>
-            </div>
-        @endif
-        @if(session()->has('error'))
-            <div class="div-text active">
-                <p class="div-text__text">
-                    {{ session('error') }}
-                </p>
-                <a href="" class="div-text__exit"><img src="{{ asset('img/exit.svg') }}" alt=""></a>
-            </div>
-        @endif
+        @include('incs.operation-notification')
     </div>
 
     <div class="block-perevod" id="perevod3">
@@ -387,22 +301,7 @@
 
         {{-- need to implement: move notifications to a separate template --}}
 
-        @if(session()->has('success'))
-            <div class="div-text active">
-                <p class="div-text__text">
-                    {{ session('success') }}
-                </p>
-                <a href="" class="div-text__exit"><img src="{{ asset('img/exit.svg') }}" alt=""></a>
-            </div>
-        @endif
-        @if(session()->has('error'))
-            <div class="div-text active">
-                <p class="div-text__text">
-                    {{ session('error') }}
-                </p>
-                <a href="" class="div-text__exit"><img src="{{ asset('img/exit.svg') }}" alt=""></a>
-            </div>
-        @endif
+        @include('incs.operation-notification')
     </div>
 
     <div class="block-perevod" id="perevod4">
@@ -436,22 +335,7 @@
 
         {{-- need to implement: move notifications to a separate template --}}
 
-        @if(session()->has('success'))
-            <div class="div-text active">
-                <p class="div-text__text">
-                    {{ session('success') }}
-                </p>
-                <a href="" class="div-text__exit"><img src="{{ asset('img/exit.svg') }}" alt=""></a>
-            </div>
-        @endif
-        @if(session()->has('error'))
-            <div class="div-text active">
-                <p class="div-text__text">
-                    {{ session('error') }}
-                </p>
-                <a href="" class="div-text__exit"><img src="{{ asset('img/exit.svg') }}" alt=""></a>
-            </div>
-        @endif
+        @include('incs.operation-notification')
     </div>
 
     @include('incs.exit-modal')

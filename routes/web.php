@@ -42,9 +42,8 @@ Route::middleware('auth')->group(function() {
     Route::get('/finances', [MainController::class, 'finances'])
         ->name('finances');
 
-//
-    Route::post('/finances', [OperationController::class, 'storeTransaction'])
-        ->name('transaction.store');
+    Route::post('/finances', [OperationController::class, 'storeOperation'])
+        ->name('operation.store');
 
 
     /*

@@ -225,7 +225,7 @@ class UserController extends Controller
 
     public function authInfo()
     {
-        $user = User::find(Auth::user()->id);
+        $user = User::find(Auth::id());
         $control_sum = ($user->balance->control_sum_lt) ?: 0;
 
         return view('auth-info', compact('control_sum'));
