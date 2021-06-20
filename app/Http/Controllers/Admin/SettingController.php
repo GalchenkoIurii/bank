@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class SettingController extends Controller
@@ -14,7 +15,8 @@ class SettingController extends Controller
      */
     public function index()
     {
-        //
+        $settings = Setting::all();
+        return view('admin.settings', compact('settings'));
     }
 
     /**
@@ -24,7 +26,7 @@ class SettingController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.settings-create');
     }
 
     /**
@@ -35,7 +37,14 @@ class SettingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title_lt' => 'required',
+            'slug' => 'required',
+        ]);
+
+        Setting::create($request->all());
+
+        return redirect()->route('settings.index')->with('success', 'Настройка добавлена');
     }
 
     /**
@@ -57,7 +66,8 @@ class SettingController extends Controller
      */
     public function edit($id)
     {
-        //
+        $setting = Setting::findOrFail($id);
+        return view('admin.settings-edit', compact('setting'));
     }
 
     /**
@@ -69,7 +79,15 @@ class SettingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'title_lt' => 'required',
+            'slug' => 'required',
+        ]);
+
+        $setting = Setting::find($id);
+        $setting->update($request->all());
+
+        return redirect()->route('settings.index')->with('success', 'Настройка обновлена');
     }
 
     /**
@@ -80,6 +98,9 @@ class SettingController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $setting = Setting::findOrFail($id);
+        $setting->delete();
+
+        return redirect()->route('settings.index')->with('success', 'Настройка удалена');
     }
 }

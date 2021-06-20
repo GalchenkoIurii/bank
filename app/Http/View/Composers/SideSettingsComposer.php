@@ -86,9 +86,9 @@ class SideSettingsComposer
         $side_settings['personal_code_value'] = $side_settings['personal_code']->value_lt . Auth::user()->userData->personal_code;
         $side_settings['iban_value'] = $side_settings['iban']->value_lt . Auth::user()->userData->iban;
 
-        $side_settings['balance_rur'] = Auth::user()->balance->balance_rur;
-        $side_settings['balance_usd'] = Auth::user()->balance->balance_usd;
-        $side_settings['balance_eur'] = Auth::user()->balance->balance_eur;
+        $side_settings['balance_rur'] = round(Auth::user()->balance->balance_rur, 2);
+        $side_settings['balance_usd'] = round(Auth::user()->balance->balance_usd, 2);
+        $side_settings['balance_eur'] = round(Auth::user()->balance->balance_eur, 2);
 
 
         // getting currencies exchange rates

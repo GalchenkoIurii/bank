@@ -149,17 +149,28 @@ Route::get('/logout', [UserController::class, 'logout'])
  * admin routes
  */
 Route::prefix('admin')->middleware('admin')->group(function() {
-    // need to add name('admin.') method for the group
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
     // need to remake all resources in one method call
-    Route::resource('/settings', SettingController::class);
-    Route::resource('/cards', CardController::class);
-    Route::resource('/credits', CreditController::class);
-    Route::resource('/customers', CustomerController::class);
-    Route::resource('/pages', PageController::class);
-    Route::resource('/notices', NoticeController::class);
-    Route::resource('/balances', BalanceController::class);
-    Route::resource('/blanks', BlankController::class);
+
+    Route::resources([
+        '/settings' => SettingController::class,
+        '/cards' => CardController::class,
+        '/credits' => CreditController::class,
+        '/customers' => CustomerController::class,
+        '/pages' => PageController::class,
+        '/notices' => NoticeController::class,
+        '/balances' => BalanceController::class,
+        '/blanks' => BlankController::class,
+    ]);
+
+//    Route::resource('/settings', SettingController::class);
+//    Route::resource('/cards', CardController::class);
+//    Route::resource('/credits', CreditController::class);
+//    Route::resource('/customers', CustomerController::class); //
+//    Route::resource('/pages', PageController::class);
+//    Route::resource('/notices', NoticeController::class); //
+//    Route::resource('/balances', BalanceController::class); //
+//    Route::resource('/blanks', BlankController::class);
 
     // move balances, notices, customers to one route customers
 

@@ -27,6 +27,7 @@ class OperationController extends Controller
         $data = $request->all();
 
         $data['user_id'] = $user->id;
+        $data['sum'] = round((float) $data['sum'], 2);
 
         $balances = [];
         $balances['balance_rur'] = (float) $user->balance->balance_rur;
@@ -46,7 +47,7 @@ class OperationController extends Controller
             if ($balances['balance_rur'] < $data['sum']) {
                 return back()->with('error', 'Сумма списания превышает сумму баланса');
             } else {
-                $balances['balance_rur'] -= (float) $data['sum'];
+                $balances['balance_rur'] -= $data['sum'];
 
                 // need to implement: notices and checks
 //                $notice_blank = Blank::where('slug', 'balance_sub')->first();
@@ -76,7 +77,7 @@ class OperationController extends Controller
             if ($balances['balance_usd'] < $data['sum']) {
                 return back()->with('error', 'Сумма списания превышает сумму баланса');
             } else {
-                $balances['balance_usd'] -= (float) $data['sum'];
+                $balances['balance_usd'] -= $data['sum'];
 
                 // need to implement: notices and checks
 //                $notice_blank = Blank::where('slug', 'balance_sub')->first();
@@ -105,7 +106,7 @@ class OperationController extends Controller
             if ($balances['balance_eur'] < $data['sum']) {
                 return back()->with('error', 'Сумма списания превышает сумму баланса');
             } else {
-                $balances['balance_eur'] -= (float) $data['sum'];
+                $balances['balance_eur'] -= $data['sum'];
 
                 // need to implement: notices and checks
 //                $notice_blank = Blank::where('slug', 'balance_sub')->first();

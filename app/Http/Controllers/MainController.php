@@ -20,9 +20,9 @@ class MainController extends Controller
     {
         $balance = User::find(Auth::id())->balance;
 
-        $balance_rur = $balance->balance_rur;
-        $balance_usd = $balance->balance_usd;
-        $balance_eur = $balance->balance_eur;
+        $balance_rur = round($balance->balance_rur, 2);
+        $balance_usd = round($balance->balance_usd, 2);
+        $balance_eur = round($balance->balance_eur, 2);
         $operations = null;
 
 
