@@ -163,8 +163,7 @@ Route::prefix('admin')->middleware('admin')->group(function() {
         '/blanks' => BlankController::class,
     ]);
 
-//    Route::resource('/settings', SettingController::class);
-//    Route::resource('/cards', CardController::class);
+
 //    Route::resource('/credits', CreditController::class);
 //    Route::resource('/customers', CustomerController::class); //
 //    Route::resource('/pages', PageController::class);
