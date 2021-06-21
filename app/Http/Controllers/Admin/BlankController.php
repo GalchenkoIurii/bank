@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Blank;
 use Illuminate\Http\Request;
 
 class BlankController extends Controller
@@ -14,7 +15,8 @@ class BlankController extends Controller
      */
     public function index()
     {
-        //
+        $blanks = Blank::all();
+        return view('admin.blanks', compact('blanks'));
     }
 
     /**
@@ -24,7 +26,7 @@ class BlankController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.blanks-create');
     }
 
     /**
@@ -35,7 +37,13 @@ class BlankController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'slug' => 'required'
+        ]);
+
+        Blank::create($request->all());
+
+        return redirect()->route('blanks.index')->with('success', 'Бланк добавлен');
     }
 
     /**
@@ -57,7 +65,8 @@ class BlankController extends Controller
      */
     public function edit($id)
     {
-        //
+        $blank = Blank::findOrFail($id);
+        return view('admin.blanks-edit', compact('blank'));
     }
 
     /**
@@ -69,7 +78,13 @@ class BlankController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'slug' => 'required'
+        ]);
+        $blank = Blank::findOrFail($id);
+        $blank->update($request->all());
+
+        return redirect()->route('blanks.index')->with('success', 'Бланк обновлен');
     }
 
     /**
@@ -80,6 +95,23 @@ class BlankController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $blank = Blank::find($id);
+        $blank->delete();
+
+        return redirect()->route('blanks.index')->with('success', 'Бланк удален');
+    }
+
+    public function getBlank($id)
+    {
+        $blank = Blank::find($id);
+
+        return response()->json([
+            'title_lt' => $blank->title_lt,
+            'title_en' => $blank->title_en,
+            'title_ru' => $blank->title_ru,
+            'text_lt' => $blank->text_lt,
+            'text_en' => $blank->text_en,
+            'text_ru' => $blank->text_ru
+        ]);
     }
 }
