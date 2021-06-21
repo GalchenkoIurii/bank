@@ -164,9 +164,7 @@ Route::prefix('admin')->middleware('admin')->group(function() {
     ]);
 
 
-//    Route::resource('/credits', CreditController::class);
 //    Route::resource('/customers', CustomerController::class); //
-//    Route::resource('/pages', PageController::class);
 //    Route::resource('/notices', NoticeController::class); //
 //    Route::resource('/balances', BalanceController::class); //
 //    Route::resource('/blanks', BlankController::class);
