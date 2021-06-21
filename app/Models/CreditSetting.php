@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class CreditSetting extends Model
 {
     use HasFactory;
+
+    public function credits()
+    {
+        return $this->hasMany(Credit::class);
+    }
 }

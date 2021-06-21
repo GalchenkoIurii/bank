@@ -80,7 +80,7 @@
                 <div class="block-input">
                     <input type="text" name="full_name" placeholder="Фамилия, имя и отчество" class="cont-input"
                            @if(auth()->check())
-                                value="{{ auth()->user()->first_name . auth()->user()->last_name . auth()->user()->patronymic }}"
+                                value="{{ auth()->user()->last_name . ' ' . auth()->user()->first_name . ' ' . auth()->user()->patronymic }}"
                            @endif
                     >
                     <p class="text-arror">Укажите фамилию, имя и отчество через пробел</p>

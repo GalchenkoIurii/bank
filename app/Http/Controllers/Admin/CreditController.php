@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Credit;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CreditController extends Controller
@@ -14,7 +16,10 @@ class CreditController extends Controller
      */
     public function index()
     {
-        //
+        $credits = Credit::with('creditSetting')->orderByDesc('id')->get();
+//        $credits = Credit::orderByDesc('id')->get();
+
+        return view('admin.credits', compact('credits'));
     }
 
     /**
@@ -57,7 +62,15 @@ class CreditController extends Controller
      */
     public function edit($id)
     {
-        //
+        $credit = Credit::findOrFail($id);
+
+        // need to implement Blanks
+//        $credit_agreement = Blank::where('slug', 'credit_agreement')->first();
+//        $payments_table = Blank::where('slug', 'payments_table')->first();
+        $credit_agreement = null;
+        $payments_table = null;
+
+        return view('admin.credits-edit', compact('credit', 'credit_agreement', 'payments_table'));
     }
 
     /**
@@ -69,7 +82,60 @@ class CreditController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'result' => 'required'
+        ]);
+
+        $data = $request->all();
+
+        $credit = Credit::findOrFail($id);
+
+
+        // need to implement Notices and Blanks
+
+        if ($data['result'] === '0') {
+            $data['reviewing'] = 0;
+//            $notice_blank = Blank::where('slug', 'credit_refused')->first();
+//            $notice = [
+//                'title' => $notice_blank->title,
+//                'text' => $notice_blank->text,
+//                'user_id' => $credit['user_id']
+//            ];
+//            Notice::create($notice);
+        } elseif ($data['result'] === '1') {
+            $data['reviewing'] = 0;
+
+            $user = User::findOrFail($credit['user_id']);
+
+            $balance['balance_rur'] = round((float) $user->balance->balance_rur, 2);
+            $balance['balance_rur'] += round((float) $data['credit_sum'], 2);
+
+            $user->balance()->update($balance);
+
+//            $notice_blank = Blank::where('slug', 'credit_approved')->first();
+//            $notice_text = $notice_blank->text . ' на сумму: ' . $data['credit_sum']
+//                . '. <a href="' . route('credit.agreement', ['id' => $id])
+//                . '" target="_blank"><strong>Подробности моего кредита</strong></a>';
+//            $notice = [
+//                'title' => $notice_blank->title,
+//                'text' => $notice_text,
+//                'user_id' => $credit['user_id']
+//            ];
+//            Notice::create($notice);
+
+//            $blank_balance_add = Blank::where('slug', 'balance_add')->first();
+//            $operation = [
+//                'title' => $blank_balance_add->title,
+//                'description' => $blank_balance_add->text,
+//                'sum' => $data['credit_sum'] . ' RUB',
+//                'user_id' => $credit['user_id']
+//            ];
+//            Operation::create($operation);
+        }
+
+        $credit->update($data);
+
+        return redirect()->route('credits.edit', ['credit' => $id])->with('success', 'Данные сохранены');
     }
 
     /**
@@ -80,6 +146,8 @@ class CreditController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $credit = Credit::findOrFail($id);
+        $credit->delete();
+        return redirect()->route('credits.index')->with('success', 'Заявка удалена');
     }
 }

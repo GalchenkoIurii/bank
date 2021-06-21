@@ -18,6 +18,15 @@ class Credit extends Model
         'user_id',
         'full_name',
         'phone',
-        'email'
+        'email',
+        'reviewing',
+        'result',
+        'credit_agreement',
+        'payments_table',
     ];
+
+    public function creditSetting()
+    {
+        return $this->belongsTo(CreditSetting::class);
+    }
 }
