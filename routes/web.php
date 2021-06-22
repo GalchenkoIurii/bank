@@ -166,12 +166,6 @@ Route::prefix('admin')->name('admin.')->middleware('admin')
     ]);
 
 
-//    Route::resource('/customers', CustomerController::class); //
-//    Route::resource('/notices', NoticeController::class); //
-
-    // move balances, notices, customers to one route customers
-
-
     Route::get('/get-blank/{id}', [BlankController::class, 'getBlank'])
         ->name('get.blank');
 

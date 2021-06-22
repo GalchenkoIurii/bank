@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Blank;
+use App\Models\Notice;
 use Illuminate\Http\Request;
 
 class NoticeController extends Controller
@@ -24,7 +26,10 @@ class NoticeController extends Controller
      */
     public function create()
     {
-        //
+        $user_id = $_GET['id'];
+        $blanks = Blank::all();
+
+        return view('admin.notices-create', compact('user_id', 'blanks'));
     }
 
     /**
@@ -35,7 +40,17 @@ class NoticeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title_lt' => 'required',
+            'text_lt' => 'required',
+            'user_id' => 'required'
+        ]);
+
+        $requestData = $request->all();
+
+        Notice::create($requestData);
+
+        return back()->with('success', 'Уведомление добавлено');
     }
 
     /**
@@ -57,7 +72,10 @@ class NoticeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $notice = Notice::findOrFail($id);
+        $blanks = Blank::all();
+
+        return view('admin.notices-edit', compact('notice', 'blanks'));
     }
 
     /**
@@ -69,7 +87,15 @@ class NoticeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+
+//        $notice_blank = Blank::find($data['blank']);
+//        $data['text'] .= '<br>' . $notice_blank->text;
+
+        $notice = Notice::find($id);
+        $notice->update($data);
+
+        return back()->with('success', 'Уведомление обновлено');
     }
 
     /**
@@ -80,6 +106,9 @@ class NoticeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $notice = Notice::find($id);
+        $notice->delete();
+
+        return back()->with('success', 'Уведомление удалено');
     }
 }

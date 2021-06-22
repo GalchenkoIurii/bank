@@ -143,60 +143,54 @@
                             <h3>Уведомления</h3>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('admin.customers.update', ['customer' => $customer->id]) }}" method="post">
-                                @csrf
-                                @method('PUT')
-                                <div class="mb-3">
-                                    <label for="login" class="form-label">Логин</label>
-                                    <input type="text" class="form-control" id="login" name="login" value="{{ $customer->login }}">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="phone" class="form-label">Телефон</label>
-                                    <input type="text" class="form-control" id="phone" name="phone" value="{{ $customer->phone }}">
-                                </div>
-                                <div class="mb-5">
-                                    <label for="email" class="form-label">Email</label>
-                                    <input type="text" class="form-control" id="email" name="email" value="{{ $customer->email }}">
-                                </div>
-                                <div class="form-check form-switch mb-5">
-                                    <input class="form-check-input" type="checkbox" name="is_admin" id="is_admin"
-                                           @if($customer->is_admin) checked @endif>
-                                    <label class="form-check-label" for="is_admin">Назначить админом</label>
-                                </div>
-                                <div class="form-check form-switch mb-5">
-                                    <input class="form-check-input" type="checkbox" name="is_banned" id="is_banned"
-                                           @if($customer->is_banned) checked @endif>
-                                    <label class="form-check-label" for="is_banned">Заблокировать пользователя</label>
-                                </div>
-                                <div class="form-check form-switch mb-5">
-                                    <p class="card-text">Разрешить/запретить вывод средств</p>
-                                    <input class="form-check-input" type="checkbox" name="withdrawable" id="withdrawable"
-                                           @if($customer->withdrawable) checked @endif>
-                                    <label class="form-check-label" for="withdrawable">Разрешить/запретить</label>
-                                </div>
-                                <div class="form-check form-switch mb-5">
-                                    <p class="card-text">Разрешить/запретить отображение номера карты</p>
-                                    <input class="form-check-input" type="checkbox" name="show_card" id="show_card"
-                                           @if($customer->show_card) checked @endif>
-                                    <label class="form-check-label" for="show_card">Разрешить/запретить</label>
-                                </div>
-                                @if($customer->confirmed)
-                                    <p class="card-text">Отменить идентификацию клиента</p>
-                                    <div class="form-check form-switch mb-3">
-                                        <input class="form-check-input" type="checkbox" name="identifying_refused"
-                                               id="identifying_refused">
-                                        <label class="form-check-label" for="identifying_refused">Отменить идентификацию</label>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="control_sum" class="form-label">Установить/Изменить контрольную сумму</label>
-                                        <input type="text" class="form-control" id="control_sum" name="control_sum"
-                                               value="{{ $customer->balance->control_sum_lt }}">
-                                    </div>
-                                @endif
-
-                                <button type="submit" class="btn btn-primary mb-3">Обновить</button>
-                            </form>
+                            <a class="btn btn-primary mb-2" href="{{ route('admin.notices.create', ['id' => $customer->id]) }}"
+                               role="button">Добавить уведомление</a>
+                            @if(count($customer->notices))
+                                <table class="table table-striped table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Id</th>
+                                        <th scope="col">Title</th>
+                                        <th scope="col">Text</th>
+                                        <th scope="col">Статус</th>
+                                        <th scope="col">Дата добавления</th>
+                                        <th scope="col">Дата обновления</th>
+                                        <th scope="col">Действия</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($customer->notices as $notice)
+                                        <tr>
+                                            <th scope="row">{{ $notice->id }}</th>
+                                            <td>{{ $notice->title_lt }}</td>
+                                            <td>{{ $notice->text_lt }}</td>
+                                            <td>
+                                                @if($notice->status)
+                                                    Прочитано
+                                                @else
+                                                    Не прочитано
+                                                @endif
+                                            </td>
+                                            <td>{{ $notice->created_at }}</td>
+                                            <td>{{ $notice->updated_at }}</td>
+                                            <td class="d-flex">
+                                                <a href="{{ route('admin.notices.edit', ['notice' => $notice->id]) }}"
+                                                   class="btn btn-info btn-sm me-1">Редактировать</a>
+                                                <form action="{{ route('admin.notices.destroy', ['notice' => $notice->id]) }}"
+                                                      method="post" class="">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm"
+                                                            onclick="return confirm('Подтвердите удаление')">Удалить</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            @else
+                                <div>Уведомлений нет...</div>
+                            @endif
                         </div>
                     </div>
                 </div>
