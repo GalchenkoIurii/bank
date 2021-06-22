@@ -9,7 +9,7 @@
             <h3>Новая страница</h3>
         </div>
         <div class="card-body">
-            <form action="{{ route('pages.store') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('admin.pages.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
                     <label for="title" class="form-label">Название (Литовский)</label>

@@ -43,7 +43,7 @@ class BlankController extends Controller
 
         Blank::create($request->all());
 
-        return redirect()->route('blanks.index')->with('success', 'Бланк добавлен');
+        return redirect()->route('admin.blanks.index')->with('success', 'Бланк добавлен');
     }
 
     /**
@@ -84,7 +84,7 @@ class BlankController extends Controller
         $blank = Blank::findOrFail($id);
         $blank->update($request->all());
 
-        return redirect()->route('blanks.index')->with('success', 'Бланк обновлен');
+        return redirect()->route('admin.blanks.index')->with('success', 'Бланк обновлен');
     }
 
     /**
@@ -98,7 +98,7 @@ class BlankController extends Controller
         $blank = Blank::find($id);
         $blank->delete();
 
-        return redirect()->route('blanks.index')->with('success', 'Бланк удален');
+        return redirect()->route('admin.blanks.index')->with('success', 'Бланк удален');
     }
 
     public function getBlank($id)

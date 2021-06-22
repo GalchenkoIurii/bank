@@ -30,12 +30,12 @@ jQuery(document).ready(function(){
         $('#customers-table tbody').append(foundElems);
     });
 
-    $('#search-corr-account').change(function(){
-        var searchAccValue = $('#search-corr-account').val();
+    $('#search-personal-code').change(function(){
+        var searchAccValue = $('#search-personal-code').val();
         var foundElems = [];
 
         elems.each(function(index, element){
-            if(element.querySelector('.corr-account').innerText.includes(searchAccValue)) {
+            if(element.querySelector('.personal-code').innerText.includes(searchAccValue)) {
                 foundElems.push(element);
             }
         });

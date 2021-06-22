@@ -56,7 +56,7 @@
                                 @else Нет
                                 @endif</td>
                             <td class="d-flex">
-                                <a href="{{ route('credits.edit', ['credit' => $credit->id]) }}"
+                                <a href="{{ route('admin.credits.edit', ['credit' => $credit->id]) }}"
                                    class="btn btn-info btn-sm me-1">
                                     @if(!$credit->reviewing)
                                         Просмотреть
@@ -64,7 +64,7 @@
                                         Редактировать
                                     @endif
                                 </a>
-                                <form action="{{ route('credits.destroy', ['credit' => $credit->id]) }}" method="post" class="">
+                                <form action="{{ route('admin.credits.destroy', ['credit' => $credit->id]) }}" method="post" class="">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm"

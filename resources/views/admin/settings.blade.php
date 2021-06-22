@@ -9,7 +9,7 @@
             <h3>Управление настройками</h3>
         </div>
         <div class="card-body table-responsive">
-            <a class="btn btn-primary mb-2" href="{{ route('settings.create') }}" role="button">Добавить настройку</a>
+            <a class="btn btn-primary mb-2" href="{{ route('admin.settings.create') }}" role="button">Добавить настройку</a>
             @if(!empty($settings))
                 <table class="table table-striped table-hover">
                     <thead>
@@ -29,9 +29,9 @@
                             <td>{{ $setting->slug }}</td>
                             <td>{{ $setting->value_ru }}</td>
                             <td class="d-flex">
-                                <a href="{{ route('settings.edit', ['setting' => $setting->id]) }}"
+                                <a href="{{ route('admin.settings.edit', ['setting' => $setting->id]) }}"
                                    class="btn btn-info btn-sm me-1">Редактировать</a>
-                                <form action="{{ route('settings.destroy', ['setting' => $setting->id]) }}" method="post" class="">
+                                <form action="{{ route('admin.settings.destroy', ['setting' => $setting->id]) }}" method="post" class="">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm"

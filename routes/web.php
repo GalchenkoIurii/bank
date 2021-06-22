@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BalanceController;
 use App\Http\Controllers\Admin\BlankController;
 use App\Http\Controllers\Admin\CardController;
+use App\Http\Controllers\Admin\ConfirmationController;
 use App\Http\Controllers\Admin\CreditController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\NoticeController;
@@ -148,39 +149,38 @@ Route::get('/logout', [UserController::class, 'logout'])
 /*
  * admin routes
  */
-Route::prefix('admin')->middleware('admin')->group(function() {
-    Route::get('/', [AdminController::class, 'index'])->name('admin.index');
-    // need to remake all resources in one method call
+Route::prefix('admin')->name('admin.')->middleware('admin')
+    ->group(function() {
+    Route::get('/', [AdminController::class, 'index'])->name('index');
 
     Route::resources([
-        '/settings' => SettingController::class,
-        '/cards' => CardController::class,
-        '/credits' => CreditController::class,
-        '/customers' => CustomerController::class,
-        '/pages' => PageController::class,
-        '/notices' => NoticeController::class,
         '/balances' => BalanceController::class,
         '/blanks' => BlankController::class,
+        '/cards' => CardController::class,
+        '/confirmations' => ConfirmationController::class,
+        '/credits' => CreditController::class,
+        '/customers' => CustomerController::class,
+        '/notices' => NoticeController::class,
+        '/pages' => PageController::class,
+        '/settings' => SettingController::class,
     ]);
 
 
 //    Route::resource('/customers', CustomerController::class); //
 //    Route::resource('/notices', NoticeController::class); //
 //    Route::resource('/balances', BalanceController::class); //
-//    Route::resource('/blanks', BlankController::class);
 
     // move balances, notices, customers to one route customers
 
-    // need to add identification requests route
 
     Route::get('/get-blank/{id}', [BlankController::class, 'getBlank'])
-        ->name('admin.get.blank');
+        ->name('get.blank');
     Route::get('/balances/add/{id}', [BalanceController::class, 'add'])
-        ->name('admin.balance.add');
+        ->name('balance.add');
     Route::put('/balances/add/{id}', [BalanceController::class, 'addUpdate'])
-        ->name('admin.balance.add.update');
+        ->name('balance.add.update');
     Route::get('/balances/sub/{id}', [BalanceController::class, 'sub'])
-        ->name('admin.balance.sub');
+        ->name('balance.sub');
     Route::put('/balances/sub/{id}', [BalanceController::class, 'subUpdate'])
-        ->name('admin.balance.sub.update');
+        ->name('balance.sub.update');
 });

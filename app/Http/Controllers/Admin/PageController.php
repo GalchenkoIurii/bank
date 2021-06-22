@@ -62,7 +62,7 @@ class PageController extends Controller
 
         $page = Page::create($data);
 
-        return redirect()->route('pages.index')->with('success', 'Страница добавлена');
+        return redirect()->route('admin.pages.index')->with('success', 'Страница добавлена');
     }
 
     /**
@@ -124,7 +124,7 @@ class PageController extends Controller
 
         $page->update($data);
 
-        return redirect()->route('pages.index')->with('success', 'Страница обновлена');
+        return redirect()->route('admin.pages.index')->with('success', 'Страница обновлена');
     }
 
     /**
@@ -138,6 +138,6 @@ class PageController extends Controller
         $page = Page::find($id);
         $page->delete();
 
-        return redirect()->route('pages.index')->with('success', 'Страница удалена');
+        return redirect()->route('admin.pages.index')->with('success', 'Страница удалена');
     }
 }

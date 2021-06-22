@@ -35,7 +35,8 @@
                             <td>{{ $card->number }}</td>
                             <td>{{ $card->name }}</td>
                             <td class="d-flex">
-                                <a href="{{ route('cards.edit', ['card' => $card->id]) }}" class="btn btn-info btn-sm me-1">Редактировать</a>
+                                <a href="{{ route('admin.cards.edit', ['card' => $card->id]) }}"
+                                   class="btn btn-info btn-sm me-1">Редактировать</a>
                                 {{--<form action="{{ route('cards.destroy', ['card' => $card->id]) }}" method="post" class="">--}}
                                     {{--@csrf--}}
                                     {{--@method('DELETE')--}}

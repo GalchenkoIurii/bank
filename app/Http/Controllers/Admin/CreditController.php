@@ -135,7 +135,7 @@ class CreditController extends Controller
 
         $credit->update($data);
 
-        return redirect()->route('credits.edit', ['credit' => $id])->with('success', 'Данные сохранены');
+        return redirect()->route('admin.credits.edit', ['credit' => $id])->with('success', 'Данные сохранены');
     }
 
     /**
@@ -148,6 +148,6 @@ class CreditController extends Controller
     {
         $credit = Credit::findOrFail($id);
         $credit->delete();
-        return redirect()->route('credits.index')->with('success', 'Заявка удалена');
+        return redirect()->route('admin.credits.index')->with('success', 'Заявка удалена');
     }
 }

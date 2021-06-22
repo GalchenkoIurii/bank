@@ -29,6 +29,11 @@
             user-select: none;
         }
 
+        .sidebar .nav-link .feather {
+            width: 20px;
+            height: 20px;
+        }
+
         @media (min-width: 768px) {
             .bd-placeholder-img-lg {
                 font-size: 3.5rem;
@@ -93,6 +98,12 @@
                         <a class="nav-link" href="{{ route('balances.index') }}">
                             <span data-feather="bar-chart-2"></span>
                             Балансы
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('confirmations.index') }}">
+                            <span data-feather="user-check"></span>
+                            Заявки на идентификацию
                         </a>
                     </li>
                     <li class="nav-item">

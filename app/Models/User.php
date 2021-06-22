@@ -27,8 +27,14 @@ class User extends Authenticatable
         'patronymic',
         'birth_date',
         'gender',
+        'is_admin',
+        'is_banned',
         'need_confirmation',
         'confirmation',
+        'confirmed',
+        'confirmed_at',
+        'show_card',
+        'withdrawable',
     ];
 
     /**

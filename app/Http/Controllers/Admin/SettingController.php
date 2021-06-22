@@ -44,7 +44,7 @@ class SettingController extends Controller
 
         Setting::create($request->all());
 
-        return redirect()->route('settings.index')->with('success', 'Настройка добавлена');
+        return redirect()->route('admin.settings.index')->with('success', 'Настройка добавлена');
     }
 
     /**
@@ -87,7 +87,7 @@ class SettingController extends Controller
         $setting = Setting::find($id);
         $setting->update($request->all());
 
-        return redirect()->route('settings.index')->with('success', 'Настройка обновлена');
+        return redirect()->route('admin.settings.index')->with('success', 'Настройка обновлена');
     }
 
     /**
@@ -101,6 +101,6 @@ class SettingController extends Controller
         $setting = Setting::findOrFail($id);
         $setting->delete();
 
-        return redirect()->route('settings.index')->with('success', 'Настройка удалена');
+        return redirect()->route('admin.settings.index')->with('success', 'Настройка удалена');
     }
 }

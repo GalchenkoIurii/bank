@@ -16,7 +16,7 @@
         </div>
         <div class="card-body">
             @if($credit->reviewing && !$credit->result)
-            <form action="{{ route('credits.update', ['credit' => $credit->id]) }}" method="post">
+            <form action="{{ route('admin.credits.update', ['credit' => $credit->id]) }}" method="post">
                 @csrf
                 @method('PUT')
 

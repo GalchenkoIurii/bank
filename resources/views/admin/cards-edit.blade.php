@@ -9,7 +9,7 @@
             <h3>{{ $card->title }}</h3>
         </div>
         <div class="card-body">
-            <form action="{{ route('cards.update', ['card' => $card->id]) }}" method="post">
+            <form action="{{ route('admin.cards.update', ['card' => $card->id]) }}" method="post">
                 @csrf
                 @method('PUT')
                 <div class="mb-3">

@@ -9,7 +9,7 @@
             <h3>Новая карта</h3>
         </div>
         <div class="card-body">
-            <form action="{{ route('cards.store') }}" method="post">
+            <form action="{{ route('admin.cards.store') }}" method="post">
                 @csrf
                 <div class="mb-3">
                     <label for="type" class="form-label">Тип</label>

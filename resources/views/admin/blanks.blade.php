@@ -9,7 +9,7 @@
             <h3>Управление бланками</h3>
         </div>
         <div class="card-body table-responsive">
-            <a class="btn btn-primary mb-2" href="{{ route('blanks.create') }}" role="button">Добавить бланк</a>
+            <a class="btn btn-primary mb-2" href="{{ route('admin.blanks.create') }}" role="button">Добавить бланк</a>
             @if(count($blanks))
                 <table class="table table-striped table-hover">
                     <thead>
@@ -29,9 +29,9 @@
                             <td>{{ $blank->slug }}</td>
                             <td>{{ $blank->text_ru }}</td>
                             <td class="d-flex">
-                                <a href="{{ route('blanks.edit', ['blank' => $blank->id]) }}"
+                                <a href="{{ route('admin.blanks.edit', ['blank' => $blank->id]) }}"
                                    class="btn btn-info btn-sm me-1">Редактировать</a>
-                                <form action="{{ route('blanks.destroy', ['blank' => $blank->id]) }}" method="post" class="">
+                                <form action="{{ route('admin.blanks.destroy', ['blank' => $blank->id]) }}" method="post" class="">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm"

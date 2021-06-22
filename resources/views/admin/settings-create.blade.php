@@ -9,7 +9,7 @@
             <h3>Новая настройка</h3>
         </div>
         <div class="card-body">
-            <form action="{{ route('settings.store') }}" method="post">
+            <form action="{{ route('admin.settings.store') }}" method="post">
                 @csrf
                 <div class="mb-3">
                     <label for="slug" class="form-label">Слаг</label>

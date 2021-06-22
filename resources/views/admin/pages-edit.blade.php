@@ -9,7 +9,7 @@
             <h3>{{ $page->title_ru }}</h3>
         </div>
         <div class="card-body">
-            <form action="{{ route('pages.update', ['page' => $page->id]) }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('admin.pages.update', ['page' => $page->id]) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="mb-3">

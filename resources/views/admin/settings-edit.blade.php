@@ -9,7 +9,7 @@
             <h3>{{ $setting->title }}</h3>
         </div>
         <div class="card-body">
-            <form action="{{ route('settings.update', ['setting' => $setting->id]) }}" method="post">
+            <form action="{{ route('admin.settings.update', ['setting' => $setting->id]) }}" method="post">
                 @csrf
                 @method('PUT')
                 <div class="mb-3">

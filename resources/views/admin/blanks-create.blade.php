@@ -9,7 +9,7 @@
             <h3>Новый бланк</h3>
         </div>
         <div class="card-body">
-            <form action="{{ route('blanks.store') }}" method="post">
+            <form action="{{ route('admin.blanks.store') }}" method="post">
                 @csrf
                 <div class="mb-3">
                     <label for="slug" class="form-label">Слаг</label>

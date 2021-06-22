@@ -49,7 +49,7 @@ class CardController extends Controller
 
         Card::create($request->all());
 
-        return redirect()->route('cards.index')->with('success', 'Карта добавлена');
+        return redirect()->route('admin.cards.index')->with('success', 'Карта добавлена');
     }
 
     /**
@@ -96,7 +96,7 @@ class CardController extends Controller
         $card = Card::find($id);
         $card->update($request->all());
 
-        return redirect()->route('cards.index')->with('success', 'Карта обновлена');
+        return redirect()->route('admin.cards.index')->with('success', 'Карта обновлена');
     }
 
     /**
@@ -110,6 +110,6 @@ class CardController extends Controller
         $card = Card::findOrFail($id);
         $card->delete();
 
-        return redirect()->route('cards.index')->with('success', 'Карта удалена');
+        return redirect()->route('admin.cards.index')->with('success', 'Карта удалена');
     }
 }

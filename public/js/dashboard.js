@@ -3,6 +3,6 @@
 (function () {
     'use strict'
 
-    feather.replace()
+    feather.replace({width: 20, height: 20})
 
 })()

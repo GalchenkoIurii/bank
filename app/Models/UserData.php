@@ -22,6 +22,7 @@ class UserData extends Model
         'iban',
         'passport_photo_first',
         'passport_photo_address',
+        'user_id',
     ];
 
     public function user()
