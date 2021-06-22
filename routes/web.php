@@ -168,17 +168,18 @@ Route::prefix('admin')->name('admin.')->middleware('admin')
 
 //    Route::resource('/customers', CustomerController::class); //
 //    Route::resource('/notices', NoticeController::class); //
-//    Route::resource('/balances', BalanceController::class); //
 
     // move balances, notices, customers to one route customers
 
 
     Route::get('/get-blank/{id}', [BlankController::class, 'getBlank'])
         ->name('get.blank');
+
     Route::get('/balances/add/{id}', [BalanceController::class, 'add'])
         ->name('balance.add');
     Route::put('/balances/add/{id}', [BalanceController::class, 'addUpdate'])
         ->name('balance.add.update');
+
     Route::get('/balances/sub/{id}', [BalanceController::class, 'sub'])
         ->name('balance.sub');
     Route::put('/balances/sub/{id}', [BalanceController::class, 'subUpdate'])

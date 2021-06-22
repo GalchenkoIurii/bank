@@ -106,12 +106,8 @@ class BlankController extends Controller
         $blank = Blank::find($id);
 
         return response()->json([
-            'title_lt' => $blank->title_lt,
-            'title_en' => $blank->title_en,
-            'title_ru' => $blank->title_ru,
-            'text_lt' => $blank->text_lt,
-            'text_en' => $blank->text_en,
-            'text_ru' => $blank->text_ru
+            'title' => $blank->title_lt,
+            'text' => $blank->text_lt
         ]);
     }
 }

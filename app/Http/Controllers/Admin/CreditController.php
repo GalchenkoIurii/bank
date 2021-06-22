@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Blank;
 use App\Models\Credit;
 use App\Models\Notice;
+use App\Models\Operation;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -88,9 +89,6 @@ class CreditController extends Controller
 
         $credit = Credit::findOrFail($id);
 
-
-        // need to implement Notices and Blanks
-
         if ($data['result'] === '0') {
             $data['reviewing'] = 0;
 
@@ -119,17 +117,19 @@ class CreditController extends Controller
                 . '. <a href="' . route('credit.agreement', ['id' => $id])
                 . '" target="_blank"><strong>Подробности моего кредита</strong></a>';
             $notice = [
-                'title' => $notice_blank->title,
-                'text' => $notice_text,
+                'title_lt' => $notice_blank->title_lt,
+                'text_lt' => $notice_text,
                 'user_id' => $credit['user_id']
             ];
             Notice::create($notice);
 
             $blank_balance_add = Blank::where('slug', 'balance_add')->first();
             $operation = [
-                'title' => $blank_balance_add->title,
-                'description' => $blank_balance_add->text,
-                'sum' => $data['credit_sum'] . ' RUB',
+                'title_lt' => $blank_balance_add->title_lt,
+                'description_lt' => $blank_balance_add->text_lt,
+                'type' => 'credit',
+                'sum' => $data['credit_sum'],
+                'currency' => 'RUB',
                 'user_id' => $credit['user_id']
             ];
             Operation::create($operation);

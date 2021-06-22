@@ -96,12 +96,12 @@
                             Клиенты
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.balances.index') }}">
-                            <span data-feather="bar-chart-2"></span>
-                            Балансы
-                        </a>
-                    </li>
+                    {{--<li class="nav-item">--}}
+                        {{--<a class="nav-link" href="{{ route('admin.balances.index') }}">--}}
+                            {{--<span data-feather="bar-chart-2"></span>--}}
+                            {{--Балансы--}}
+                        {{--</a>--}}
+                    {{--</li>--}}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.confirmations.index') }}">
                             <span data-feather="user-check"></span>
@@ -114,12 +114,12 @@
                             Заявки на кредит
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.notices.index') }}">
-                            <span data-feather="message-square"></span>
-                            Уведомления
-                        </a>
-                    </li>
+                    {{--<li class="nav-item">--}}
+                        {{--<a class="nav-link" href="{{ route('admin.notices.index') }}">--}}
+                            {{--<span data-feather="message-square"></span>--}}
+                            {{--Уведомления--}}
+                        {{--</a>--}}
+                    {{--</li>--}}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.blanks.index') }}">
                             <span data-feather="layers"></span>

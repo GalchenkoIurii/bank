@@ -65,4 +65,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Balance::class);
     }
+
+    public function notices()
+    {
+        return $this->hasMany(Notice::class);
+    }
 }
