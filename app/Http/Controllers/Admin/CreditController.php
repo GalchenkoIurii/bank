@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Blank;
 use App\Models\Credit;
+use App\Models\Notice;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -17,7 +19,6 @@ class CreditController extends Controller
     public function index()
     {
         $credits = Credit::with('creditSetting')->orderByDesc('id')->get();
-//        $credits = Credit::orderByDesc('id')->get();
 
         return view('admin.credits', compact('credits'));
     }
@@ -64,11 +65,8 @@ class CreditController extends Controller
     {
         $credit = Credit::findOrFail($id);
 
-        // need to implement Blanks
-//        $credit_agreement = Blank::where('slug', 'credit_agreement')->first();
-//        $payments_table = Blank::where('slug', 'payments_table')->first();
-        $credit_agreement = null;
-        $payments_table = null;
+        $credit_agreement = Blank::where('slug', 'credit_agreement')->first();
+        $payments_table = Blank::where('slug', 'payments_table')->first();
 
         return view('admin.credits-edit', compact('credit', 'credit_agreement', 'payments_table'));
     }
@@ -95,13 +93,16 @@ class CreditController extends Controller
 
         if ($data['result'] === '0') {
             $data['reviewing'] = 0;
-//            $notice_blank = Blank::where('slug', 'credit_refused')->first();
-//            $notice = [
-//                'title' => $notice_blank->title,
-//                'text' => $notice_blank->text,
-//                'user_id' => $credit['user_id']
-//            ];
-//            Notice::create($notice);
+
+            $notice_blank = Blank::where('slug', 'credit_refused')->first();
+
+            $notice = [
+                'title_lt' => $notice_blank->title_lt,
+                'text_lt' => $notice_blank->text_lt,
+                'user_id' => $credit['user_id']
+            ];
+            Notice::create($notice);
+
         } elseif ($data['result'] === '1') {
             $data['reviewing'] = 0;
 
@@ -112,25 +113,26 @@ class CreditController extends Controller
 
             $user->balance()->update($balance);
 
-//            $notice_blank = Blank::where('slug', 'credit_approved')->first();
-//            $notice_text = $notice_blank->text . ' на сумму: ' . $data['credit_sum']
-//                . '. <a href="' . route('credit.agreement', ['id' => $id])
-//                . '" target="_blank"><strong>Подробности моего кредита</strong></a>';
-//            $notice = [
-//                'title' => $notice_blank->title,
-//                'text' => $notice_text,
-//                'user_id' => $credit['user_id']
-//            ];
-//            Notice::create($notice);
+            $notice_blank = Blank::where('slug', 'credit_approved')->first();
 
-//            $blank_balance_add = Blank::where('slug', 'balance_add')->first();
-//            $operation = [
-//                'title' => $blank_balance_add->title,
-//                'description' => $blank_balance_add->text,
-//                'sum' => $data['credit_sum'] . ' RUB',
-//                'user_id' => $credit['user_id']
-//            ];
-//            Operation::create($operation);
+            $notice_text = $notice_blank->text_lt . ' на сумму: ' . $data['credit_sum']
+                . '. <a href="' . route('credit.agreement', ['id' => $id])
+                . '" target="_blank"><strong>Подробности моего кредита</strong></a>';
+            $notice = [
+                'title' => $notice_blank->title,
+                'text' => $notice_text,
+                'user_id' => $credit['user_id']
+            ];
+            Notice::create($notice);
+
+            $blank_balance_add = Blank::where('slug', 'balance_add')->first();
+            $operation = [
+                'title' => $blank_balance_add->title,
+                'description' => $blank_balance_add->text,
+                'sum' => $data['credit_sum'] . ' RUB',
+                'user_id' => $credit['user_id']
+            ];
+            Operation::create($operation);
         }
 
         $credit->update($data);

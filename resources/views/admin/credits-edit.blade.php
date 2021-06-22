@@ -83,7 +83,7 @@
                                 @if(isset($credit->credit_agreement))
                                     {{ $credit->credit_agreement }}
                                 @else
-{{--                                    {{ $credit_agreement->text }}--}}
+                                    {{ $credit_agreement->text_lt }}
                                 @endif
                             </textarea>
                         </div>
@@ -93,7 +93,7 @@
                                 @if(isset($credit->payments_table))
                                     {{ $credit->payments_table }}
                                 @else
-{{--                                    {{ $payments_table->text }}--}}
+                                    {{ $payments_table->text_lt }}
                                 @endif
                             </textarea>
                         </div>

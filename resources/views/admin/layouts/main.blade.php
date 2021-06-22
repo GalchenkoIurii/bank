@@ -9,7 +9,8 @@
     <title>Админпанель</title>
 
 <!-- Bootstrap core CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="https://getbootstrap.com/docs/5.0/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
@@ -48,7 +49,8 @@
 
 <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
     <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="{{ route('home') }}">Перейти на сайт</a>
-    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
@@ -71,55 +73,55 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('settings.index') }}">
+                        <a class="nav-link" href="{{ route('admin.settings.index') }}">
                             <span data-feather="settings"></span>
                             Основные настройки
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('pages.index') }}">
+                        <a class="nav-link" href="{{ route('admin.pages.index') }}">
                             <span data-feather="file-text"></span>
                             Страницы
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('cards.index') }}">
+                        <a class="nav-link" href="{{ route('admin.cards.index') }}">
                             <span data-feather="credit-card"></span>
                             Карты
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('customers.index') }}">
+                        <a class="nav-link" href="{{ route('admin.customers.index') }}">
                             <span data-feather="users"></span>
                             Клиенты
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('balances.index') }}">
+                        <a class="nav-link" href="{{ route('admin.balances.index') }}">
                             <span data-feather="bar-chart-2"></span>
                             Балансы
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('confirmations.index') }}">
+                        <a class="nav-link" href="{{ route('admin.confirmations.index') }}">
                             <span data-feather="user-check"></span>
                             Заявки на идентификацию
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('credits.index') }}">
+                        <a class="nav-link" href="{{ route('admin.credits.index') }}">
                             <span data-feather="dollar-sign"></span>
                             Заявки на кредит
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('notices.index') }}">
+                        <a class="nav-link" href="{{ route('admin.notices.index') }}">
                             <span data-feather="message-square"></span>
                             Уведомления
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('blanks.index') }}">
+                        <a class="nav-link" href="{{ route('admin.blanks.index') }}">
                             <span data-feather="layers"></span>
                             Бланки
                         </a>
@@ -173,10 +175,13 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
+        integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
 <script src="{{ asset('js/dashboard.js') }}"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+        crossorigin="anonymous"></script>
 <script src="{{ asset('js/admin.js') }}"></script>
 
 @yield('scripts')

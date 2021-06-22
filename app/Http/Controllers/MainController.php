@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blank;
 use App\Models\Credit;
 use App\Models\CreditSetting;
+use App\Models\Notice;
 use App\Models\Page;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -25,7 +27,6 @@ class MainController extends Controller
         $balance_eur = round($balance->balance_eur, 2);
         $operations = null;
 
-
         // need to implement:
         // getting user's operations
 
@@ -39,7 +40,7 @@ class MainController extends Controller
     public function lending()
     {
         $user_credits_reviewing = Credit::where([
-            ['user_id', '=', Auth::user()->id],
+            ['user_id', '=', Auth::id()],
             ['reviewing', '=', 1]
         ])->get();
         $has_reviewing_credits = false;
@@ -78,18 +79,17 @@ class MainController extends Controller
 
         $data = $request->all();
 
-        $data['user_id'] = ($data['user_id'] == Auth::user()->id) ? $data['user_id'] : Auth::user()->id;
+        $data['user_id'] = ($data['user_id'] == Auth::id()) ? $data['user_id'] : Auth::id();
 
         Credit::create($data);
 
-        // need to implement Blanks and Notices logic
-//        $notice_blank = Blank::where('slug', 'credit_request_sent')->first();
-//        $notice = [
-//            'title' => $notice_blank->title,
-//            'text' => $notice_blank->text,
-//            'user_id' => Auth::user()->id
-//        ];
-//        Notice::create($notice);
+        $notice_blank = Blank::where('slug', 'credit_request_sent')->first();
+        $notice = [
+            'title_lt' => $notice_blank->title_lt,
+            'text_lt' => $notice_blank->text_lt,
+            'user_id' => Auth::id()
+        ];
+        Notice::create($notice);
 
         return redirect()->route('lending')->with('success', 'Заявка отправлена на проверку');
     }
@@ -109,7 +109,7 @@ class MainController extends Controller
     public function convert()
     {
         if (auth()->check()) {
-            $user = User::find(Auth::user()->id);
+            $user = User::find(Auth::id());
 
             if ($user->is_banned) {
                 return redirect()->route('logout');
@@ -126,7 +126,7 @@ class MainController extends Controller
 
     public function profile()
     {
-        $user = User::find(Auth::user()->id);
+        $user = User::find(Auth::id());
         $balance = $user->balance;
 
         $is_user_confirmed = ($user->confirmed) ? true : false;
