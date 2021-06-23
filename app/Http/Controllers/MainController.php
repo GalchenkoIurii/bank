@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blank;
+use App\Models\Check;
 use App\Models\Credit;
 use App\Models\CreditSetting;
 use App\Models\Notice;
 use App\Models\Page;
+use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -99,6 +101,28 @@ class MainController extends Controller
         $credit_info = Credit::findOrFail($id);
 
         return view('credit-agreement', compact('credit_info'));
+    }
+
+    public function check($id)
+    {
+        $site_settings = Setting::whereIn('slug', ['site_name', 'address', 'email', 'tel'])->get();
+
+        $settings = [
+            'site_name' => null,
+            'tel' => null,
+            'email' => null,
+            'address' => null,
+        ];
+
+        foreach($site_settings as $site_setting) {
+            if (array_key_exists($site_setting->slug, $settings)) {
+                $settings[$site_setting->slug] = $site_setting;
+            }
+        }
+
+        $settings['check_info'] = Check::with('operation')->find($id);
+
+        return view('check', $settings);
     }
 
     public function services()

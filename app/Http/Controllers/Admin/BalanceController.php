@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Blank;
+use App\Models\Check;
 use App\Models\Notice;
 use App\Models\Operation;
 use App\Models\Setting;
@@ -120,24 +121,7 @@ class BalanceController extends Controller
         if (isset($requestData['balance_rur'])) {
             $balances['balance_rur'] += round((float) $requestData['balance_rur'], 2);
 
-            // need to implement Checks
-//            $check = Check::create([
-//                'title' => $requestData['title'],
-//                'sum' => $requestData['balance_rur'] . ' RUB.',
-//                'user_id' => $customer->id
-//            ]);
-
-            $notice_text = $requestData['text'] . ' ' . round((float) $requestData['balance_rur'], 2) . ' RUB. <br>'
-                . ' <a href="' . route('check', ['id' => 'check-id'])
-                . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
-            $notice = [
-                'title_lt' => $requestData['title'],
-                'text_lt' => $notice_text,
-                'user_id' => $customer->id
-            ];
-            Notice::create($notice);
-
-            $operation = [
+            $operation_data = [
                 'title_lt' => $requestData['title'],
                 'description_lt' => $requestData['text'],
                 'type' => 'balance_add',
@@ -145,19 +129,15 @@ class BalanceController extends Controller
                 'currency' => 'RUB',
                 'user_id' => $customer->id
             ];
-            Operation::create($operation);
-        }
-        if (isset($requestData['balance_usd'])) {
-            $balances['balance_usd'] += round((float) $requestData['balance_usd'], 2);
+            $operation = Operation::create($operation_data);
 
-//            $check = Check::create([
-//                'title' => $requestData['title'],
-//                'sum' => $requestData['balance_usd'] . ' USD.',
-//                'user_id' => $customer->id
-//            ]);
+            $operation->check()->create([
+                'title_lt' => $requestData['title'],
+                'sum' => round((float) $requestData['balance_rur'], 2),
+            ]);
 
-            $notice_text = $requestData['text'] . ' ' . round((float) $requestData['balance_usd'], 2) . ' USD. <br>'
-                . ' <a href="' . route('check', ['id' => 'check-id'])
+            $notice_text = $requestData['text'] . ' ' . round((float) $requestData['balance_rur'], 2) . ' RUB. <br>'
+                . ' <a href="' . route('check', ['id' => $operation->check->id])
                 . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
             $notice = [
                 'title_lt' => $requestData['title'],
@@ -165,8 +145,11 @@ class BalanceController extends Controller
                 'user_id' => $customer->id
             ];
             Notice::create($notice);
+        }
+        if (isset($requestData['balance_usd'])) {
+            $balances['balance_usd'] += round((float) $requestData['balance_usd'], 2);
 
-            $operation = [
+            $operation_data = [
                 'title_lt' => $requestData['title'],
                 'description_lt' => $requestData['text'],
                 'type' => 'balance_add',
@@ -174,19 +157,15 @@ class BalanceController extends Controller
                 'currency' => 'USD',
                 'user_id' => $customer->id
             ];
-            Operation::create($operation);
-        }
-        if (isset($requestData['balance_eur'])) {
-            $balances['balance_eur'] += round((float) $requestData['balance_eur'], 2);
+            $operation = Operation::create($operation_data);
 
-//            $check = Check::create([
-//                'title' => $requestData['title'],
-//                'sum' => $requestData['balance_eur'] . ' EUR.',
-//                'user_id' => $customer->id
-//            ]);
+            $operation->check()->create([
+                'title_lt' => $requestData['title'],
+                'sum' => round((float) $requestData['balance_usd'], 2),
+            ]);
 
-            $notice_text = $requestData['text'] . ' ' . round((float) $requestData['balance_eur'], 2) . ' EUR. <br>'
-                . ' <a href="' . route('check', ['id' => 'check-id'])
+            $notice_text = $requestData['text'] . ' ' . round((float) $requestData['balance_usd'], 2) . ' USD. <br>'
+                . ' <a href="' . route('check', ['id' => $operation->check->id])
                 . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
             $notice = [
                 'title_lt' => $requestData['title'],
@@ -194,8 +173,11 @@ class BalanceController extends Controller
                 'user_id' => $customer->id
             ];
             Notice::create($notice);
+        }
+        if (isset($requestData['balance_eur'])) {
+            $balances['balance_eur'] += round((float) $requestData['balance_eur'], 2);
 
-            $operation = [
+            $operation_data = [
                 'title_lt' => $requestData['title'],
                 'description_lt' => $requestData['text'],
                 'type' => 'balance_add',
@@ -203,7 +185,22 @@ class BalanceController extends Controller
                 'currency' => 'EUR',
                 'user_id' => $customer->id
             ];
-            Operation::create($operation);
+            $operation = Operation::create($operation_data);
+
+            $operation->check()->create([
+                'title_lt' => $requestData['title'],
+                'sum' => round((float) $requestData['balance_eur'], 2),
+            ]);
+
+            $notice_text = $requestData['text'] . ' ' . round((float) $requestData['balance_eur'], 2) . ' EUR. <br>'
+                . ' <a href="' . route('check', ['id' => $operation->check->id])
+                . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
+            $notice = [
+                'title_lt' => $requestData['title'],
+                'text_lt' => $notice_text,
+                'user_id' => $customer->id
+            ];
+            Notice::create($notice);
         }
 
         $customer->balance()->update($balances);
@@ -227,24 +224,7 @@ class BalanceController extends Controller
             if ($balances['balance_rur'] < 0) {
                 return back()->with('error', 'Сумма списания превышает сумму баланса');
             } else {
-
-//                $check = Check::create([
-//                    'title' => $requestData['title'],
-//                    'sum' => $requestData['balance_rur'] . ' RUB',
-//                    'user_id' => $customer->id
-//                ]);
-
-                $notice_text = $requestData['text']  . ' ' . round((float) $requestData['balance_rur'], 2) . ' RUB. <br>'
-                    . ' <a href="' . route('check', ['id' => 'check-id'])
-                    . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
-                $notice = [
-                    'title_lt' => $requestData['title'],
-                    'text_lt' => $notice_text,
-                    'user_id' => $customer->id
-                ];
-                Notice::create($notice);
-
-                $operation = [
+                $operation_data = [
                     'title_lt' => $requestData['title'],
                     'description_lt' => $requestData['text'],
                     'type' => 'balance_sub',
@@ -252,7 +232,22 @@ class BalanceController extends Controller
                     'currency' => 'RUB',
                     'user_id' => $customer->id
                 ];
-                Operation::create($operation);
+                $operation = Operation::create($operation_data);
+
+                $operation->check()->create([
+                    'title_lt' => $requestData['title'],
+                    'sum' => round((float) $requestData['balance_rur'], 2),
+                ]);
+
+                $notice_text = $requestData['text']  . ' ' . round((float) $requestData['balance_rur'], 2) . ' RUB. <br>'
+                    . ' <a href="' . route('check', ['id' => $operation->check->id])
+                    . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
+                $notice = [
+                    'title_lt' => $requestData['title'],
+                    'text_lt' => $notice_text,
+                    'user_id' => $customer->id
+                ];
+                Notice::create($notice);
             }
         }
         if (isset($requestData['balance_usd'])) {
@@ -260,24 +255,7 @@ class BalanceController extends Controller
             if ($balances['balance_usd'] < 0) {
                 return back()->with('error', 'Сумма списания превышает сумму баланса');
             } else {
-
-//                $check = Check::create([
-//                    'title' => $requestData['title'],
-//                    'sum' => $requestData['balance_usd'] . ' USD.',
-//                    'user_id' => $customer->id
-//                ]);
-
-                $notice_text = $requestData['text'] . ' ' . round((float) $requestData['balance_usd'], 2) . ' USD. <br>'
-                    . ' <a href="' . route('check', ['id' => 'check-id'])
-                    . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
-                $notice = [
-                    'title_lt' => $requestData['title'],
-                    'text_lt' => $notice_text,
-                    'user_id' => $customer->id
-                ];
-                Notice::create($notice);
-
-                $operation = [
+                $operation_data = [
                     'title_lt' => $requestData['title'],
                     'description_lt' => $requestData['text'],
                     'type' => 'balance_sub',
@@ -285,23 +263,15 @@ class BalanceController extends Controller
                     'currency' => 'USD',
                     'user_id' => $customer->id
                 ];
-                Operation::create($operation);
-            }
-        }
-        if (isset($requestData['balance_eur'])) {
-            $balances['balance_eur'] -= round((float) $requestData['balance_eur'], 2);
-            if ($balances['balance_eur'] < 0) {
-                return back()->with('error', 'Сумма списания превышает сумму баланса');
-            } else {
+                $operation = Operation::create($operation_data);
 
-//                $check = Check::create([
-//                    'title' => $requestData['title'],
-//                    'sum' => $requestData['balance_eur'] . ' EUR.',
-//                    'user_id' => $customer->id
-//                ]);
+                $operation->check()->create([
+                    'title_lt' => $requestData['title'],
+                    'sum' => round((float) $requestData['balance_usd'], 2),
+                ]);
 
-                $notice_text = $requestData['text'] . ' ' . round((float) $requestData['balance_eur'], 2) . ' EUR. <br>'
-                    . ' <a href="' . route('check', ['id' => 'check-id'])
+                $notice_text = $requestData['text'] . ' ' . round((float) $requestData['balance_usd'], 2) . ' USD. <br>'
+                    . ' <a href="' . route('check', ['id' => $operation->check->id])
                     . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
                 $notice = [
                     'title_lt' => $requestData['title'],
@@ -309,8 +279,14 @@ class BalanceController extends Controller
                     'user_id' => $customer->id
                 ];
                 Notice::create($notice);
-
-                $operation = [
+            }
+        }
+        if (isset($requestData['balance_eur'])) {
+            $balances['balance_eur'] -= round((float) $requestData['balance_eur'], 2);
+            if ($balances['balance_eur'] < 0) {
+                return back()->with('error', 'Сумма списания превышает сумму баланса');
+            } else {
+                $operation_data = [
                     'title_lt' => $requestData['title'],
                     'description_lt' => $requestData['text'],
                     'type' => 'balance_sub',
@@ -318,7 +294,22 @@ class BalanceController extends Controller
                     'currency' => 'EUR',
                     'user_id' => $customer->id
                 ];
-                Operation::create($operation);
+                $operation = Operation::create($operation_data);
+
+                $operation->check()->create([
+                    'title_lt' => $requestData['title'],
+                    'sum' => round((float) $requestData['balance_eur'], 2),
+                ]);
+
+                $notice_text = $requestData['text'] . ' ' . round((float) $requestData['balance_eur'], 2) . ' EUR. <br>'
+                    . ' <a href="' . route('check', ['id' => $operation->check->id])
+                    . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
+                $notice = [
+                    'title_lt' => $requestData['title'],
+                    'text_lt' => $notice_text,
+                    'user_id' => $customer->id
+                ];
+                Notice::create($notice);
             }
         }
 

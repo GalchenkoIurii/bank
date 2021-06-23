@@ -124,7 +124,7 @@ class CreditController extends Controller
             Notice::create($notice);
 
             $blank_balance_add = Blank::where('slug', 'balance_add')->first();
-            $operation = [
+            $operation_data = [
                 'title_lt' => $blank_balance_add->title_lt,
                 'description_lt' => $blank_balance_add->text_lt,
                 'type' => 'credit',
@@ -132,7 +132,12 @@ class CreditController extends Controller
                 'currency' => 'RUB',
                 'user_id' => $credit['user_id']
             ];
-            Operation::create($operation);
+            $operation = Operation::create($operation_data);
+
+            $operation->check()->create([
+                'title_lt' => $blank_balance_add->title_lt,
+                'sum' => round((float) $data['credit_sum'], 2),
+            ]);
         }
 
         $credit->update($data);

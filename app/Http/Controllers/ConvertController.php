@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Balance;
+use App\Models\Blank;
+use App\Models\Check;
+use App\Models\Notice;
+use App\Models\Operation;
 use App\Models\User;
 use CentralBankRussian\ExchangeRate\CBRClient;
 use CentralBankRussian\ExchangeRate\Exceptions\ExceptionIncorrectData;
@@ -82,7 +86,7 @@ class ConvertController extends Controller
 
     public function store(Request $request)
     {
-        $user = User::find(Auth::user()->id);
+        $user = User::find(Auth::id());
         $requestData = $request->all();
 
         $balances = [];
@@ -90,10 +94,9 @@ class ConvertController extends Controller
         $balances['balance_usd'] = round((float) $user->balance->balance_usd, 2);
         $balances['balance_eur'] = round((float) $user->balance->balance_eur, 2);
 
-        // need to implement notices
-//        $notice_blank_balance_sub = Blank::where('slug', 'balance_sub')->first();
-//        $notice_blank_balance_add = Blank::where('slug', 'balance_add')->first();
-//        $notice_blank_convert = Blank::where('slug', 'convert')->first();
+        $notice_blank_balance_sub = Blank::where('slug', 'balance_sub')->first();
+        $notice_blank_balance_add = Blank::where('slug', 'balance_add')->first();
+        $notice_blank_convert = Blank::where('slug', 'convert')->first();
 
         $first_currency_sum = round((float)$requestData['first_currency_sum'], 2);
         $first_currency = $requestData['first_currency'];
@@ -140,35 +143,33 @@ class ConvertController extends Controller
                     if ($balances['balance_rur'] < 0) {
                         return back()->with('error', 'Сумма списания превышает сумму баланса');
                     } else {
-//                        $balances['balance_rur'] = (string) $balances['balance_rur'];
                         $balances['balance_usd'] += round($second_currency_sum, 2);
-//                        $balances['balance_usd'] = (string) $balances['balance_usd'];
 
-                        // need to implement checks, notices, operations
-//                        $check = Check::create([
-//                            'title' => $notice_blank_convert['title'],
-//                            'sum' => $second_currency_sum . ' USD',
-//                            'user_id' => $customer->id
-//                        ]);
+                        $operation_data = [
+                            'title_lt' => $notice_blank_convert->title_lt,
+                            'description_lt' => $notice_blank_convert->text_lt,
+                            'type' => 'currency_exchange',
+                            'sum' => round((float) $second_currency_sum, 2),
+                            'currency' => 'USD',
+                            'user_id' => $user->id
+                        ];
+                        $operation = Operation::create($operation_data);
 
-//                        $notice_text = $notice_blank_balance_sub->text . ' ' . $first_currency_sum . ' RUB <br>'
-//                            . $notice_blank_balance_add->text . ' ' . $second_currency_sum . ' USD <br>'
-//                            . '. <a href="' . route('check', ['id' => $check->id])
-//                            . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
-//                        $notice = [
-//                            'title' => $notice_blank_convert['title'],
-//                            'text' => $notice_text,
-//                            'user_id' => $customer->id
-//                        ];
-//                        Notice::create($notice);
-//
-//                        $operation = [
-//                            'title' => $notice_blank_convert['title'],
-//                            'description' => $notice_blank_convert->text,
-//                            'sum' => $second_currency_sum . ' USD',
-//                            'user_id' => $customer->id
-//                        ];
-//                        Operation::create($operation);
+                        $operation->check()->create([
+                            'title_lt' => $notice_blank_convert->title_lt,
+                            'sum' => round((float) $second_currency_sum, 2),
+                        ]);
+
+                        $notice_text = $notice_blank_balance_sub->text_lt . ' ' . $first_currency_sum . ' RUB <br>'
+                            . $notice_blank_balance_add->text_lt . ' ' . $second_currency_sum . ' USD <br>'
+                            . '. <a href="' . route('check', ['id' => $operation->check->id])
+                            . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
+                        $notice = [
+                            'title_lt' => $notice_blank_convert->title_lt,
+                            'text_lt' => $notice_text,
+                            'user_id' => $user->id
+                        ];
+                        Notice::create($notice);
                     }
                 } elseif ($second_currency == 'EUR') {
                     $second_currency_sum = $this->exchangeCurrencies($first_currency_sum, $rub_eur);
@@ -176,35 +177,33 @@ class ConvertController extends Controller
                     if ($balances['balance_rur'] < 0) {
                         return back()->with('error', 'Сумма списания превышает сумму баланса');
                     } else {
-//                        $balances['balance_rur'] = (string) $balances['balance_rur'];
                         $balances['balance_eur'] += round($second_currency_sum, 2);
-//                        $balances['balance_eur'] = (string) $balances['balance_eur'];
 
-                        // need to implement checks, notices, operations
-//                        $check = Check::create([
-//                            'title' => $notice_blank_convert['title'],
-//                            'sum' => $second_currency_sum . ' EUR',
-//                            'user_id' => $customer->id
-//                        ]);
-//
-//                        $notice_text = $notice_blank_balance_sub->text . ' ' . $first_currency_sum . ' RUB <br>'
-//                            . $notice_blank_balance_add->text . ' ' . $second_currency_sum . ' EUR <br>'
-//                            . '. <a href="' . route('check', ['id' => $check->id])
-//                            . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
-//                        $notice = [
-//                            'title' => $notice_blank_convert['title'],
-//                            'text' => $notice_text,
-//                            'user_id' => $customer->id
-//                        ];
-//                        Notice::create($notice);
-//
-//                        $operation = [
-//                            'title' => $notice_blank_convert['title'],
-//                            'description' => $notice_blank_convert->text,
-//                            'sum' => $second_currency_sum . ' EUR',
-//                            'user_id' => $customer->id
-//                        ];
-//                        Operation::create($operation);
+                        $operation_data = [
+                            'title_lt' => $notice_blank_convert->title_lt,
+                            'description_lt' => $notice_blank_convert->text_lt,
+                            'type' => 'currency_exchange',
+                            'sum' => round((float) $second_currency_sum, 2),
+                            'currency' => 'EUR',
+                            'user_id' => $user->id
+                        ];
+                        $operation = Operation::create($operation_data);
+
+                        $operation->check()->create([
+                            'title_lt' => $notice_blank_convert->title_lt,
+                            'sum' => round((float) $second_currency_sum, 2),
+                        ]);
+
+                        $notice_text = $notice_blank_balance_sub->text_lt . ' ' . $first_currency_sum . ' RUB <br>'
+                            . $notice_blank_balance_add->text_lt . ' ' . $second_currency_sum . ' EUR <br>'
+                            . '. <a href="' . route('check', ['id' => $operation->check->id])
+                            . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
+                        $notice = [
+                            'title_lt' => $notice_blank_convert->title_lt,
+                            'text_lt' => $notice_text,
+                            'user_id' => $user->id
+                        ];
+                        Notice::create($notice);
                     }
                 }
                 break;
@@ -215,35 +214,33 @@ class ConvertController extends Controller
                     if ($balances['balance_usd'] < 0) {
                         return back()->with('error', 'Сумма списания превышает сумму баланса');
                     } else {
-//                        $balances['balance_usd'] = (string) $balances['balance_usd'];
                         $balances['balance_rur'] += round($second_currency_sum, 2);
-//                        $balances['balance_rur'] = (string) $balances['balance_rur'];
 
-                        // need to implement checks, notices, operations
-//                        $check = Check::create([
-//                            'title' => $notice_blank_convert['title'],
-//                            'sum' => $second_currency_sum . ' RUB',
-//                            'user_id' => $customer->id
-//                        ]);
-//
-//                        $notice_text = $notice_blank_balance_sub->text . ' ' . $first_currency_sum . ' USD <br>'
-//                            . $notice_blank_balance_add->text . ' ' . $second_currency_sum . ' RUB <br>'
-//                            . '. <a href="' . route('check', ['id' => $check->id])
-//                            . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
-//                        $notice = [
-//                            'title' => $notice_blank_convert['title'],
-//                            'text' => $notice_text,
-//                            'user_id' => $customer->id
-//                        ];
-//                        Notice::create($notice);
-//
-//                        $operation = [
-//                            'title' => $notice_blank_convert['title'],
-//                            'description' => $notice_blank_convert->text,
-//                            'sum' => $second_currency_sum . ' RUB',
-//                            'user_id' => $customer->id
-//                        ];
-//                        Operation::create($operation);
+                        $operation_data = [
+                            'title_lt' => $notice_blank_convert->title_lt,
+                            'description_lt' => $notice_blank_convert->text_lt,
+                            'type' => 'currency_exchange',
+                            'sum' => round((float) $second_currency_sum, 2),
+                            'currency' => 'RUB',
+                            'user_id' => $user->id
+                        ];
+                        $operation = Operation::create($operation_data);
+
+                        $operation->check()->create([
+                            'title_lt' => $notice_blank_convert->title_lt,
+                            'sum' => round((float) $second_currency_sum, 2),
+                        ]);
+
+                        $notice_text = $notice_blank_balance_sub->text_lt . ' ' . $first_currency_sum . ' USD <br>'
+                            . $notice_blank_balance_add->text_lt . ' ' . $second_currency_sum . ' RUB <br>'
+                            . '. <a href="' . route('check', ['id' => $operation->check->id])
+                            . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
+                        $notice = [
+                            'title_lt' => $notice_blank_convert->title_lt,
+                            'text_lt' => $notice_text,
+                            'user_id' => $user->id
+                        ];
+                        Notice::create($notice);
                     }
                 } elseif ($second_currency == 'EUR') {
                     $second_currency_sum = $this->exchangeCurrencies($first_currency_sum, $usd_eur);
@@ -251,35 +248,33 @@ class ConvertController extends Controller
                     if ($balances['balance_usd'] < 0) {
                         return back()->with('error', 'Сумма списания превышает сумму баланса');
                     } else {
-//                        $balances['balance_usd'] = (string) $balances['balance_usd'];
                         $balances['balance_eur'] += round($second_currency_sum, 2);
-//                        $balances['balance_eur'] = (string) $balances['balance_eur'];
 
-                        // need to implement checks, notices, operations
-//                        $check = Check::create([
-//                            'title' => $notice_blank_convert['title'],
-//                            'sum' => $second_currency_sum . ' EUR',
-//                            'user_id' => $customer->id
-//                        ]);
-//
-//                        $notice_text = $notice_blank_balance_sub->text . ' ' . $first_currency_sum . ' USD <br>'
-//                            . $notice_blank_balance_add->text . ' ' . $second_currency_sum . ' EUR <br>'
-//                            . '. <a href="' . route('check', ['id' => $check->id])
-//                            . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
-//                        $notice = [
-//                            'title' => $notice_blank_convert['title'],
-//                            'text' => $notice_text,
-//                            'user_id' => $customer->id
-//                        ];
-//                        Notice::create($notice);
-//
-//                        $operation = [
-//                            'title' => $notice_blank_convert['title'],
-//                            'description' => $notice_blank_convert->text,
-//                            'sum' => $second_currency_sum . ' EUR',
-//                            'user_id' => $customer->id
-//                        ];
-//                        Operation::create($operation);
+                        $operation_data = [
+                            'title_lt' => $notice_blank_convert->title_lt,
+                            'description_lt' => $notice_blank_convert->text_lt,
+                            'type' => 'currency_exchange',
+                            'sum' => round((float) $second_currency_sum, 2),
+                            'currency' => 'EUR',
+                            'user_id' => $user->id
+                        ];
+                        $operation = Operation::create($operation_data);
+
+                        $operation->check()->create([
+                            'title_lt' => $notice_blank_convert->title_lt,
+                            'sum' => round((float) $second_currency_sum, 2),
+                        ]);
+
+                        $notice_text = $notice_blank_balance_sub->text_lt . ' ' . $first_currency_sum . ' USD <br>'
+                            . $notice_blank_balance_add->text_lt . ' ' . $second_currency_sum . ' EUR <br>'
+                            . '. <a href="' . route('check', ['id' => $operation->check->id])
+                            . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
+                        $notice = [
+                            'title_lt' => $notice_blank_convert->title_lt,
+                            'text_lt' => $notice_text,
+                            'user_id' => $user->id
+                        ];
+                        Notice::create($notice);
                     }
                 }
                 break;
@@ -290,35 +285,33 @@ class ConvertController extends Controller
                     if ($balances['balance_eur'] < 0) {
                         return back()->with('error', 'Сумма списания превышает сумму баланса');
                     } else {
-//                        $balances['balance_eur'] = (string) $balances['balance_eur'];
                         $balances['balance_rur'] += round($second_currency_sum, 2);
-//                        $balances['balance_rur'] = (string) $balances['balance_rur'];
 
-                        // need to implement checks, notices, operations
-//                        $check = Check::create([
-//                            'title' => $notice_blank_convert['title'],
-//                            'sum' => $second_currency_sum . ' RUB',
-//                            'user_id' => $customer->id
-//                        ]);
-//
-//                        $notice_text = $notice_blank_balance_sub->text . ' ' . $first_currency_sum . ' EUR <br>'
-//                            . $notice_blank_balance_add->text . ' ' . $second_currency_sum . ' RUB <br>'
-//                            . '. <a href="' . route('check', ['id' => $check->id])
-//                            . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
-//                        $notice = [
-//                            'title' => $notice_blank_convert['title'],
-//                            'text' => $notice_text,
-//                            'user_id' => $customer->id
-//                        ];
-//                        Notice::create($notice);
-//
-//                        $operation = [
-//                            'title' => $notice_blank_convert['title'],
-//                            'description' => $notice_blank_convert->text,
-//                            'sum' => $second_currency_sum . ' RUB',
-//                            'user_id' => $customer->id
-//                        ];
-//                        Operation::create($operation);
+                        $operation_data = [
+                            'title_lt' => $notice_blank_convert->title_lt,
+                            'description_lt' => $notice_blank_convert->text_lt,
+                            'type' => 'currency_exchange',
+                            'sum' => round((float) $second_currency_sum, 2),
+                            'currency' => 'RUB',
+                            'user_id' => $user->id
+                        ];
+                        $operation = Operation::create($operation_data);
+
+                        $operation->check()->create([
+                            'title_lt' => $notice_blank_convert->title_lt,
+                            'sum' => round((float) $second_currency_sum, 2),
+                        ]);
+
+                        $notice_text = $notice_blank_balance_sub->text_lt . ' ' . $first_currency_sum . ' EUR <br>'
+                            . $notice_blank_balance_add->text_lt . ' ' . $second_currency_sum . ' RUB <br>'
+                            . '. <a href="' . route('check', ['id' => $operation->check->id])
+                            . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
+                        $notice = [
+                            'title_lt' => $notice_blank_convert->title_lt,
+                            'text_lt' => $notice_text,
+                            'user_id' => $user->id
+                        ];
+                        Notice::create($notice);
                     }
                 } elseif ($second_currency == 'USD') {
                     $second_currency_sum = $this->exchangeCurrencies($first_currency_sum, $eur_usd);
@@ -326,35 +319,33 @@ class ConvertController extends Controller
                     if ($balances['balance_eur'] < 0) {
                         return back()->with('error', 'Сумма списания превышает сумму баланса');
                     } else {
-//                        $balances['balance_eur'] = (string) $balances['balance_eur'];
                         $balances['balance_usd'] += round($second_currency_sum, 2);
-//                        $balances['balance_usd'] = (string) $balances['balance_usd'];
 
-                        // need to implement checks, notices, operations
-//                        $check = Check::create([
-//                            'title' => $notice_blank_convert['title'],
-//                            'sum' => $second_currency_sum . ' USD',
-//                            'user_id' => $customer->id
-//                        ]);
-//
-//                        $notice_text = $notice_blank_balance_sub->text . ' ' . $first_currency_sum . ' EUR <br>'
-//                            . $notice_blank_balance_add->text . ' ' . $second_currency_sum . ' USD <br>'
-//                            . '. <a href="' . route('check', ['id' => $check->id])
-//                            . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
-//                        $notice = [
-//                            'title' => $notice_blank_convert['title'],
-//                            'text' => $notice_text,
-//                            'user_id' => $customer->id
-//                        ];
-//                        Notice::create($notice);
-//
-//                        $operation = [
-//                            'title' => $notice_blank_convert['title'],
-//                            'description' => $notice_blank_convert->text,
-//                            'sum' => $second_currency_sum . ' USD',
-//                            'user_id' => $customer->id
-//                        ];
-//                        Operation::create($operation);
+                        $operation_data = [
+                            'title_lt' => $notice_blank_convert->title_lt,
+                            'description_lt' => $notice_blank_convert->text_lt,
+                            'type' => 'currency_exchange',
+                            'sum' => round((float) $second_currency_sum, 2),
+                            'currency' => 'USD',
+                            'user_id' => $user->id
+                        ];
+                        $operation = Operation::create($operation_data);
+
+                        $operation->check()->create([
+                            'title_lt' => $notice_blank_convert->title_lt,
+                            'sum' => round((float) $second_currency_sum, 2),
+                        ]);
+
+                        $notice_text = $notice_blank_balance_sub->text_lt . ' ' . $first_currency_sum . ' EUR <br>'
+                            . $notice_blank_balance_add->text_lt . ' ' . $second_currency_sum . ' USD <br>'
+                            . '. <a href="' . route('check', ['id' => $operation->check->id])
+                            . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
+                        $notice = [
+                            'title_lt' => $notice_blank_convert->title_lt,
+                            'text_lt' => $notice_text,
+                            'user_id' => $user->id
+                        ];
+                        Notice::create($notice);
                     }
                 }
                 break;
