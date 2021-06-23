@@ -14,7 +14,13 @@
             <li class="header-menu__item"><a href="{{ route('investments') }}" class="header-menu__link">Инвестиции</a></li>
             <li class="header-menu__item"><a href="{{ route('profile') }}" class="header-menu__link">Мой профиль</a></li>
             <li class="header-menu__item mod">
-                <a href="{{ route('notices') }}" class="header-menu__link notifications">Уведомления<img src="{{ asset('img/str-two/block-right/kolokolchik.svg') }}" alt=""></a>
+                <a href="{{ route('notices') }}" class="header-menu__link notifications">Уведомления
+                    @if($site_settings['user_notices'])
+                        <img src="{{ asset('img/str-two/block-right/kolokolchik-red.svg') }}" alt="">
+                    @else
+                        <img src="{{ asset('img/str-two/block-right/kolokolchik.svg') }}" alt="">
+                    @endif
+                </a>
             </li>
         </ul>
 

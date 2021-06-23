@@ -22,16 +22,15 @@ class MainController extends Controller
 
     public function finances()
     {
-        $balance = User::find(Auth::id())->balance;
+        $user = User::with(['balance', 'operations' => function ($query) {
+            $query->latest();
+        }])->find(Auth::id());
 
-        $balance_rur = round($balance->balance_rur, 2);
-        $balance_usd = round($balance->balance_usd, 2);
-        $balance_eur = round($balance->balance_eur, 2);
-        $operations = null;
+        $balance_rur = round($user->balance->balance_rur, 2);
+        $balance_usd = round($user->balance->balance_usd, 2);
+        $balance_eur = round($user->balance->balance_eur, 2);
 
-        // need to implement:
-        // getting user's operations
-
+        $operations = $user->operations;
 
         return view(
             'finances',
@@ -165,6 +164,7 @@ class MainController extends Controller
     public function notices()
     {
         $notices = Notice::where('user_id', Auth::id())->latest()->get();
+        Notice::where('user_id', Auth::id())->update(['status' => 1]);
 
         return view('notices', compact('notices'));
     }

@@ -40,7 +40,7 @@
     <div class="operations-block">
         <p class="operations-block__title"><img src="{{ asset('img/str-two/block-right/title-img-1.svg') }}" alt="">Мои операции</p>
 
-        @if(isset($operations))
+        @if(count($operations))
             <div class="operations-cont">
                 <div class="operations-item">
                     @foreach($operations as $operation)
@@ -49,15 +49,15 @@
                                 <div class="block-active"><img src="{{ asset('img/str-two/block-right/vallet.svg') }}" alt=""></div>
                                 <div class="left-cont">
                                     <div class="left-top">
-                                        <p class="left-cont__title">{{ $operation->title }}</p>
+                                        <p class="left-cont__title">{{ $operation->title_lt }}</p>
                                         <p class="left-cont__time">{{ $operation->created_at }}</p>
                                     </div>
-                                    <p class="left-cont__name">{!! $operation->description !!}</p>
+                                    <p class="left-cont__name">{!! $operation->description_lt !!}</p>
                                 </div>
                             </div>
 
                             <div class="right-item">
-                                <p class="right-item__price">{{ $operation->sum }}</p>
+                                <p class="right-item__price">{{ $operation->sum }} {{ $operation->currency }}</p>
                                 <!-- <p class="right-item__update"><img src="img/str-two/block-right/icon-update.svg" alt=""></p> -->
                             </div>
                         </div>

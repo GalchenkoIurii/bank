@@ -104,7 +104,7 @@ Route::middleware('auth')->group(function() {
     Route::post('/user/settings', [UserController::class, 'userSettingsStore'])
         ->name('user.settings.store');
 
-//
+
     Route::get('/notices', [MainController::class, 'notices'])
         ->name('notices');
 });

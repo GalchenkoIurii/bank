@@ -4,21 +4,30 @@
 namespace App\Http\View\Composers;
 
 
+use App\Models\Notice;
 use App\Models\Setting;
 use CentralBankRussian\ExchangeRate\CBRClient;
 use CentralBankRussian\ExchangeRate\Exceptions\ExceptionIncorrectData;
 use CentralBankRussian\ExchangeRate\Exceptions\ExceptionInvalidParameter;
 use CentralBankRussian\ExchangeRate\ExchangeRate;
 use DateTime;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class SettingsComposer
 {
     protected $settings;
+    protected $user_has_notices;
 
     public function __construct()
     {
         $this->settings = Setting::all();
+
+        $notices = Notice::where('user_id', Auth::id())
+            ->where('status', 0)->get();
+
+        $this->user_has_notices = (count($notices)) ? true : false;
+
     }
 
     public function compose(View $view)
@@ -58,8 +67,7 @@ class SettingsComposer
             ]);
         }
 
-        // need to implement:
-        // getting user's notices
+        $settings['user_notices'] = $this->user_has_notices;
 
         $view->with('site_settings', $settings);
     }
