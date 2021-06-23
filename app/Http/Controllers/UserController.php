@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blank;
 use App\Models\User;
 use App\Models\UserData;
 use Illuminate\Auth\Events\PasswordReset;
@@ -149,7 +150,7 @@ class UserController extends Controller
 
     public function userIdentify()
     {
-        $user = User::find(Auth::user()->id);
+        $user = User::find(Auth::id());
         $user_name = $user->last_name . ' ' . $user->first_name . ' ' . $user->patronymic;
         $user_passport = $user->userData->passport_num;
 
@@ -205,20 +206,16 @@ class UserController extends Controller
         // will retrieve via updated_at field of related UserData model
 //        $data['identifying_at'] = now();
 
-
-        $user = User::find(Auth::user()->id);
+        $user = User::find(Auth::id());
         $user->update($user_data);
         $user->userData()->update($user_data_rel);
 
-
-        // need to implement notices
-//        $notice_blank = Blank::where('slug', 'data_sent')->first();
-//        $notice = [
-//            'title' => $notice_blank->title,
-//            'text' => $notice_blank->text,
-//            'user_id' => Auth::user()->id
-//        ];
-//        Notice::create($notice);
+        $notice_blank = Blank::where('slug', 'user_data_sent')->first();
+        $notice = [
+            'title_lt' => $notice_blank->title_lt,
+            'text_lt' => $notice_blank->text_lt,
+        ];
+        $user->notices()->create($notice);
 
         return redirect()->route('user.identify')->with('success', 'Данные отправлены на проверку');
     }

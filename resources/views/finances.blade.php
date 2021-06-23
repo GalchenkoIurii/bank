@@ -75,18 +75,26 @@
 
         <div class="transfers-item">
             <p class="transfers-item__title">Переводы</p>
-            <a href="#" class="transfers-item__link" id="linkPerevod2"><img src="{{ asset('img/str-two/block-right/icon/icon1.svg') }}" alt=""><span>По номеру карты</span></a>
-            <a href="#" class="transfers-item__link link-hover" id="linkPerevod"><img src="{{ asset('img/str-two/block-right/icon/icon2.svg') }}" alt=""><span>В другой банк по номеру карты</span></a>
-            <a href="#" class="transfers-item__link link-hover" id="linkPerevod3"><img src="{{ asset('img/str-two/block-right/icon/icon2.svg') }}" alt=""><span>По реквизитам счета в любой банк</span></a>
+            <a href="#" class="transfers-item__link" id="linkPerevod2">
+                <img src="{{ asset('img/str-two/block-right/icon/icon1.svg') }}" alt=""><span>По номеру карты клиенту банка</span></a>
+            <a href="#" class="transfers-item__link link-hover" id="linkPerevod">
+                <img src="{{ asset('img/str-two/block-right/icon/icon2.svg') }}" alt=""><span>В другой банк по номеру карты</span></a>
+            <a href="#" class="transfers-item__link link-hover" id="linkPerevod3">
+                <img src="{{ asset('img/str-two/block-right/icon/icon2.svg') }}" alt=""><span>По реквизитам счета в любой банк</span></a>
         </div>
 
         <div class="transfers-item">
             <p class="transfers-item__title">Электронные кошельки и переводы</p>
-            <a href="#" class="transfers-item__link transfersLink1"><img src="{{ asset('img/str-two/block-right/icon/icon3.svg') }}" alt="">Qiwi</a>
-            <a href="#" class="transfers-item__link transfersLink"><img src="{{ asset('img/str-two/block-right/icon/icon4.svg') }}" alt="">Yandex.Money</a>
-            <a href="#" class="transfers-item__link transfersLink2"><img src="{{ asset('img/str-two/block-right/icon/icon5.svg') }}" alt="">PayPal</a>
-            <a href="#" class="transfers-item__link transfersLink"><img src="{{ asset('img/str-two/block-right/icon/icon6.svg') }}" alt="">OSON</a>
-            <a href="#" class="transfers-item__link transfersLink3"><img src="{{ asset('img/str-two/block-right/icon/icon7.svg') }}" alt="">Пополнение мобильного</a>
+            <a href="#" class="transfers-item__link transfersLink1">
+                <img src="{{ asset('img/str-two/block-right/icon/icon3.svg') }}" alt="">Qiwi</a>
+            <a href="#" class="transfers-item__link transfersLink">
+                <img src="{{ asset('img/str-two/block-right/icon/icon4.svg') }}" alt="">Юмани</a>
+            <a href="#" class="transfers-item__link transfersLink2">
+                <img src="{{ asset('img/str-two/block-right/icon/icon5.svg') }}" alt="">PayPal</a>
+            <a href="#" class="transfers-item__link transfersLink">
+                <img src="{{ asset('img/str-two/block-right/icon/icon6.svg') }}" alt="">OSON</a>
+            <a href="#" class="transfers-item__link transfersLink3">
+                <img src="{{ asset('img/str-two/block-right/icon/icon7.svg') }}" alt="">Мобильная связь</a>
         </div>
     </div>
 

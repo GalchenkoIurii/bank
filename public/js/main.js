@@ -153,10 +153,10 @@ $(".mob-head__link").click(function(e){
     $(".footer").removeClass("active");
 });
 
-$(".notifications").click(function(e){
-    e.preventDefault();
-    $("#uved1").toggleClass("active");
-});
+// $(".notifications").click(function(e){
+//     e.preventDefault();
+//     $("#uved1").toggleClass("active");
+// });
 
 
 $("#uvedom").click(function(e){

@@ -66,8 +66,8 @@
                                     </div>
 
                                     <div class="mb-5">
-                                        <label for="control_sum" class="form-label">Установить/Изменить контрольную сумму</label>
-                                        <input type="text" class="form-control" id="control_sum" name="control_sum"
+                                        <label for="control_sum_lt" class="form-label">Установить/Изменить контрольную сумму</label>
+                                        <input type="text" class="form-control" id="control_sum_lt" name="control_sum_lt"
                                                value="{{ $customer->balance->control_sum_lt }}">
                                     </div>
                                 @endif

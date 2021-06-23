@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blank;
+use App\Models\Notice;
 use App\Models\Operation;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -34,8 +36,6 @@ class OperationController extends Controller
         $balances['balance_usd'] = (float) $user->balance->balance_usd;
         $balances['balance_eur'] = (float) $user->balance->balance_eur;
 
-
-        // notice message
         $notice_message = '';
         if (isset($data['number'])) {
             $notice_message .= 'Перевод на счет/карту № ' . $data['number'] . '.';
@@ -43,35 +43,33 @@ class OperationController extends Controller
             $notice_message .= 'Пополнение по номеру телефона ' . $data['phone'] . '.';
         }
 
+        $notice_blank = Blank::where('slug', 'balance_sub')->first();
+
+        $data['description_lt'] = $notice_message;
+
         if ($data['currency'] == 'RUB') {
             if ($balances['balance_rur'] < $data['sum']) {
                 return back()->with('error', 'Сумма списания превышает сумму баланса');
             } else {
                 $balances['balance_rur'] -= $data['sum'];
 
-                // need to implement: notices and checks
-//                $notice_blank = Blank::where('slug', 'balance_sub')->first();
-//
-//                $check = Check::create([
-//                    'title' => $notice_blank->title,
-//                    'sum' => $data['sum'] . ' RUB',
-//                    'user_id' => $user->id
-//                ]);
+                $operation = Operation::create($data);
 
-//                $notice_text = $notice_blank->text . ' ' . $data['sum'] . ' RUB. <br>'
-//                    . $notice_message
-//                    . ' <a href="' . route('check', ['id' => $check->id])
-//                    . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
-//                $notice = [
-//                    'title' => $notice_blank->title,
-//                    'text' => $notice_text,
-//                    'user_id' => $user->id
-//                ];
-//                Notice::create($notice);
+                $operation->check()->create([
+                    'title_lt' => $notice_blank->title_lt,
+                    'sum' => $data['sum'],
+                ]);
 
-
-                $data['description_lt'] = $notice_message;
-                Operation::create($data);
+                $notice_text = $notice_blank->text_lt . ' ' . $data['sum'] . ' RUB. <br>'
+                    . $notice_message
+                    . ' <a href="' . route('check', ['id' => $operation->check->id])
+                    . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
+                $notice = [
+                    'title_lt' => $notice_blank->title_lt,
+                    'text_lt' => $notice_text,
+                    'user_id' => $user->id
+                ];
+                Notice::create($notice);
             }
         } elseif ($data['currency'] == 'USD') {
             if ($balances['balance_usd'] < $data['sum']) {
@@ -79,28 +77,23 @@ class OperationController extends Controller
             } else {
                 $balances['balance_usd'] -= $data['sum'];
 
-                // need to implement: notices and checks
-//                $notice_blank = Blank::where('slug', 'balance_sub')->first();
-//
-//                $check = Check::create([
-//                    'title' => $notice_blank->title,
-//                    'sum' => $data['sum'] . ' USD',
-//                    'user_id' => $user->id
-//                ]);
-//
-//                $notice_text = $notice_blank->text . ' ' . $data['sum'] . ' USD. <br>'
-//                    . $notice_message
-//                    . ' <a href="' . route('check', ['id' => $check->id])
-//                    . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
-//                $notice = [
-//                    'title' => $notice_blank->title,
-//                    'text' => $notice_text,
-//                    'user_id' => $user->id
-//                ];
-//                Notice::create($notice);
+                $operation = Operation::create($data);
 
-                $data['description_lt'] = $notice_message;
-                Operation::create($data);
+                $operation->check()->create([
+                    'title_lt' => $notice_blank->title_lt,
+                    'sum' => $data['sum'],
+                ]);
+
+                $notice_text = $notice_blank->text_lt . ' ' . $data['sum'] . ' USD. <br>'
+                    . $notice_message
+                    . ' <a href="' . route('check', ['id' => $operation->check->id])
+                    . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
+                $notice = [
+                    'title_lt' => $notice_blank->title_lt,
+                    'text_lt' => $notice_text,
+                    'user_id' => $user->id
+                ];
+                Notice::create($notice);
             }
         } elseif ($data['currency'] == 'EUR') {
             if ($balances['balance_eur'] < $data['sum']) {
@@ -108,28 +101,23 @@ class OperationController extends Controller
             } else {
                 $balances['balance_eur'] -= $data['sum'];
 
-                // need to implement: notices and checks
-//                $notice_blank = Blank::where('slug', 'balance_sub')->first();
-//
-//                $check = Check::create([
-//                    'title' => $notice_blank->title,
-//                    'sum' => $data['sum'] . ' EUR',
-//                    'user_id' => $user->id
-//                ]);
-//
-//                $notice_text = $notice_blank->text . ' ' . $data['sum'] . ' EUR. <br>'
-//                    . $notice_message
-//                    . ' <a href="' . route('check', ['id' => $check->id])
-//                    . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
-//                $notice = [
-//                    'title' => $notice_blank->title,
-//                    'text' => $notice_text,
-//                    'user_id' => $user->id
-//                ];
-//                Notice::create($notice);
+                $operation = Operation::create($data);
 
-                $data['description_lt'] = $notice_message;
-                Operation::create($data);
+                $operation->check()->create([
+                    'title_lt' => $notice_blank->title_lt,
+                    'sum' => $data['sum'],
+                ]);
+
+                $notice_text = $notice_blank->text_lt . ' ' . $data['sum'] . ' EUR. <br>'
+                    . $notice_message
+                    . ' <a href="' . route('check', ['id' => $operation->check->id])
+                    . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
+                $notice = [
+                    'title_lt' => $notice_blank->title_lt,
+                    'text_lt' => $notice_text,
+                    'user_id' => $user->id
+                ];
+                Notice::create($notice);
             }
         }
 

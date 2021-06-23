@@ -156,8 +156,8 @@ class CustomerController extends Controller
             Notice::create($notice);
         }
 
-        if (isset($data['control_sum'])) {
-            $balance_data['control_sum'] = $data['control_sum'];
+        if (isset($data['control_sum_lt'])) {
+            $balance_data['control_sum_lt'] = $data['control_sum_lt'];
         }
 
         $customer->update($customer_data);

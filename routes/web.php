@@ -64,7 +64,7 @@ Route::middleware('auth')->group(function() {
     Route::get('/credit-agreement/{id}', [MainController::class, 'creditAgreement'])
         ->name('credit.agreement');
 
-//
+
     Route::get('/check/{id}', [MainController::class, 'check'])
         ->name('check');
 
@@ -75,10 +75,8 @@ Route::middleware('auth')->group(function() {
 
     Route::get('/convert', [MainController::class, 'convert'])
         ->name('convert');
-
     Route::post('/convert', [ConvertController::class, 'store'])
         ->name('convert.store');
-
     Route::post('/convert/handle', [ConvertController::class, 'handle'])
         ->name('convert.handle');
 
@@ -93,7 +91,6 @@ Route::middleware('auth')->group(function() {
 
     Route::get('/user/identify', [UserController::class, 'userIdentify'])
         ->name('user.identify');
-
     Route::post('/user/identify', [UserController::class, 'userIdentifyStore'])
         ->name('user.identify.store');
 
@@ -104,10 +101,8 @@ Route::middleware('auth')->group(function() {
 
     Route::get('/user/settings', [UserController::class, 'userSettings'])
         ->name('user.settings');
-
     Route::post('/user/settings', [UserController::class, 'userSettingsStore'])
         ->name('user.settings.store');
-
 
 //
     Route::get('/notices', [MainController::class, 'notices'])
@@ -136,6 +131,7 @@ Route::middleware('guest')->group(function() {
         ->name('register.create');
     Route::post('/register', [UserController::class, 'store'])
         ->name('register.store');
+
     Route::get('/login', [UserController::class, 'loginForm'])
         ->name('login.create');
     Route::post('/login', [UserController::class, 'login'])

@@ -120,7 +120,7 @@ class MainController extends Controller
             }
         }
 
-        $settings['check_info'] = Check::with('operation')->find($id);
+        $settings['check_info'] = Check::with('operation')->findOrFail($id);
 
         return view('check', $settings);
     }
@@ -162,6 +162,12 @@ class MainController extends Controller
         return view('profile', compact('is_user_confirmed', 'is_positive_balance'));
     }
 
+    public function notices()
+    {
+        $notices = Notice::where('user_id', Auth::id())->latest()->get();
+
+        return view('notices', compact('notices'));
+    }
 
 
     public function about()

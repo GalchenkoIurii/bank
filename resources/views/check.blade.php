@@ -15,7 +15,7 @@
             <div class="block-info">
                 <div class="block-text">
                     <p class="block-text__title">Название операции</p>
-                    <p class="block-text__text">{{ $check_info->title }}</p>
+                    <p class="block-text__text">{{ $check_info->title_lt }}</p>
                 </div>
 
                 <div class="block-text">
