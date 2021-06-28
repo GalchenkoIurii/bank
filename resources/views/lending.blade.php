@@ -1,6 +1,6 @@
 @extends('layouts.logged')
 
-@section('page-title')Услуги кредитования @endsection
+@section('page-title'){{ __('lending.title') }} @endsection
 
 @section('side')
     @include('incs.side-logged')
@@ -14,34 +14,35 @@
     @include('incs.admin-message')
 
     <div class="kredit-block">
-        <p class="kredit-block__title">УСЛУГИ КРЕДИТОВАНИЯ</p>
+        <p class="kredit-block__title">{{ __('lending.title') }}</p>
 
         @if($has_reviewing_credits)
             <div class="kredit-item">
-                <p class="kredit-item__title">Ваша заявка на кредит находится на рассмотрении, повторная
-                    подача заявки будет доступна после рассмотрения текущей заявки</p>
+                <p class="kredit-item__title">{{ __('lending.has_application') }}</p>
             </div>
         @elseif(auth()->check() && auth()->user()->confirmed)
 
         @foreach($credits as $credit)
             <div class="kredit-item">
-                <p class="kredit-item__title">{{ $credit->category_lt }}</p>
-                {!! $credit->description_lt !!}
-                <a href="{{ route('lending.category', ['category' => $credit->category_slug]) }}" class="kredit-item__link">Оставить заявку</a>
+                <p class="kredit-item__title">{{ $credit->__('category') }}</p>
+                {!! $credit->__('description') !!}
+                <a href="{{ route('lending.category', ['category' => $credit->category_slug]) }}"
+                   class="kredit-item__link">{{ __('lending.leave_claim') }}</a>
             </div>
         @endforeach
 
         @else
             <div class="kredit-item">
-                <p class="kredit-item__title">Для подачи заявки на кредит Вам необходимо пройти первый шаг идентификации</p>
-                <a href="{{ route('user.identify') }}" class="kredit-item__link">Идентификация</a>
+                <p class="kredit-item__title">{{ __('lending.identify_text') }}</p>
+                <a href="{{ route('user.identify') }}"
+                   class="kredit-item__link">{{ __('lending.identify_btn') }}</a>
             </div>
         @endif
 
         <div class="kredit-item">
-            <p class="kredit-item__title"><span>!</span>Информация</p>
-            <p class="kredit-item__text">Подробная информация о рамках получения кредита и его погашения.</p>
-            <a href="{{ route('lending.info') }}" class="kredit-item__link">Узнать больше</a>
+            <p class="kredit-item__title"><span>!</span>{{ __('lending.info_title') }}</p>
+            <p class="kredit-item__text">{{ __('lending.info_text') }}</p>
+            <a href="{{ route('lending.info') }}" class="kredit-item__link">{{ __('lending.info_btn') }}</a>
         </div>
     </div>
 

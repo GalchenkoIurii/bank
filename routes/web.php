@@ -27,119 +27,125 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [MainController::class, 'index'])
-    ->name('home');
-Route::get('/about', [MainController::class, 'about'])
-    ->name('about');
-Route::get('/agreement', [MainController::class, 'agreement'])
-    ->name('agreement');
-Route::get('/business', [MainController::class, 'business'])
-    ->name('business');
-Route::get('/confidentiality', [MainController::class, 'confidentiality'])
-    ->name('confidentiality');
+Route::middleware('set_locale')->group(function() {
+    Route::get('/', [MainController::class, 'index'])
+        ->name('home');
+    Route::get('/about', [MainController::class, 'about'])
+        ->name('about');
+    Route::get('/agreement', [MainController::class, 'agreement'])
+        ->name('agreement');
+    Route::get('/business', [MainController::class, 'business'])
+        ->name('business');
+    Route::get('/confidentiality', [MainController::class, 'confidentiality'])
+        ->name('confidentiality');
+
+    Route::get('/locale/{locale}', [MainController::class, 'changeLocale'])
+        ->name('locale');
 
 
-Route::middleware('auth')->group(function() {
-    Route::get('/finances', [MainController::class, 'finances'])
-        ->name('finances');
+    Route::middleware('auth')->group(function() {
+        Route::get('/finances', [MainController::class, 'finances'])
+            ->name('finances');
 
-    Route::post('/finances', [OperationController::class, 'storeOperation'])
-        ->name('operation.store');
-
-
-    /*
-     * credit pages
-     */
-    Route::get('/lending', [MainController::class, 'lending'])
-        ->name('lending');
-    Route::post('/lending', [MainController::class, 'creditStore'])
-        ->name('lending.store');
-
-    Route::get('/lending/info', [MainController::class, 'creditInfo'])
-        ->name('lending.info');
-
-    Route::get('/lending/{category}', [MainController::class, 'credit'])
-        ->name('lending.category');
-
-    Route::get('/credit-agreement/{id}', [MainController::class, 'creditAgreement'])
-        ->name('credit.agreement');
+        Route::post('/finances', [OperationController::class, 'storeOperation'])
+            ->name('operation.store');
 
 
-    Route::get('/check/{id}', [MainController::class, 'check'])
-        ->name('check');
+        /*
+         * credit pages
+         */
+        Route::get('/lending', [MainController::class, 'lending'])
+            ->name('lending');
+        Route::post('/lending', [MainController::class, 'creditStore'])
+            ->name('lending.store');
+
+        Route::get('/lending/info', [MainController::class, 'creditInfo'])
+            ->name('lending.info');
+
+        Route::get('/lending/{category}', [MainController::class, 'credit'])
+            ->name('lending.category');
+
+        Route::get('/credit-agreement/{id}', [MainController::class, 'creditAgreement'])
+            ->name('credit.agreement');
 
 
-    Route::get('/services', [MainController::class, 'services'])
-        ->name('services');
+        Route::get('/check/{id}', [MainController::class, 'check'])
+            ->name('check');
 
 
-    Route::get('/convert', [MainController::class, 'convert'])
-        ->name('convert');
-    Route::post('/convert', [ConvertController::class, 'store'])
-        ->name('convert.store');
-    Route::post('/convert/handle', [ConvertController::class, 'handle'])
-        ->name('convert.handle');
+        Route::get('/services', [MainController::class, 'services'])
+            ->name('services');
 
 
-    Route::get('/investments', [MainController::class, 'investments'])
-        ->name('investments');
+        Route::get('/convert', [MainController::class, 'convert'])
+            ->name('convert');
+        Route::post('/convert', [ConvertController::class, 'store'])
+            ->name('convert.store');
+        Route::post('/convert/handle', [ConvertController::class, 'handle'])
+            ->name('convert.handle');
 
 
-    Route::get('/profile', [MainController::class, 'profile'])
-        ->name('profile');
+        Route::get('/investments', [MainController::class, 'investments'])
+            ->name('investments');
 
 
-    Route::get('/user/identify', [UserController::class, 'userIdentify'])
-        ->name('user.identify');
-    Route::post('/user/identify', [UserController::class, 'userIdentifyStore'])
-        ->name('user.identify.store');
+        Route::get('/profile', [MainController::class, 'profile'])
+            ->name('profile');
 
 
-    Route::get('/auth-info', [UserController::class, 'authInfo'])
-        ->name('auth.info');
+        Route::get('/user/identify', [UserController::class, 'userIdentify'])
+            ->name('user.identify');
+        Route::post('/user/identify', [UserController::class, 'userIdentifyStore'])
+            ->name('user.identify.store');
 
 
-    Route::get('/user/settings', [UserController::class, 'userSettings'])
-        ->name('user.settings');
-    Route::post('/user/settings', [UserController::class, 'userSettingsStore'])
-        ->name('user.settings.store');
+        Route::get('/auth-info', [UserController::class, 'authInfo'])
+            ->name('auth.info');
 
 
-    Route::get('/notices', [MainController::class, 'notices'])
-        ->name('notices');
+        Route::get('/user/settings', [UserController::class, 'userSettings'])
+            ->name('user.settings');
+        Route::post('/user/settings', [UserController::class, 'userSettingsStore'])
+            ->name('user.settings.store');
+
+
+        Route::get('/notices', [MainController::class, 'notices'])
+            ->name('notices');
+    });
+
+
+    Route::middleware('guest')->group(function() {
+        /*
+         * reset password
+         */
+        Route::get('/forgot-password', [UserController::class, 'passwordRequest'])
+            ->name('password.request');
+        Route::post('/forgot-password', [UserController::class, 'passwordEmail'])
+            ->name('password.email');
+
+        Route::get('/reset-password/{token}/', [UserController::class, 'passwordReset'])
+            ->name('password.reset');
+        Route::post('/reset-password', [UserController::class, 'passwordUpdate'])
+            ->name('password.update');
+
+        /*
+         * register, login, logout
+         */
+        Route::get('/register', [UserController::class, 'create'])
+            ->name('register.create');
+        Route::post('/register', [UserController::class, 'store'])
+            ->name('register.store');
+
+        Route::get('/login', [UserController::class, 'loginForm'])
+            ->name('login.create');
+        Route::post('/login', [UserController::class, 'login'])
+            ->name('login');
+    });
+
+    Route::get('/logout', [UserController::class, 'logout'])
+        ->name('logout')->middleware('auth');
 });
 
-
-Route::middleware('guest')->group(function() {
-    /*
-     * reset password
-     */
-    Route::get('/forgot-password', [UserController::class, 'passwordRequest'])
-        ->name('password.request');
-    Route::post('/forgot-password', [UserController::class, 'passwordEmail'])
-        ->name('password.email');
-
-    Route::get('/reset-password/{token}/', [UserController::class, 'passwordReset'])
-        ->name('password.reset');
-    Route::post('/reset-password', [UserController::class, 'passwordUpdate'])
-        ->name('password.update');
-
-    /*
-     * register, login, logout
-     */
-    Route::get('/register', [UserController::class, 'create'])
-        ->name('register.create');
-    Route::post('/register', [UserController::class, 'store'])
-        ->name('register.store');
-
-    Route::get('/login', [UserController::class, 'loginForm'])
-        ->name('login.create');
-    Route::post('/login', [UserController::class, 'login'])
-        ->name('login');
-});
-
-Route::get('/logout', [UserController::class, 'logout'])
-    ->name('logout')->middleware('auth');
 
 
 /*

@@ -1,6 +1,6 @@
 @extends('layouts.logged')
 
-@section('page-title')Сервисы @endsection
+@section('page-title'){{ __('services.title') }} @endsection
 
 @section('side')
     @include('incs.side-logged')
@@ -14,58 +14,58 @@
     @include('incs.admin-message')
 
     <div class="services-block serv">
-        <p class="services-block__title">СЕРВИСЫ</p>
-        <form action="#" class="form-search">
-            <input type="search" name="" placeholder="Поиск">
-        </form>
+        <p class="services-block__title">{{ __('services.title') }}</p>
+        {{--<form action="#" class="form-search">--}}
+            {{--<input type="search" name="" placeholder="{{ __('services.search') }}">--}}
+        {{--</form>--}}
 
         <div class="serv-page">
             <div class="item-page">
-                <p class="item-page__title">Кинотеатры</p>
+                <p class="item-page__title">{{ __('services.cinema') }}</p>
                 <div class="page-services">
                     <div class="services-one">
                         <img src="{{ asset('img/new-icon/icon1.svg') }}" alt="">
-                        <span class="services-one__text">Кинотеатры</span>
+                        <span class="services-one__text">{{ __('services.cinema') }}</span>
                     </div>
                 </div>
 
-                <a href="#" class="item-page__link item-serv header-menu__no-active">Узнать подробнее</a>
+                <a href="#" class="item-page__link item-serv header-menu__no-active">{{ __('services.more') }}</a>
             </div>
 
             <div class="item-page">
-                <p class="item-page__title">Авиабилеты</p>
+                <p class="item-page__title">{{ __('services.avia') }}</p>
                 <div class="page-services">
                     <div class="services-one">
                         <img src="{{ asset('img/new-icon/icon2.svg') }}" alt="">
-                        <span class="services-one__text">Авиабилеты</span>
+                        <span class="services-one__text">{{ __('services.avia') }}</span>
                     </div>
                 </div>
 
-                <a href="#" class="item-page__link item-serv header-menu__no-active">Узнать подробнее</a>
+                <a href="#" class="item-page__link item-serv header-menu__no-active">{{ __('services.more') }}</a>
             </div>
 
             <div class="item-page">
-                <p class="item-page__title">Страховые полисы</p>
+                <p class="item-page__title">{{ __('services.insurance') }}</p>
                 <div class="page-services">
                     <div class="services-one">
                         <img src="{{ asset('img/new-icon/icon3.svg') }}" alt="">
-                        <span class="services-one__text">Страховые полисы</span>
+                        <span class="services-one__text">{{ __('services.insurance') }}</span>
                     </div>
                 </div>
 
-                <a href="#" class="item-page__link item-serv header-menu__no-active">Узнать подробнее</a>
+                <a href="#" class="item-page__link item-serv header-menu__no-active">{{ __('services.more') }}</a>
             </div>
 
             <div class="item-page">
-                <p class="item-page__title">Заказ пластиковой банковской карты</p>
+                <p class="item-page__title">{{ __('services.card_title') }}</p>
                 <div class="page-services">
                     <div class="services-one">
                         <img src="{{ asset('img/new-icon/icon4.svg') }}" alt="">
-                        <span class="services-one__text">Банковская карта</span>
+                        <span class="services-one__text">{{ __('services.card_text') }}</span>
                     </div>
                 </div>
 
-                <a href="#" class="item-page__link link-new">Заказать</a>
+                <a href="#" class="item-page__link link-new">{{ __('services.card_btn') }}</a>
             </div>
         </div>
     </div>

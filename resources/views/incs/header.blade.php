@@ -6,7 +6,7 @@
                     <a href="#" class="top-cont__burger" id="burger"></a>
                     <a href="{{ route('home') }}" class="top-cont__logo">
                         <img src="{{ asset('img/logo.png') }}" alt="logo">
-                        <span>{{ $site_settings['site_name']->value_lt }}</span>
+                        <span>{{ $site_settings['site_name']->__('value') }}</span>
                     </a>
                     {{--<a href="{{ route('home') }}" class="top-cont__logo">{{ $site_settings['site_name']->value_lt }}</a>--}}
                     <a href="{{ route('logout') }}" class="top-cont__exit"><img src="{{ asset('img/exit-ak.svg') }}" alt=""></a>
@@ -15,9 +15,12 @@
                 <div class="top-cont__menu-block">
                     <div class="mob-left">
                         <ul class="main-menu" id="indexMenu">
-                            <li class="main-menu__item"><a href="{{ route('home') }}#comment" class="main-menu__link">Отзывы</a></li>
-                            <li class="main-menu__item"><a href="{{ route('home') }}#services" class="main-menu__link">Популярные услуги</a></li>
-                            <li class="main-menu__item"><a href="{{ route('home') }}#info" class="main-menu__link">О компании</a></li>
+                            <li class="main-menu__item"><a href="{{ route('home') }}#comment"
+                                                           class="main-menu__link">{{ __('main.header.reviews') }}</a></li>
+                            <li class="main-menu__item"><a href="{{ route('home') }}#services"
+                                                           class="main-menu__link">{{ __('main.header.popular') }}</a></li>
+                            <li class="main-menu__item"><a href="{{ route('home') }}#info"
+                                                           class="main-menu__link">{{ __('main.header.about') }}</a></li>
                         </ul>
 
                         <div class="currency-block">
@@ -27,15 +30,15 @@
                     </div>
                     <div class="block-link">
                         @if(auth()->check() && auth()->user()->is_admin)
-                            <a href="{{ route('admin.index') }}" class="top-cont__login">Админпанель</a>
-                            <a href="{{ route('finances') }}" class="top-cont__score">В кабинет</a>
-                            <a href="{{ route('logout') }}" class="top-cont__login">Выйти</a>
+                            <a href="{{ route('admin.index') }}" class="top-cont__login">{{ __('main.header.admin') }}</a>
+                            <a href="{{ route('finances') }}" class="top-cont__score">{{ __('main.header.cabinet') }}</a>
+                            <a href="{{ route('logout') }}" class="top-cont__login">{{ __('main.header.exit') }}</a>
                         @elseif(auth()->check())
-                            <a href="{{ route('finances') }}" class="top-cont__score">В кабинет</a>
-                            <a href="{{ route('logout') }}" class="top-cont__login">Выйти</a>
+                            <a href="{{ route('finances') }}" class="top-cont__score">{{ __('main.header.cabinet') }}</a>
+                            <a href="{{ route('logout') }}" class="top-cont__login">{{ __('main.header.exit') }}</a>
                         @else
-                            <a href="{{ route('register.create') }}" class="top-cont__score">Открыть счет</a>
-                            <a href="{{ route('login.create') }}" class="top-cont__login">Войти</a>
+                            <a href="{{ route('register.create') }}" class="top-cont__score">{{ __('main.header.open_account') }}</a>
+                            <a href="{{ route('login.create') }}" class="top-cont__login">{{ __('main.header.login') }}</a>
                         @endif
                     </div>
                 </div>

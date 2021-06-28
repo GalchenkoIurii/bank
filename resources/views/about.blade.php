@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('page-title') {{ $page_data->title_lt }} @endsection
+@section('page-title') {{ $page_data->__('title') }} @endsection
 
 @section('header')
     @include('incs.header')
@@ -10,8 +10,8 @@
     <div class="new-str">
         <div class="container">
             <div class="new-cont">
-                <p class="new-cont__title">{{ $page_data->title_lt }}</p>
-                <p class="new-cont__text">{{ $page_data->description_lt }}</p>
+                <p class="new-cont__title">{{ $page_data->__('title') }}</p>
+                <p class="new-cont__text">{{ $page_data->__('description') }}</p>
 
                 <div class="block-career">
                     <div class="block-text">
@@ -29,10 +29,10 @@
                     </div>
 
                     <div class="block-img">
-                        <img src="img/career-img.png" alt="">
+                        <img src="{{ asset('img/career-img.png') }}" alt="">
                     </div>
                 </div>
-                {!! $page_data->content_lt !!}
+                {!! $page_data->__('content') !!}
             </div>
         </div>
     </div>

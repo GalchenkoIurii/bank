@@ -7,6 +7,7 @@ use App\Models\Blank;
 use App\Models\Check;
 use App\Models\Notice;
 use App\Models\Operation;
+use App\Models\Traits\LocalizationTrait;
 use App\Models\User;
 use CentralBankRussian\ExchangeRate\CBRClient;
 use CentralBankRussian\ExchangeRate\Exceptions\ExceptionIncorrectData;
@@ -18,6 +19,8 @@ use Illuminate\Support\Facades\Auth;
 
 class ConvertController extends Controller
 {
+    use LocalizationTrait;
+
     public function handle(Request $request)
     {
         $first_currency_sum = (float)$request->input('first_currency_sum');
@@ -27,7 +30,7 @@ class ConvertController extends Controller
 
         if ($first_currency == $second_currency) {
             return response()->json([
-                "errorSameCurrency" => "Валюты не должны быть одинаковыми, выберите другую валюту"
+                "errorSameCurrency" => __('main.same_currency')
             ]);
         }
 
@@ -105,10 +108,10 @@ class ConvertController extends Controller
 
         if ($first_currency == $second_currency) {
             return response()->json([
-                'errorSameCurrency' => 'Валюты не должны быть одинаковыми, выберите другую валюту'
+                'errorSameCurrency' => __('main.same_currency')
             ]);
         } elseif (empty($first_currency_sum)) {
-            return back()->with('error', 'Введите сумму');
+            return back()->with('error', __('main.enter_sum'));
         }
 
         $exchangeRate = new ExchangeRate(new CBRClient());
@@ -135,19 +138,21 @@ class ConvertController extends Controller
         $usd_eur = $rub_eur / $rub_usd;
         $eur_usd = $rub_usd / $rub_eur;
 
+        $locale = $this->getCurrentLocale();
+
         switch ($first_currency) {
             case 'RUB':
                 if ($second_currency == 'USD') {
                     $second_currency_sum = $this->exchangeCurrencies($first_currency_sum, $rub_usd);
                     $balances['balance_rur'] -= $first_currency_sum;
                     if ($balances['balance_rur'] < 0) {
-                        return back()->with('error', 'Сумма списания превышает сумму баланса');
+                        return back()->with('error', __('main.sum_exceeds_balance'));
                     } else {
                         $balances['balance_usd'] += round($second_currency_sum, 2);
 
                         $operation_data = [
-                            'title_lt' => $notice_blank_convert->title_lt,
-                            'description_lt' => $notice_blank_convert->text_lt,
+                            'title_' . $locale => $notice_blank_convert->__('title'),
+                            'description_' . $locale => $notice_blank_convert->__('text'),
                             'type' => 'currency_exchange',
                             'sum' => round((float) $second_currency_sum, 2),
                             'currency' => 'USD',
@@ -156,17 +161,17 @@ class ConvertController extends Controller
                         $operation = Operation::create($operation_data);
 
                         $operation->check()->create([
-                            'title_lt' => $notice_blank_convert->title_lt,
+                            'title_' . $locale => $notice_blank_convert->__('title'),
                             'sum' => round((float) $second_currency_sum, 2),
                         ]);
 
-                        $notice_text = $notice_blank_balance_sub->text_lt . ' ' . $first_currency_sum . ' RUB <br>'
-                            . $notice_blank_balance_add->text_lt . ' ' . $second_currency_sum . ' USD <br>'
+                        $notice_text = $notice_blank_balance_sub->__('text') . ' ' . $first_currency_sum . ' RUB <br>'
+                            . $notice_blank_balance_add->__('text') . ' ' . $second_currency_sum . ' USD <br>'
                             . '. <a href="' . route('check', ['id' => $operation->check->id])
-                            . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
+                            . '" target="_blank"><strong>' . __('main.transaction_receipt') . '</strong></a>';
                         $notice = [
-                            'title_lt' => $notice_blank_convert->title_lt,
-                            'text_lt' => $notice_text,
+                            'title_' . $locale => $notice_blank_convert->__('title'),
+                            'text_' . $locale => $notice_text,
                             'user_id' => $user->id
                         ];
                         Notice::create($notice);
@@ -175,13 +180,13 @@ class ConvertController extends Controller
                     $second_currency_sum = $this->exchangeCurrencies($first_currency_sum, $rub_eur);
                     $balances['balance_rur'] -= $first_currency_sum;
                     if ($balances['balance_rur'] < 0) {
-                        return back()->with('error', 'Сумма списания превышает сумму баланса');
+                        return back()->with('error', __('main.sum_exceeds_balance'));
                     } else {
                         $balances['balance_eur'] += round($second_currency_sum, 2);
 
                         $operation_data = [
-                            'title_lt' => $notice_blank_convert->title_lt,
-                            'description_lt' => $notice_blank_convert->text_lt,
+                            'title_' . $locale => $notice_blank_convert->__('title'),
+                            'description_' . $locale => $notice_blank_convert->__('text'),
                             'type' => 'currency_exchange',
                             'sum' => round((float) $second_currency_sum, 2),
                             'currency' => 'EUR',
@@ -190,17 +195,17 @@ class ConvertController extends Controller
                         $operation = Operation::create($operation_data);
 
                         $operation->check()->create([
-                            'title_lt' => $notice_blank_convert->title_lt,
+                            'title_' . $locale => $notice_blank_convert->__('title'),
                             'sum' => round((float) $second_currency_sum, 2),
                         ]);
 
-                        $notice_text = $notice_blank_balance_sub->text_lt . ' ' . $first_currency_sum . ' RUB <br>'
-                            . $notice_blank_balance_add->text_lt . ' ' . $second_currency_sum . ' EUR <br>'
+                        $notice_text = $notice_blank_balance_sub->__('text') . ' ' . $first_currency_sum . ' RUB <br>'
+                            . $notice_blank_balance_add->__('text') . ' ' . $second_currency_sum . ' EUR <br>'
                             . '. <a href="' . route('check', ['id' => $operation->check->id])
-                            . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
+                            . '" target="_blank"><strong>' . __('main.transaction_receipt') . '</strong></a>';
                         $notice = [
-                            'title_lt' => $notice_blank_convert->title_lt,
-                            'text_lt' => $notice_text,
+                            'title_' . $locale => $notice_blank_convert->__('title'),
+                            'text_' . $locale => $notice_text,
                             'user_id' => $user->id
                         ];
                         Notice::create($notice);
@@ -212,13 +217,13 @@ class ConvertController extends Controller
                     $second_currency_sum = $this->exchangeCurrencies($first_currency_sum, $usd_rub);
                     $balances['balance_usd'] -= $first_currency_sum;
                     if ($balances['balance_usd'] < 0) {
-                        return back()->with('error', 'Сумма списания превышает сумму баланса');
+                        return back()->with('error', __('main.sum_exceeds_balance'));
                     } else {
                         $balances['balance_rur'] += round($second_currency_sum, 2);
 
                         $operation_data = [
-                            'title_lt' => $notice_blank_convert->title_lt,
-                            'description_lt' => $notice_blank_convert->text_lt,
+                            'title_' . $locale => $notice_blank_convert->__('title'),
+                            'description_' . $locale => $notice_blank_convert->__('text'),
                             'type' => 'currency_exchange',
                             'sum' => round((float) $second_currency_sum, 2),
                             'currency' => 'RUB',
@@ -227,17 +232,17 @@ class ConvertController extends Controller
                         $operation = Operation::create($operation_data);
 
                         $operation->check()->create([
-                            'title_lt' => $notice_blank_convert->title_lt,
+                            'title_' . $locale => $notice_blank_convert->__('title'),
                             'sum' => round((float) $second_currency_sum, 2),
                         ]);
 
-                        $notice_text = $notice_blank_balance_sub->text_lt . ' ' . $first_currency_sum . ' USD <br>'
-                            . $notice_blank_balance_add->text_lt . ' ' . $second_currency_sum . ' RUB <br>'
+                        $notice_text = $notice_blank_balance_sub->__('text') . ' ' . $first_currency_sum . ' USD <br>'
+                            . $notice_blank_balance_add->__('text') . ' ' . $second_currency_sum . ' RUB <br>'
                             . '. <a href="' . route('check', ['id' => $operation->check->id])
-                            . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
+                            . '" target="_blank"><strong>' . __('main.transaction_receipt') . '</strong></a>';
                         $notice = [
-                            'title_lt' => $notice_blank_convert->title_lt,
-                            'text_lt' => $notice_text,
+                            'title_' . $locale => $notice_blank_convert->__('title'),
+                            'text_' . $locale => $notice_text,
                             'user_id' => $user->id
                         ];
                         Notice::create($notice);
@@ -246,13 +251,13 @@ class ConvertController extends Controller
                     $second_currency_sum = $this->exchangeCurrencies($first_currency_sum, $usd_eur);
                     $balances['balance_usd'] -= $first_currency_sum;
                     if ($balances['balance_usd'] < 0) {
-                        return back()->with('error', 'Сумма списания превышает сумму баланса');
+                        return back()->with('error', __('main.sum_exceeds_balance'));
                     } else {
                         $balances['balance_eur'] += round($second_currency_sum, 2);
 
                         $operation_data = [
-                            'title_lt' => $notice_blank_convert->title_lt,
-                            'description_lt' => $notice_blank_convert->text_lt,
+                            'title_' . $locale => $notice_blank_convert->__('title'),
+                            'description_' . $locale => $notice_blank_convert->__('text'),
                             'type' => 'currency_exchange',
                             'sum' => round((float) $second_currency_sum, 2),
                             'currency' => 'EUR',
@@ -261,17 +266,17 @@ class ConvertController extends Controller
                         $operation = Operation::create($operation_data);
 
                         $operation->check()->create([
-                            'title_lt' => $notice_blank_convert->title_lt,
+                            'title_' . $locale => $notice_blank_convert->__('title'),
                             'sum' => round((float) $second_currency_sum, 2),
                         ]);
 
-                        $notice_text = $notice_blank_balance_sub->text_lt . ' ' . $first_currency_sum . ' USD <br>'
-                            . $notice_blank_balance_add->text_lt . ' ' . $second_currency_sum . ' EUR <br>'
+                        $notice_text = $notice_blank_balance_sub->__('text') . ' ' . $first_currency_sum . ' USD <br>'
+                            . $notice_blank_balance_add->__('text') . ' ' . $second_currency_sum . ' EUR <br>'
                             . '. <a href="' . route('check', ['id' => $operation->check->id])
-                            . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
+                            . '" target="_blank"><strong>' . __('main.transaction_receipt') . '</strong></a>';
                         $notice = [
-                            'title_lt' => $notice_blank_convert->title_lt,
-                            'text_lt' => $notice_text,
+                            'title_' . $locale => $notice_blank_convert->__('title'),
+                            'text_' . $locale => $notice_text,
                             'user_id' => $user->id
                         ];
                         Notice::create($notice);
@@ -283,13 +288,13 @@ class ConvertController extends Controller
                     $second_currency_sum = $this->exchangeCurrencies($first_currency_sum, $eur_rub);
                     $balances['balance_eur'] -= $first_currency_sum;
                     if ($balances['balance_eur'] < 0) {
-                        return back()->with('error', 'Сумма списания превышает сумму баланса');
+                        return back()->with('error', __('main.sum_exceeds_balance'));
                     } else {
                         $balances['balance_rur'] += round($second_currency_sum, 2);
 
                         $operation_data = [
-                            'title_lt' => $notice_blank_convert->title_lt,
-                            'description_lt' => $notice_blank_convert->text_lt,
+                            'title_' . $locale => $notice_blank_convert->__('title'),
+                            'description_' . $locale => $notice_blank_convert->__('text'),
                             'type' => 'currency_exchange',
                             'sum' => round((float) $second_currency_sum, 2),
                             'currency' => 'RUB',
@@ -298,17 +303,17 @@ class ConvertController extends Controller
                         $operation = Operation::create($operation_data);
 
                         $operation->check()->create([
-                            'title_lt' => $notice_blank_convert->title_lt,
+                            'title_' . $locale => $notice_blank_convert->__('title'),
                             'sum' => round((float) $second_currency_sum, 2),
                         ]);
 
-                        $notice_text = $notice_blank_balance_sub->text_lt . ' ' . $first_currency_sum . ' EUR <br>'
-                            . $notice_blank_balance_add->text_lt . ' ' . $second_currency_sum . ' RUB <br>'
+                        $notice_text = $notice_blank_balance_sub->__('text') . ' ' . $first_currency_sum . ' EUR <br>'
+                            . $notice_blank_balance_add->__('text') . ' ' . $second_currency_sum . ' RUB <br>'
                             . '. <a href="' . route('check', ['id' => $operation->check->id])
-                            . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
+                            . '" target="_blank"><strong>' . __('main.transaction_receipt') . '</strong></a>';
                         $notice = [
-                            'title_lt' => $notice_blank_convert->title_lt,
-                            'text_lt' => $notice_text,
+                            'title_' . $locale => $notice_blank_convert->__('title'),
+                            'text_' . $locale => $notice_text,
                             'user_id' => $user->id
                         ];
                         Notice::create($notice);
@@ -317,13 +322,13 @@ class ConvertController extends Controller
                     $second_currency_sum = $this->exchangeCurrencies($first_currency_sum, $eur_usd);
                     $balances['balance_eur'] -= $first_currency_sum;
                     if ($balances['balance_eur'] < 0) {
-                        return back()->with('error', 'Сумма списания превышает сумму баланса');
+                        return back()->with('error', __('main.sum_exceeds_balance'));
                     } else {
                         $balances['balance_usd'] += round($second_currency_sum, 2);
 
                         $operation_data = [
-                            'title_lt' => $notice_blank_convert->title_lt,
-                            'description_lt' => $notice_blank_convert->text_lt,
+                            'title_' . $locale => $notice_blank_convert->__('title'),
+                            'description_' . $locale => $notice_blank_convert->__('text'),
                             'type' => 'currency_exchange',
                             'sum' => round((float) $second_currency_sum, 2),
                             'currency' => 'USD',
@@ -332,17 +337,17 @@ class ConvertController extends Controller
                         $operation = Operation::create($operation_data);
 
                         $operation->check()->create([
-                            'title_lt' => $notice_blank_convert->title_lt,
+                            'title_' . $locale => $notice_blank_convert->__('title'),
                             'sum' => round((float) $second_currency_sum, 2),
                         ]);
 
-                        $notice_text = $notice_blank_balance_sub->text_lt . ' ' . $first_currency_sum . ' EUR <br>'
-                            . $notice_blank_balance_add->text_lt . ' ' . $second_currency_sum . ' USD <br>'
+                        $notice_text = $notice_blank_balance_sub->__('text') . ' ' . $first_currency_sum . ' EUR <br>'
+                            . $notice_blank_balance_add->__('text') . ' ' . $second_currency_sum . ' USD <br>'
                             . '. <a href="' . route('check', ['id' => $operation->check->id])
-                            . '" target="_blank"><strong>Квитанция транзакции</strong></a>';
+                            . '" target="_blank"><strong>' . __('main.transaction_receipt') . '</strong></a>';
                         $notice = [
-                            'title_lt' => $notice_blank_convert->title_lt,
-                            'text_lt' => $notice_text,
+                            'title_' . $locale => $notice_blank_convert->__('title'),
+                            'text_' . $locale => $notice_text,
                             'user_id' => $user->id
                         ];
                         Notice::create($notice);
@@ -354,10 +359,10 @@ class ConvertController extends Controller
         $res = Balance::where('user_id', $user->id)->update($balances);
 
         if ($res) {
-            return redirect()->route('convert')->with('success', 'Конвертация проведена успешно');
+            return redirect()->route('convert')->with('success', __('main.convert_success'));
         }
 
-        return back()->with('error', 'Что-то пошло не так');
+        return back()->with('error', __('main.something_went_wrong'));
     }
 
     public function exchangeCurrencies($currency_sum, $exchange_rate)

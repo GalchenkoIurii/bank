@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('page-title')Восстановление пароля @endsection
+@section('page-title'){{ __('main.password.recovery_title') }} @endsection
 
 @section('header')
     @include('incs.header-register')
@@ -12,7 +12,7 @@
             <div class="reg-cont">
                 <form action="{{ route('password.update') }}" method="POST" class="form-reg login">
                     @csrf
-                    <p class="form-reg__title">СМЕНА ПАРОЛЯ</p>
+                    <p class="form-reg__title">{{ __('main.password.change') }}</p>
 
                     @if($errors->any())
                         @foreach($errors->all() as $error)
@@ -31,17 +31,19 @@
                     </div>
 
                     <div class="block-input">
-                        <p class="block-input__text">Новый пароль</p>
-                        <input type="password" name="password" id="userPassword" placeholder="Введите пароль" required>
+                        <p class="block-input__text">{{ __('main.password.new') }}</p>
+                        <input type="password" name="password" id="userPassword"
+                               placeholder="{{ __('main.login.password_text') }}" required>
                     </div>
 
                     <div class="block-input">
-                        <p class="block-input__text">Повторите пароль</p>
-                        <input type="password" name="password_confirmation" id="userPasswordTwo" placeholder="Введите пароль ещё раз" required>
+                        <p class="block-input__text">{{ __('main.password.repeat') }}</p>
+                        <input type="password" name="password_confirmation" id="userPasswordTwo"
+                               placeholder="{{ __('main.register.password_confirm_text') }}" required>
                     </div>
 
                     <div class="block-link">
-                        <button id="regBtn">Сохранить</button>
+                        <button id="regBtn">{{ __('main.password.save') }}</button>
                     </div>
                 </form>
             </div>

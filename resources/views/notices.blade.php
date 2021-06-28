@@ -1,6 +1,6 @@
 @extends('layouts.logged')
 
-@section('page-title')Мои уведомления @endsection
+@section('page-title'){{ __('main.notices.title') }} @endsection
 
 @section('side')
     @include('incs.side-logged')
@@ -14,7 +14,7 @@
     @include('incs.admin-message')
 
     <div class="finance-block ">
-        <p class="finance-block__title">Мои уведомления</p>
+        <p class="finance-block__title">{{ __('main.notices.title') }}</p>
     </div>
 
     <div class="operations-block">
@@ -26,10 +26,10 @@
                             <div class="left-item">
                                 <div class="left-cont">
                                     <div class="left-top">
-                                        <p class="left-cont__title">{{ $notice->title_lt }}</p>
+                                        <p class="left-cont__title">{{ $notice->__('title') }}</p>
                                         <p class="left-cont__time">{{ $notice->created_at }}</p>
                                     </div>
-                                    <p class="left-cont__name">{!! $notice->text_lt !!}</p>
+                                    <p class="left-cont__name">{!! $notice->__('text') !!}</p>
                                 </div>
                             </div>
                         </div>
@@ -37,7 +37,7 @@
                 </div>
             </div>
         @else
-            <p class="operations-block__noOperations">Уведомлений нет...</p>
+            <p class="operations-block__noOperations">{{ __('main.notices.empty') }}</p>
         @endif
     </div>
 

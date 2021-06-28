@@ -14,7 +14,9 @@
     <link rel="stylesheet" href="{{ asset('style/two-media.css') }}">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"
+            integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA=="
+            crossorigin="anonymous"></script>
 
     <title>@yield('page-title')</title>
 
@@ -26,13 +28,13 @@
 <div class="block-noactive-two">
     <div class="noactive-header">
         <a href="#" class="noactive-header__prev"><img src="{{ asset('img/prev.svg') }}" alt=""></a>
-        <a href="{{ route('home') }}" class="noactive-header__title">{{ $site_settings['site_name']->value_lt }}</a>
+        <a href="{{ route('home') }}" class="noactive-header__title">{{ $site_settings['site_name']->__('value') }}</a>
         <a href="{{ route('home') }}" class="noactive-header__home"><img src="{{ asset('img/home.svg') }}" alt=""></a>
     </div>
     <div class="noactive-cont">
-        <p class="noactive-cont__title">Услуга недоступна.</p>
-        <p class="noactive-cont__text">К сожалению, данный продукт Вам временно не доступен</p>
-        <a href="#" class="noactive-cont__link">Назад</a>
+        <p class="noactive-cont__title">{{ __('main.not_available') }}</p>
+        <p class="noactive-cont__text">{{ __('main.not_available_msg') }}</p>
+        <a href="#" class="noactive-cont__link">{{ __('main.back') }}</a>
     </div>
 </div>
 
@@ -42,7 +44,7 @@
     <div class="bg-mob"></div>
     <div class="mob-head">
         <a href="{{ route('logout') }}" class="mob-head__link"><img src="{{ asset('img/exit.svg') }}" alt=""></a>
-        <p class="mob-head__title">{{ $site_settings['site_name']->value_lt }}</p>
+        <p class="mob-head__title">{{ $site_settings['site_name']->__('value') }}</p>
     </div>
     <div class="block-left" id="blockLeft">
         @yield('side')

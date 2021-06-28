@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('page-title')Кредитный договор @endsection
+@section('page-title'){{ __('lending.credit_agreement') }} @endsection
 
 @section('header')
     @include('incs.header')
@@ -12,13 +12,13 @@
         <table>
             <thead>
             <tr class="tr-top">
-                <td>№<br>Платежа</td>
-                <td>Дата платежа</td>
-                <td>Сумма платежа</td>
-                <td>Основной долг</td>
-                <td>Начисленные проценты</td>
-                <td>Ежемесячные комиссии</td>
-                <td>Остаток задолженности</td>
+                <td>{{ __('lending.payment_num') }}</td>
+                <td>{{ __('lending.payment_date') }}</td>
+                <td>{{ __('lending.payment_sum') }}</td>
+                <td>{{ __('lending.payment_debt') }}</td>
+                <td>{{ __('lending.payment_percent') }}</td>
+                <td>{{ __('lending.payment_commissions') }}</td>
+                <td>{{ __('lending.payment_remain') }}</td>
             </tr>
             </thead>
             <tbody>

@@ -1,11 +1,11 @@
 <p class="block-left__logo">
     <a class="block-left__title" href="{{ route('home') }}">
         <img src="{{ asset('img/logo.png') }}" alt="logo">
-        {{ $side_settings['site_name']->value_lt }}
+        {{ $side_settings['site_name']->__('value') }}
     </a>
 </p>
 
-<a href="{{ route('finances') }}" class="block-left__link">Мои операции</a>
+<a href="{{ route('finances') }}" class="block-left__link">{{ __('main.side.transactions') }}</a>
 
 
 
@@ -133,37 +133,37 @@
         <p class="type-pos">{{ $side_settings['gold_card']->title }}</p>
 
         <div class="block-pos">
-            <a href="#" class="block-pos__link">Оформить продукт</a>
+            <a href="#" class="block-pos__link">{{ __('main.side.get_product') }}</a>
         </div>
     </div>
 @endif
 
 <div class="select-block">
-    <p class="select-block__title">Баланс</p>
+    <p class="select-block__title">{{ __('main.side.balance') }}</p>
     <div class="wrapper">
         <div class="title">
         </div>
         <div class="select_wrap">
             <ul class="default_option">
                 <li>
-                    <div class="option pizza">
+                    <div class="option">
                         <p><span>₽</span>{{ $side_settings['balance_rur'] }}</p>
                     </div>
                 </li>
             </ul>
             <ul class="select_ul">
                 <li>
-                    <div class="option pizza">
+                    <div class="option">
                         <p><span>₽</span>{{ $side_settings['balance_rur'] }}</p>
                     </div>
                 </li>
                 <li>
-                    <div class="option burger">
+                    <div class="option">
                         <p><span>$</span>{{ $side_settings['balance_usd'] }}</p>
                     </div>
                 </li>
                 <li>
-                    <div class="option ice">
+                    <div class="option">
                         <p><span>€</span>{{ $side_settings['balance_eur'] }}</p>
                     </div>
                 </li>
@@ -174,35 +174,36 @@
 </div>
 
 <div class="select-block two">
-    <a href="#" class="select-block__link">Мои реквизиты <img class="l-img" src="{{ asset('img/str-two/block-right/arrow-button.svg') }}" alt=""></a>
+    <a href="#" class="select-block__link">{{ __('main.side.details') }}
+        <img class="l-img" src="{{ asset('img/str-two/block-right/arrow-button.svg') }}" alt=""></a>
 </div>
 
 <div class="block-rek">
     <div class="block-info">
-        <p class="block-info__title">{{ $side_settings['bank']->title_lt }}</p>
-        <p class="block-info__text">{{ $side_settings['bank']->value_lt }}</p>
+        <p class="block-info__title">{{ $side_settings['bank']->__('title') }}</p>
+        <p class="block-info__text">{{ $side_settings['bank']->__('value') }}</p>
     </div>
 
     <div class="block-info">
-        <p class="block-info__title">{{ $side_settings['personal_code']->title_lt }}</p>
+        <p class="block-info__title">{{ $side_settings['personal_code']->__('title') }}</p>
         <p class="block-info__text">{{ $side_settings['personal_code_value'] }}</p>
     </div>
 
     <div class="block-info">
-        <p class="block-info__title">{{ $side_settings['iban']->title_lt }}</p>
+        <p class="block-info__title">{{ $side_settings['iban']->__('title') }}</p>
         <p class="block-info__text">{{ $side_settings['iban_value'] }}</p>
     </div>
 
     <div class="block-info">
-        <p class="block-info__title">{{ $side_settings['swift']->title_lt }}</p>
-        <p class="block-info__text">{{ $side_settings['swift']->value_lt }}</p>
+        <p class="block-info__title">{{ $side_settings['swift']->__('title') }}</p>
+        <p class="block-info__text">{{ $side_settings['swift']->__('value') }}</p>
     </div>
 </div>
 <div class="block-price">
     <div class="col-title">
         <p class="row-title"></p>
-        <p class="row-title">Покупка</p>
-        <p class="row-title">Продажа</p>
+        <p class="row-title">{{ __('main.side.purchase') }}</p>
+        <p class="row-title">{{ __('main.side.sell') }}</p>
     </div>
     <div class="col-text">
         <p class="row-val">$</p>

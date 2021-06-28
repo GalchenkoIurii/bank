@@ -9,15 +9,32 @@ use App\Models\CreditSetting;
 use App\Models\Notice;
 use App\Models\Page;
 use App\Models\Setting;
+use App\Models\Traits\LocalizationTrait;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
 class MainController extends Controller
 {
+    use LocalizationTrait;
+
     public function index()
     {
         return view('home');
+    }
+
+    public function changeLocale($locale)
+    {
+        $locales = ['lt', 'en', 'ru'];
+        if (!in_array($locale, $locales)) {
+            $locale = config('app.locale');
+        }
+
+        session(['locale' => $locale]);
+        App::setLocale($locale);
+
+        return redirect()->back();
     }
 
     public function finances()
@@ -84,15 +101,17 @@ class MainController extends Controller
 
         Credit::create($data);
 
+        $locale = $this->getCurrentLocale();
+
         $notice_blank = Blank::where('slug', 'credit_request_sent')->first();
         $notice = [
-            'title_lt' => $notice_blank->title_lt,
-            'text_lt' => $notice_blank->text_lt,
+            'title_' . $locale => $notice_blank->__('title'),
+            'text_' . $locale => $notice_blank->__('text'),
             'user_id' => Auth::id()
         ];
         Notice::create($notice);
 
-        return redirect()->route('lending')->with('success', 'Заявка отправлена на проверку');
+        return redirect()->route('lending')->with('success', __('main.application_sent'));
     }
 
     public function creditAgreement($id)

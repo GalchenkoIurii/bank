@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('page-title')Письмо отправлено @endsection
+@section('page-title'){{ __('main.password.link_sent_title') }} @endsection
 
 @section('header')
     @include('incs.header-register')
@@ -11,12 +11,12 @@
         <div class="container">
             <div class="reg-cont">
                 <form action="#" class="form-reg login pas">
-                    <p class="form-reg__title">ПИСЬМО ДЛЯ ВОССТАНОВЛЕНИЯ ОТПРАВЛЕНО</p>
+                    <p class="form-reg__title">{{ __('main.password.link_sent_subtitle') }}</p>
 
-                    <p class="form-reg__text">Проверьте вашу почту, откройте письмо и перейдите по ссылке в письме для
-                        восстановления пароля. Не пришло письмо? Возможно вы не верно ввели данные. Попробуйте ещё раз.</p>
-                    <a href="{{ route('password.request') }}" class="form-reg__link">Отправить сообщение заново</a>
-                    <a href="{{ route('home') }}" class="form-reg__link two">На главную</a>
+                    <p class="form-reg__text">{{ __('main.password.link_sent_text') }}</p>
+                    <a href="{{ route('password.request') }}"
+                       class="form-reg__link">{{ __('main.password.link_resend') }}</a>
+                    <a href="{{ route('home') }}" class="form-reg__link two">{{ __('main.password.link_home') }}</a>
                 </form>
             </div>
         </div>

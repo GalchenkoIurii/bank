@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('page-title')Восстановление пароля @endsection
+@section('page-title'){{ __('main.password.recovery_title') }} @endsection
 
 @section('header')
     @include('incs.header-register')
@@ -13,7 +13,7 @@
             <div class="reg-cont">
                 <form action="{{ route('password.email') }}" method="POST" class="form-reg login">
                     @csrf
-                    <p class="form-reg__title">ВОССТАНОВЛЕНИЕ ПАРОЛЯ</p>
+                    <p class="form-reg__title">{{ __('main.password.recovery_title') }}</p>
 
                     @if($errors->any())
                         @foreach($errors->all() as $error)
@@ -31,12 +31,13 @@
 
                     <div class="block-input">
                         <p class="block-input__text">Email</p>
-                        <input type="email" name="email" id="userEmail" placeholder="Введите вашь Email" required>
+                        <input type="email" name="email" id="userEmail"
+                               placeholder="{{ __('main.password.enter_email') }}" required>
                     </div>
 
                     <div class="block-link password">
-                        <a href="{{ route('login') }}" class="block-link__link">Назад</a>
-                        <button id="regBtn">Далее</button>
+                        <a href="{{ route('login') }}" class="block-link__link">{{ __('main.back') }}</a>
+                        <button id="regBtn">{{ __('main.password.next') }}</button>
                     </div>
                 </form>
             </div>

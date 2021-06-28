@@ -1,6 +1,6 @@
 @extends('layouts.logged')
 
-@section('page-title')Услуги кредитования | {{ $credit->category_lt }} @endsection
+@section('page-title'){{ __('lending.title') }} | {{ $credit->__('category') }} @endsection
 
 @section('side')
     @include('incs.side-logged')
@@ -19,7 +19,7 @@
                 <div class="section-calc-input">
 
                     <div class="calc-block">
-                        <div class="calc-headline">Желаемая сумма кредита</div>
+                        <div class="calc-headline">{{ __('lending.loan_sum') }}</div>
 
                         <div class="field-box">
                             <div class="field-wrap">
@@ -32,14 +32,14 @@
                                        min="{{ $credit->min_sum }}" max="{{ $credit->max_sum }}">
                             </div>
 
-                            <div class=""><span class="rouble">руб.</span></div>
+                            <div class=""><span class="rouble">{{ __('lending.currency') }}.</span></div>
                         </div>
                     </div>
 
                     <div class="calc-block new">
 
                         <div class="field-box ">
-                            <div class="calc-headline">Срок кредита</div>
+                            <div class="calc-headline">{{ __('lending.term_title') }}</div>
                             <div class="field-wrap">
                                 <input class="input" id="term-input" type="number" value="{{ $credit->min_term }}"
                                        min="{{ $credit->min_term }}" max="{{ $credit->max_term }}">
@@ -50,12 +50,12 @@
                                        min="{{ $credit->min_term }}" max="{{ $credit->max_term }}">
                             </div>
 
-                            <div class="month">мес.</div>
+                            <div class="month">{{ __('lending.term') }}.</div>
                         </div>
 
                         <div class="">
-                            <div class="calc-headline one">Ежемесячный платеж</div>
-                            <div class="calc-value" id="payment-month">0 <span class="rouble">руб</span></div>
+                            <div class="calc-headline one">{{ __('lending.payment') }}</div>
+                            <div class="calc-value" id="payment-month">0 <span class="rouble">{{ __('lending.currency') }}</span></div>
                         </div>
                     </div>
 
@@ -65,7 +65,7 @@
             <form action="{{ route('lending.store') }}" method="post" class="form-cont">
                 @csrf
 
-                <p class="cont-title">Контактная информация</p>
+                <p class="cont-title">{{ __('lending.contact_info') }}</p>
 
                 <input type="hidden" name="credit_setting_id" id="creditCategory" value="{{ $credit->id }}">
                 <input type="hidden" name="credit_sum" id="creditSum">
@@ -78,25 +78,26 @@
                        @endif
                 >
                 <div class="block-input">
-                    <input type="text" name="full_name" placeholder="Фамилия, имя и отчество" class="cont-input"
+                    <input type="text" name="full_name" placeholder="{{ __('lending.full_name') }}"
+                           class="cont-input"
                            @if(auth()->check())
                                 value="{{ auth()->user()->last_name . ' ' . auth()->user()->first_name . ' ' . auth()->user()->patronymic }}"
                            @endif
                     >
-                    <p class="text-arror">Укажите фамилию, имя и отчество через пробел</p>
+                    <p class="text-arror">{{ __('lending.full_name_error') }}</p>
                 </div>
 
                 <div class="block-input tel">
-                    <input type="tel" name="phone" placeholder="Мобильный телефон*" class="cont-tel"
+                    <input type="tel" name="phone" placeholder="{{ __('lending.phone') }}" class="cont-tel"
                            @if(auth()->check())
                                 value="{{ auth()->user()->phone }}"
                            @endif
                     >
-                    <p class="text-arror">Необходимо указать номер телефона</p>
+                    <p class="text-arror">{{ __('lending.phone_error') }}</p>
                 </div>
 
                 <div class="block-input email">
-                    <input type="email" name="email" placeholder="Электронная почта" class="cont-email"
+                    <input type="email" name="email" placeholder="{{ __('lending.email') }}" class="cont-email"
                            @if(auth()->check())
                                 value="{{ auth()->user()->email }}"
                            @endif
@@ -104,21 +105,21 @@
                 </div>
 
                 <div class="section-header">
-                    <h2 class="">Личный документ</h2>
+                    <h2 class="">{{ __('lending.document') }}</h2>
                 </div>
 
 
                 <select name="" id="" class="select">
-                    <option value="">паспорт</option>
+                    <option value="">{{ __('lending.pass') }}</option>
                 </select>
 
                 <div class="block-btn">
                     <label class="wrapper-login01">
                         <input class="checkbox-login01" name="agreement" checked type="checkbox">
                         <span class="style-login01"></span>
-                        <span class="text-login01">Я принимаю условия передачи информации</span>
+                        <span class="text-login01">{{ __('lending.agreement') }}</span>
                     </label>
-                    <button>Отправить</button>
+                    <button>{{ __('main.send') }}</button>
                 </div>
             </form>
         </div>

@@ -3899,3 +3899,98 @@ a font, p font, div font, span font, li font {
 .block-noactive, .block-noactive-two {
   position: fixed;
 }
+
+
+/* styles for language select */
+.mob-block .wrapper {
+  width: 60px;
+  height: 30px;
+  font-size: 25px;
+  line-height: 25px;
+  font-weight: bold;
+  color: #fff;
+  padding-bottom: 5px;
+  position: relative;
+  z-index: 14;
+}
+/* line 483, two-style.scss */
+.mob-block .select_wrap3 {
+  width: 100%;
+  padding: 5px;
+}
+.select_wrap3 .default_option3 {
+  position: relative;
+  cursor: pointer;
+}
+/* line 488, two-style.scss */
+.select_wrap3 .default_option3:before {
+  content: '';
+  display: block;
+  position: absolute;
+  background: transparent url(../img/str-two/block-right/arrow-button-1.svg) no-repeat right center;
+  /*background-size: 18px 10px;*/
+  width: 13px;
+  height: 10px;
+  top: 50%;
+  margin-top: -5px;
+  right: 0;
+}
+/* line 497, two-style.scss */
+.mob-block .select_wrap3 .option p {
+  color: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+/* line 503, two-style.scss */
+.mob-block .select_wrap3 .option span {
+  display: block;
+  margin-right: 20px;
+  color: #4E95F3;
+}
+/* line 509, two-style.scss */
+.mob-block .select_wrap3 .select_ul3 {
+  /*background: #283E62;*/
+  z-index: 13;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  /*padding-left: 10px;*/
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 0;
+  overflow: hidden;
+  -webkit-transition: min-height .4s;
+  transition: min-height .4s;
+}
+/* line 521, two-style.scss */
+.mob-block .select_wrap3 .select_ul3 li:hover {
+  background: transparent;
+}
+/* line 525, two-style.scss */
+.mob-block .select_wrap3 .select_ul3 p {
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 23px;
+}
+
+/* line 532, two-style.scss */
+.select_wrap3.active .select_ul3 {
+  min-height: 100px;
+}
+.select_wrap3.active .default_option3:before {
+  transform: rotate(180deg);
+}
+/* line 536, two-style.scss */
+.select_wrap3 .default_option3:before {
+  -webkit-transition: -webkit-transform .4s;
+  transition: -webkit-transform .4s;
+  transition: transform .4s;
+  transition: transform .4s, -webkit-transform .4s;
+}

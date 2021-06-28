@@ -11,11 +11,9 @@
         <div class="container">
             <div class="two-cont">
                 <div class="block-left">
-                    <p class="two-cont__title">{{ $site_settings['site_name']->value_lt }}</p>
-                    <p class="two-cont__text">Современный банк с надежной защитой! Простое и бесплатное открытие счета!
-                        Все Ваши средства в нашем онлайн банке надежно защищенны с помощью современных ключей шифрования.
-                        Нам доверяют люди по всему миру, совершая ежедневные переводы и покупки.  Абсолютно для всех, переводы без комиссий!</p>
-                    <a href="{{ route('about') }}" class="two-cont__link">Узнать о нас больше</a>
+                    <p class="two-cont__title">{{ $site_settings['site_name']->__('value') }}</p>
+                    <p class="two-cont__text">{{ __('home.about.text') }}</p>
+                    <a href="{{ route('about') }}" class="two-cont__link">{{ __('home.about.btn') }}</a>
                 </div>
                 <div class="img-block"><img src="{{ asset('img/index-str/img-two-section.png') }}" alt=""></div>
             </div>
@@ -27,13 +25,12 @@
     <div class="three-block">
         <div class="container">
             <div class="three-cont">
-                <p class="three-cont__title">ПРЕИМУЩЕСТВА НАШЕГО ОНЛАЙН-БАНКА</p>
+                <p class="three-cont__title">{{ __('home.advantages.title') }}</p>
 
                 <div class="block-cont">
                     <div class="block-left">
-                        <p class="block-left__text-title">Клиентская служба поддержки банка, ответит на все ваши вопросы в любое время суток</p>
-                        <p class="block-left__text">Агенты службы поддержки, работают круглосуточно и готовы ответить на ваши вопросы в любое время суток.
-                            Работаем без перерыва и выходных!</p>
+                        <p class="block-left__text-title">{{ __('home.advantages.first_title') }}</p>
+                        <p class="block-left__text">{{ __('home.advantages.first_text') }}</p>
                     </div>
                     <div class="img-block"><img src="{{ asset('img/index-str/img-three-section.png') }}" alt=""></div>
                 </div>
@@ -48,9 +45,8 @@
             <div class="four-cont">
                 <div class="img-block"><img src="{{ asset('img/index-str/img-four-section.png') }}" alt=""></div>
                 <div class="block-right">
-                    <p class="block-right__text-title">Сервера онлайн банка, всегда работают быстро и без задержек!</p>
-                    <p class="block-right__text">Наш банк установлен на лучших современных серверах нашего времени, а это
-                        значит моментальное зачисление транзакций из любой точки мира!</p>
+                    <p class="block-right__text-title">{{ __('home.advantages.second_title') }}</p>
+                    <p class="block-right__text">{{ __('home.advantages.second_text') }}</p>
                 </div>
             </div>
         </div>
@@ -62,9 +58,8 @@
         <div class="container">
             <div class="five-cont">
                 <div class="block-left">
-                    <p class="block-left__text-title">Имеем множество банков партнеров, для удобства клиентов!</p>
-                    <p class="block-left__text">Наш онлйан банк имеет множество банков партнеров по всему миру, что
-                        позволяет совершать переводы в другие банки без комиссий и тем самым обеспечить комфорт нашим клиентам!</p>
+                    <p class="block-left__text-title">{{ __('home.advantages.third_title') }}</p>
+                    <p class="block-left__text">{{ __('home.advantages.third_text') }}</p>
                 </div>
                 <div class="img-block"><img src="{{ asset('img/index-str/img-five-section.png') }}" alt=""></div>
             </div>
@@ -76,66 +71,66 @@
     <div class="six-block" id="services">
         <div class="container">
             <div class="six-cont">
-                <p class="six-cont__title">ПОПУЛЯРНЫЕ УСЛУГИ</p>
+                <p class="six-cont__title">{{ __('home.popular.title') }}</p>
 
                 <div class="block-item">
                     <div class="six-item">
                         <div class="img-block"><img src="{{ asset('img/index-str/img-six-item-1.png') }}" alt=""></div>
                         <div class="block-text">
-                            <p class="block-text__title">Дебетовая карта</p>
-                            <p class="block-text__text">-Перевод средств в любой банк партнер* без комиссий</p>
-                            <p class="block-text__text">- Получайте и отправляйте переводы по всему миру моментально</p>
-                            <p class="block-text__text">- Бесплатное обслуживание</p>
+                            <p class="block-text__title">{{ __('home.popular.first_block.title') }}</p>
+                            <p class="block-text__text">{{ __('home.popular.first_block.first_text') }}</p>
+                            <p class="block-text__text">{{ __('home.popular.first_block.second_text') }}</p>
+                            <p class="block-text__text">{{ __('home.popular.first_block.third_text') }}</p>
                             <a href="@if(auth()->check())
                             {{ route('finances') }}
                             @else
                             {{ route('login.create') }}
-                            @endif" class="block-text__link">Оформить карту</a>
+                            @endif" class="block-text__link">{{ __('home.popular.first_block.btn') }}</a>
                         </div>
                     </div>
 
                     <div class="six-item">
                         <div class="img-block"><img src="{{ asset('img/index-str/img-six-item-2.png') }}" alt=""></div>
                         <div class="block-text">
-                            <p class="block-text__title">Кредит для частных и юр.лиц</p>
-                            <p class="block-text__text">- Одобрение в день обращения. Оформите заявку и получите деньги на следующий день, не выходя из дома</p>
-                            <p class="block-text__text">- Получение кредита на ваш счет в нашем банке без подтверждения цели кредита, справок о доходах и поручителей</p>
+                            <p class="block-text__title">{{ __('home.popular.second_block.title') }}</p>
+                            <p class="block-text__text">{{ __('home.popular.second_block.first_text') }}</p>
+                            <p class="block-text__text">{{ __('home.popular.second_block.second_text') }}</p>
                             <a href="@if(auth()->check())
                             {{ route('lending') }}
                             @else
                             {{ route('login.create') }}
-                            @endif" class="block-text__link">Получить кредит</a>
+                            @endif" class="block-text__link">{{ __('home.popular.second_block.btn') }}</a>
                         </div>
                     </div>
 
                     <div class="six-item">
                         <div class="img-block"><img src="{{ asset('img/index-str/img-six-item-3.png') }}" alt=""></div>
                         <div class="block-text">
-                            <p class="block-text__title">Инвестирование</p>
-                            <p class="block-text__text">- Помощь в сборе первого инвестиционного портфеля</p>
-                            <p class="block-text__text">- Мгновенный вывод депозита без комиссий, круглосуточно</p>
-                            <p class="block-text__text">- Если биржа закрыта на ночь или выходной, откроем счет на следующий торговый день</p>
+                            <p class="block-text__title">{{ __('home.popular.third_block.title') }}</p>
+                            <p class="block-text__text">{{ __('home.popular.third_block.first_text') }}</p>
+                            <p class="block-text__text">{{ __('home.popular.third_block.second_text') }}</p>
+                            <p class="block-text__text">{{ __('home.popular.third_block.third_text') }}</p>
                             <a href="@if(auth()->check())
                             {{ route('investments') }}
                             @else
                             {{ route('login.create') }}
-                            @endif" class="block-text__link">Стать инвестором</a>
+                            @endif" class="block-text__link">{{ __('home.popular.third_block.btn') }}</a>
                         </div>
                     </div>
 
                     <div class="six-item">
                         <div class="img-block"><img src="{{ asset('img/index-str/img-six-item-4.png') }}" alt=""></div>
                         <div class="block-text">
-                            <p class="block-text__title">Страхование</p>
-                            <p class="block-text__text">- 6 видов страхования</p>
-                            <p class="block-text__text">- Надежная защита и контроль качества</p>
-                            <p class="block-text__text">- Онлайн запись на любой вид страхования</p>
-                            <p class="block-text__text">- Получения полиса по электронной почте до 1 дня, в зависимости от вида страховния</p>
+                            <p class="block-text__title">{{ __('home.popular.fourth_block.title') }}</p>
+                            <p class="block-text__text">{{ __('home.popular.fourth_block.first_text') }}</p>
+                            <p class="block-text__text">{{ __('home.popular.fourth_block.second_text') }}</p>
+                            <p class="block-text__text">{{ __('home.popular.fourth_block.third_text') }}</p>
+                            <p class="block-text__text">{{ __('home.popular.fourth_block.fourth_text') }}</p>
                             <a href="@if(auth()->check())
                             {{ route('services') }}
                             @else
                             {{ route('login.create') }}
-                            @endif" class="block-text__link">Рассчет стоимости</a>
+                            @endif" class="block-text__link">{{ __('home.popular.fourth_block.btn') }}</a>
                         </div>
                     </div>
                 </div>

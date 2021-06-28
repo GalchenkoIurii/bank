@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blank;
+use App\Models\Traits\LocalizationTrait;
 use App\Models\User;
 use App\Models\UserData;
 use Illuminate\Auth\Events\PasswordReset;
@@ -14,6 +15,8 @@ use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
+    use LocalizationTrait;
+
     public function create()
     {
         return view('register');
@@ -49,7 +52,7 @@ class UserController extends Controller
             'user_id' => $user->id,
         ]);
 
-        session()->flash('success', 'Вы зарегистрированы');
+        session()->flash('success', __('main.registration_success'));
 
         Auth::login($user);
 
@@ -71,14 +74,14 @@ class UserController extends Controller
         $user = User::where('login', $request->login)->first();
 
         if (isset($user) && $user->is_banned) {
-            return redirect()->back()->with('error', 'Аккаунт заблокирован');
+            return redirect()->back()->with('error', __('main.banned'));
         }
 
         if (Auth::attempt([
             'login' => $request->login,
             'password' => $request->password
         ])) {
-            session()->flash('success', 'Вы вошли');
+            session()->flash('success', __('main.logged'));
 
             if (Auth::user()->is_admin) {
                 return redirect()->route('admin.index');
@@ -87,7 +90,7 @@ class UserController extends Controller
             }
         }
 
-        return redirect()->back()->with('error', 'Неверный логин или пароль');
+        return redirect()->back()->with('error', __('main.incorrect_logging'));
     }
 
     public function logout()
@@ -210,20 +213,23 @@ class UserController extends Controller
         $user->update($user_data);
         $user->userData()->update($user_data_rel);
 
+        $locale = $this->getCurrentLocale();
+
         $notice_blank = Blank::where('slug', 'user_data_sent')->first();
         $notice = [
-            'title_lt' => $notice_blank->title_lt,
-            'text_lt' => $notice_blank->text_lt,
+            'title_' . $locale => $notice_blank->__('title'),
+            'text_' . $locale => $notice_blank->__('text'),
         ];
         $user->notices()->create($notice);
 
-        return redirect()->route('user.identify')->with('success', 'Данные отправлены на проверку');
+        return redirect()->route('user.identify')->with('success', __('main.data_sent'));
     }
 
     public function authInfo()
     {
         $user = User::find(Auth::id());
-        $control_sum = ($user->balance->control_sum_lt) ?: 0;
+
+        $control_sum = ($user->balance->__('control_sum')) ?: 0;
 
         return view('auth-info', compact('control_sum'));
     }
@@ -263,7 +269,7 @@ class UserController extends Controller
         if (isset($data['login'])) {
             if ($data['login'] !== $user->login
                 && $check_login = User::where('login', $data['login'])->first()) {
-                return redirect()->back()->with('error', 'Логин уже занят');
+                return redirect()->back()->with('error', __('main.login_taken'));
             }
         } else {
             $data['login'] = $user->login;
@@ -272,7 +278,7 @@ class UserController extends Controller
         if (isset($data['email'])) {
             if ($data['email'] !== $user->email
                 && $check_email = User::where('email', $data['email'])->first()) {
-                return redirect()->back()->with('error', 'Email уже занят');
+                return redirect()->back()->with('error', __('main.email_taken'));
             }
         } else {
             $data['email'] = $user->email;
@@ -281,7 +287,7 @@ class UserController extends Controller
         if (isset($data['phone'])) {
             if ($data['phone'] !== $user->phone
                 && $check_phone = User::where('phone', $data['phone'])->first()) {
-                return redirect()->back()->with('error', 'Телефон уже занят');
+                return redirect()->back()->with('error', __('main.phone_taken'));
             }
         } else {
             $data['phone'] = $user->phone;
@@ -306,13 +312,13 @@ class UserController extends Controller
             if (Auth::attempt(['id' => $user->id, 'password' => $data['passwordOld']])) {
                 $data['password'] = bcrypt($data['passwordNew']);
             } else {
-                return redirect()->back()->with('error', 'Неверный пароль');
+                return redirect()->back()->with('error', __('main.incorrect_password'));
             }
         }
 
         $user->update($data);
 
-        return redirect()->route('user.settings')->with('success', 'Данные сохранены!');
+        return redirect()->route('user.settings')->with('success', __('main.data_saved'));
     }
 
 

@@ -1,6 +1,6 @@
 @extends('layouts.logged')
 
-@section('page-title')Конвертация валют @endsection
+@section('page-title'){{ __('convert.title') }} @endsection
 
 @section('side')
     @include('incs.side-logged')
@@ -14,12 +14,13 @@
     @include('incs.admin-message')
 
     <div class="convert-block">
-        <p class="convert-block__title">КОНВЕРТАЦИЯ ВАЛЮТ</p>
+        <p class="convert-block__title">{{ __('convert.title') }}</p>
         <form action="{{ route('convert.store') }}" method="post" class="form-convert">
             @csrf
             <div class="input-block">
-                <p class="input-block__text">Счет списания</p>
-                <input type="text" id="first_currency_sum" name="first_currency_sum" placeholder="Введите сумму">
+                <p class="input-block__text">{{ __('convert.sub') }}</p>
+                <input type="text" id="first_currency_sum" name="first_currency_sum"
+                       placeholder="{{ __('convert.enter_sum') }}">
                 <select name="first_currency" id="first_currency">
                     <option value="RUB" selected>₽</option>
                     <option value="USD">$</option>
@@ -28,8 +29,9 @@
             </div>
 
             <div class="input-block">
-                <p class="input-block__text">Счет начисления</p>
-                <input type="text" id="second_currency_sum" name="second_currency_sum" placeholder="">
+                <p class="input-block__text">{{ __('convert.add') }}</p>
+                <input type="text" id="second_currency_sum" name="second_currency_sum"
+                       placeholder="{{ __('convert.enter_sum') }}">
                 <select name="second_currency" id="second_currency">
                     <option value="RUB">₽</option>
                     <option value="USD" selected>$</option>
@@ -37,7 +39,7 @@
                 </select>
             </div>
 
-            <button class="item-serv">Конвертировать</button>
+            <button class="item-serv">{{ __('convert.convert') }}</button>
 
             <div id="error" class="input-block"></div>
         </form>
@@ -46,9 +48,9 @@
     <div class="div-text">
         <p class="div-text__text">
             @if($user->withdrawable)
-                Обратитесь к онлайн администратору банка
+                {{ __('convert.admin_message') }}
             @else
-                Вывод средств запрещен, обратитесь в службу поддержки
+                {{ __('convert.withdraw_forbidden_message') }}
             @endif
         </p>
         <a href="" class="div-text__exit"><img src="{{ asset('img/exit.svg') }}" alt=""></a>

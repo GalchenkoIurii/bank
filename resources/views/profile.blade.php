@@ -1,6 +1,6 @@
 @extends('layouts.logged')
 
-@section('page-title')Мой профиль @endsection
+@section('page-title'){{ __('profile.title') }} @endsection
 
 @section('side')
     @include('incs.side-logged')
@@ -14,17 +14,15 @@
     @include('incs.admin-message')
 
     <div class="finance-block ">
-        <p class="finance-block__title">МОЙ ПРОФИЛЬ</p>
+        <p class="finance-block__title">{{ __('profile.title') }}</p>
 
         <div class="identification-block">
             <div class="block-img"><img src="{{ asset('img/str-two/block-right/img-1.png') }}" alt=""></div>
 
             <div class="block-text">
-                <p class="block-text__title">Подтверждение личных данных держателя счета</p>
-                <p class="block-text__text">Что бы получить полный спектр услуг и возможность вывода ваших средств в
-                    другие банки, клиентам нашего онлайн банка необходимо пройти процедуру подтверждения личных данных
-                    держателя счета.</p>
-                <a href="{{ route('user.identify') }}" class="block-text__link">Пройти подтверждение</a>
+                <p class="block-text__title">{{ __('profile.confirm.title') }}</p>
+                <p class="block-text__text">{{ __('profile.confirm.text') }}</p>
+                <a href="{{ route('user.identify') }}" class="block-text__link">{{ __('profile.confirm.btn') }}</a>
             </div>
         </div>
 
@@ -32,12 +30,12 @@
             <div class="block-img"><img src="{{ asset('img/str-two/block-right/title-img-1.svg') }}" alt=""></div>
 
             <div class="block-text">
-                <p class="block-text__title">Аутентификация платежной информации</p>
+                <p class="block-text__title">{{ __('profile.identify.title') }}</p>
 
                 @if($is_user_confirmed && $is_positive_balance)
-                    <a href="{{ route('auth.info') }}" class="block-text__link">Пройти аутентификацию</a>
+                    <a href="{{ route('auth.info') }}" class="block-text__link">{{ __('profile.identify.btn') }}</a>
                 @else
-                    <p class="block-text__text">Аутентификация платежной информации не требуется</p>
+                    <p class="block-text__text">{{ __('profile.identify.text') }}</p>
                 @endif
             </div>
         </div>

@@ -6,6 +6,7 @@ namespace App\Http\View\Composers;
 
 use App\Models\Card;
 use App\Models\Setting;
+use App\Models\Traits\LocalizationTrait;
 use App\Models\User;
 use CentralBankRussian\ExchangeRate\CBRClient;
 use CentralBankRussian\ExchangeRate\Exceptions\ExceptionIncorrectData;
@@ -17,6 +18,8 @@ use Illuminate\View\View;
 
 class SideSettingsComposer
 {
+    use LocalizationTrait;
+
     protected $settings;
     protected $cards;
 
@@ -83,8 +86,8 @@ class SideSettingsComposer
 //        $side_settings['balance_eur'] = $user->balance->balance_eur;
 
         // reducing db queries count
-        $side_settings['personal_code_value'] = $side_settings['personal_code']->value_lt . Auth::user()->userData->personal_code;
-        $side_settings['iban_value'] = $side_settings['iban']->value_lt . Auth::user()->userData->iban;
+        $side_settings['personal_code_value'] = $side_settings['personal_code']->__('value') . Auth::user()->userData->personal_code;
+        $side_settings['iban_value'] = $side_settings['iban']->__('value') . Auth::user()->userData->iban;
 
         $side_settings['balance_rur'] = round(Auth::user()->balance->balance_rur, 2);
         $side_settings['balance_usd'] = round(Auth::user()->balance->balance_usd, 2);

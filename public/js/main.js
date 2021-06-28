@@ -815,6 +815,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
+// language select
+$(".default_option3").click(function(){
+    $(this).parent().toggleClass("active");
+});
+
+$(".select_ul3 li").click(function(){
+    var currentele = $(this).html();
+    $(".default_option3 li").html(currentele);
+    $(this).parents(".select_wrap3").removeClass("active");
+});
+
+
 
 
 

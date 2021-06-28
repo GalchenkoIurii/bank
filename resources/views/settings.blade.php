@@ -1,6 +1,6 @@
 @extends('layouts.logged')
 
-@section('page-title')Настройки анкеты @endsection
+@section('page-title'){{ __('settings.title') }} @endsection
 
 @section('side')
     @include('incs.side-logged')
@@ -15,13 +15,13 @@
 
     <form action="{{ route('user.settings.store') }}" method="post" class="form-setting">
         @csrf
-        <p class="form-setting__title">НАСТРОЙКИ АНКЕТЫ</p>
+        <p class="form-setting__title">{{ __('settings.title') }}</p>
 
-        <p class="form-setting__text">Основные настройки:</p>
+        <p class="form-setting__text">{{ __('settings.subtitle') }}</p>
 
         <div class="block-input one">
-            <p class="block-input__text">Логин</p>
-            <input type="text" name="login" id="login" placeholder="Логин"
+            <p class="block-input__text">{{ __('settings.login') }}</p>
+            <input type="text" name="login" id="login" placeholder="{{ __('settings.login') }}"
                    @if($user['login'])
                         value="{{ $user['login'] }}"
                    @endif
@@ -29,8 +29,8 @@
         </div>
 
         <div class="block-input one">
-            <p class="block-input__text">Почта</p>
-            <input type="email" name="email" id="email" placeholder="Почта"
+            <p class="block-input__text">{{ __('settings.email') }}</p>
+            <input type="email" name="email" id="email" placeholder="{{ __('settings.email') }}"
                    @if($user['email'])
                         value="{{ $user['email'] }}"
                    @endif
@@ -38,28 +38,30 @@
         </div>
 
         <div class="block-input">
-            <p class="block-input__text">Телефон</p>
-            <input type="tel" name="phone" id="phone" placeholder="Телефон"
+            <p class="block-input__text">{{ __('settings.phone') }}</p>
+            <input type="tel" name="phone" id="phone" placeholder="{{ __('settings.phone') }}"
                    @if($user['phone'])
                         value="{{ $user['phone'] }}"
                    @endif
             >
         </div>
 
-        <p class="form-setting__text two">Смена пароля:</p>
+        <p class="form-setting__text two">{{ __('settings.password_title') }}</p>
 
         <div class="block-input one">
-            <p class="block-input__text">Старый пароль</p>
-            <input type="password" name="passwordOld" id="passwordOld" placeholder="Введите свой старый пароль">
+            <p class="block-input__text">{{ __('settings.password_title_old') }}</p>
+            <input type="password" name="passwordOld" id="passwordOld"
+                   placeholder="{{ __('settings.password_enter_old') }}">
         </div>
 
         <div class="block-input">
-            <p class="block-input__text">Новый пароль</p>
-            <input type="password" name="passwordNew" id="passwordNew" placeholder="Пароль, на который вы хотите поменять">
+            <p class="block-input__text">{{ __('settings.password_title_new') }}</p>
+            <input type="password" name="passwordNew" id="passwordNew"
+                   placeholder="{{ __('settings.password_enter_new') }}">
         </div>
 
         <div class="block-btn">
-            <button type="submit">Сохранить изменения</button>
+            <button type="submit">{{ __('settings.save') }}</button>
             @if(session()->has('success'))
                 <p class="block-btn__text">{{ session('success') }}</p>
             @endif
