@@ -6,7 +6,7 @@ return [
         'text' => 'A modern bank with reliable protection! Easy and free account opening! All your funds in our online 
                 bank are securely protected with modern encryption keys. People around the world trust us by making 
                 daily transfers and purchases. Absolutely for everyone, transfers without fees!',
-        'btn' => 'Узнать о нас больше',
+        'btn' => 'Learn more about us',
     ],
     'advantages' => [
         'title' => 'ADVANTAGES OF OUR ONLINE BANK',

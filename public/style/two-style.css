@@ -3903,7 +3903,7 @@ a font, p font, div font, span font, li font {
 
 /* styles for language select */
 .mob-block .wrapper {
-  width: 60px;
+  width: 120px;
   height: 30px;
   font-size: 25px;
   line-height: 25px;
@@ -3921,6 +3921,7 @@ a font, p font, div font, span font, li font {
 .select_wrap3 .default_option3 {
   position: relative;
   cursor: pointer;
+  width: 60px;
 }
 /* line 488, two-style.scss */
 .select_wrap3 .default_option3:before {
@@ -3963,26 +3964,32 @@ a font, p font, div font, span font, li font {
   display: -ms-flexbox;
   display: flex;
   flex-direction: column;
-  min-height: 0;
-  height: 0;
+  max-height: 0;
   overflow: hidden;
-  -webkit-transition: min-height .4s;
-  transition: min-height .4s;
+  -webkit-transition: max-height .4s;
+  transition: max-height .4s;
 }
 /* line 521, two-style.scss */
 .mob-block .select_wrap3 .select_ul3 li:hover {
   background: transparent;
 }
 /* line 525, two-style.scss */
-.mob-block .select_wrap3 .select_ul3 p {
-  font-weight: bold;
-  font-size: 18px;
-  line-height: 23px;
+.mob-block .select_wrap3 .select_ul3 .option a {
+  color: rgba(0, 0, 0, .6);
+  font-size: 12px;
+  line-height: 16px;
+  margin-left: 5px;
+}
+
+.mob-block .select_wrap3 .select_ul3 .option a {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 /* line 532, two-style.scss */
 .select_wrap3.active .select_ul3 {
-  min-height: 100px;
+  max-height: 1000px;
 }
 .select_wrap3.active .default_option3:before {
   transform: rotate(180deg);

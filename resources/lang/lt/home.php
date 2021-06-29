@@ -6,7 +6,7 @@ return [
         'text' => 'Šiuolaikiškas bankas su patikima apsauga! Lengvas ir nemokamas sąskaitos atidarymas! Visos jūsų lėšos 
                 mūsų interneto banke saugiai apsaugotos moderniais šifravimo raktas. Žmonės visame pasaulyje mumis 
                 pasitiki kasdien atlikdami pervedimus ir pirkdami. Absoliučiai visiems - pervedimai be mokesčių!',
-        'btn' => 'Узнать о нас больше',
+        'btn' => 'Sužinokite daugiau apie mus',
     ],
     'advantages' => [
         'title' => 'MŪSŲ INTERNETINIO BANKO PRIVALUMAI',
